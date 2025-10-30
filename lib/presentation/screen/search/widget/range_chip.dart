@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../design_system/theme/app_theme.dart';
 
 class RangeChip extends StatefulWidget {
   final String label;
@@ -22,6 +23,7 @@ class RangeChip extends StatefulWidget {
 class _RangeChipState extends State<RangeChip> {
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return Chip(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
       label: Row(
@@ -30,7 +32,6 @@ class _RangeChipState extends State<RangeChip> {
         children: [
           SvgPicture.asset(
             widget.image,
-            colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
             width: 24,
             height: 24,
           ),
@@ -44,17 +45,23 @@ class _RangeChipState extends State<RangeChip> {
                 children: [
                   Text(
                     widget.label,
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                    style: theme.typography.textTheme.labelSmall?.copyWith(
+                      color: theme.colors.body,
+                    ),
                   ),
                   Text(
                     widget.value.toString(),
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    style:  theme.typography.textTheme.labelLarge?.copyWith(
+                      color: theme.colors.body,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          Text(widget.unit, style: TextStyle(fontSize: 16, color: Colors.blue)),
+          Text(widget.unit, style: theme.typography.textTheme.labelSmall?.copyWith(
+            color: theme.colors.primary,
+          )),
         ],
       ),
     );
