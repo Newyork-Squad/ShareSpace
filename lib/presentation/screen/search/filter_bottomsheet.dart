@@ -62,6 +62,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   selectedRateIndices.add(0);
                 }
               } else {
+                if (index == 0) {
+                  selectedRateIndices.clear();
+                }
                 if (selectedRateIndices.length == 1 && selectedRateIndices.first == 0) {
                   selectedRateIndices.clear();
                 }
