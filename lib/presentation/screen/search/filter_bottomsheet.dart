@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/screen/search/widget/range_chip.dart';
 import 'package:share_space/presentation/screen/search/widget/range_slider.dart';
+import 'package:share_space/presentation/screen/search/widget/rating_filter.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({super.key});
@@ -11,6 +12,8 @@ class FilterBottomSheet extends StatefulWidget {
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   RangeValues _currentRange = const RangeValues(100, 500);
+  List<String> rateOptions = ["All", "1", "2", "3", "4", "5"];
+  int selectedRateIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +49,15 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
             ),
           ],
+        ),
+        RatingFilter(
+          options: rateOptions,
+          selectedIndex: selectedRateIndex,
+          onSelect: (index) {
+            setState(() {
+              selectedRateIndex = index;
+            });
+          },
         ),
       ],
     );
