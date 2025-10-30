@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 
 class CustomChip extends StatefulWidget {
   final String label;
   final String icon;
   bool isSelected;
   final VoidCallback? onSelect;
-
 
   CustomChip({
     super.key,
@@ -47,10 +47,9 @@ class _CustomChipState extends State<CustomChip> {
             if (widget.icon.isNotEmpty) ...[
               SvgPicture.asset(
                 widget.icon,
-                colorFilter: ColorFilter.mode(
-                  widget.isSelected ? Colors.blueAccent : Colors.orange,
-                  BlendMode.srcIn,
-                ),
+                colorFilter: widget.isSelected
+                    ? ColorFilter.mode(Colors.blueAccent, BlendMode.srcIn)
+                    : null,
                 width: 16,
                 height: 16,
               ),
