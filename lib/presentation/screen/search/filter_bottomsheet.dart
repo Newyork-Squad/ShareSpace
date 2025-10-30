@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share_space/presentation/screen/search/widget/range_chip.dart';
 import 'package:share_space/presentation/screen/search/widget/range_slider.dart';
 import 'package:share_space/presentation/screen/search/widget/rating_filter.dart';
+import 'package:share_space/presentation/screen/search/widget/services_filter.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({super.key});
@@ -13,7 +14,7 @@ class FilterBottomSheet extends StatefulWidget {
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   RangeValues _currentRange = const RangeValues(100, 500);
   List<String> rateOptions = ["All", "1", "2", "3", "4", "5"];
-  List<int> selectedRateIndex = [0];
+  List<int> selectedRateIndices = [0];
 
   @override
   Widget build(BuildContext context) {
@@ -52,23 +53,24 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         ),
         RatingFilter(
           options: rateOptions,
-          selectedIndex: selectedRateIndex,
+          selectedIndices: selectedRateIndices,
           onSelect: (index) {
             setState(() {
-              if (selectedRateIndex.contains(index)) {
-                selectedRateIndex.remove(index);
-                if (selectedRateIndex.isEmpty) {
-                  selectedRateIndex.add(0);
+              if (selectedRateIndices.contains(index)) {
+                selectedRateIndices.remove(index);
+                if (selectedRateIndices.isEmpty) {
+                  selectedRateIndices.add(0);
                 }
               } else {
-                if (selectedRateIndex.length == 1 && selectedRateIndex.first == 0) {
-                  selectedRateIndex.clear();
+                if (selectedRateIndices.length == 1 && selectedRateIndices.first == 0) {
+                  selectedRateIndices.clear();
                 }
-                selectedRateIndex.add(index);
+                selectedRateIndices.add(index);
               }
             });
           },
         ),
+        // ServicesFilter(selectedIndex: selectedIndex, onSelect: onSelect)
       ],
     );
   }
