@@ -15,6 +15,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   RangeValues _currentRange = const RangeValues(100, 500);
   List<String> rateOptions = ["All", "1", "2", "3", "4", "5"];
   List<int> selectedRateIndices = [0];
+  List<String> servicesOptions = [
+    "All",
+    "Wifi",
+    "A/C",
+    "Whiteboard",
+    "Power Backup",
+  ];
+  List<int> selectedServicesIndices = [0];
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +73,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 if (index == 0) {
                   selectedRateIndices.clear();
                 }
-                if (selectedRateIndices.length == 1 && selectedRateIndices.first == 0) {
+                if (selectedRateIndices.length == 1 &&
+                    selectedRateIndices.first == 0) {
                   selectedRateIndices.clear();
                 }
                 selectedRateIndices.add(index);
@@ -73,7 +82,29 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             });
           },
         ),
-        // ServicesFilter(selectedIndex: selectedIndex, onSelect: onSelect)
+        ServicesFilter(
+          options: servicesOptions,
+          selectedIndices: selectedServicesIndices,
+          onSelect: (index) {
+            setState(() {
+              if (selectedServicesIndices.contains(index)) {
+                selectedServicesIndices.remove(index);
+                if (selectedServicesIndices.isEmpty) {
+                  selectedServicesIndices.add(0);
+                }
+              } else {
+                if (index == 0) {
+                  selectedServicesIndices.clear();
+                }
+                if (selectedServicesIndices.length == 1 &&
+                    selectedServicesIndices.first == 0) {
+                  selectedServicesIndices.clear();
+                }
+                selectedServicesIndices.add(index);
+              }
+            });
+          },
+        ),
       ],
     );
   }
