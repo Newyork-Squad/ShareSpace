@@ -13,7 +13,7 @@ class FilterBottomSheet extends StatefulWidget {
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   RangeValues _currentRange = const RangeValues(100, 500);
   List<String> rateOptions = ["All", "1", "2", "3", "4", "5"];
-  int selectedRateIndex = 0;
+  List<int> selectedRateIndex = [0];
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,17 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           selectedIndex: selectedRateIndex,
           onSelect: (index) {
             setState(() {
-              selectedRateIndex = index;
+              if (selectedRateIndex.contains(index)) {
+                selectedRateIndex.remove(index);
+                if (selectedRateIndex.isEmpty) {
+                  selectedRateIndex.add(0);
+                }
+              } else {
+                if (selectedRateIndex.length == 1 && selectedRateIndex.first == 0) {
+                  selectedRateIndex.clear();
+                }
+                selectedRateIndex.add(index);
+              }
             });
           },
         ),

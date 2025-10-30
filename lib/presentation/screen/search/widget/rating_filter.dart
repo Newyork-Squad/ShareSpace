@@ -4,7 +4,7 @@ import 'custom_chip.dart';
 
 class RatingFilter extends StatefulWidget {
   List<String> options;
-  int selectedIndex;
+  List<int> selectedIndex;
   final Function(int) onSelect;
 
   RatingFilter({
@@ -19,14 +19,6 @@ class RatingFilter extends StatefulWidget {
 }
 
 class _RatingFilterState extends State<RatingFilter> {
-  late List<bool> _isSelected;
-
-  @override
-  void initState() {
-    super.initState();
-    _isSelected = List<bool>.filled(widget.options.length, false);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -37,13 +29,8 @@ class _RatingFilterState extends State<RatingFilter> {
             child: CustomChip(
               label: widget.options[index],
               icon: (index != 0) ? "assets/icons/star.svg" : "",
-              isSelected: _isSelected[index],
+              isSelected: widget.selectedIndex.contains(index),
               onSelect: () {
-                setState(() {
-                  _isSelected[widget.selectedIndex] = false;
-                  widget.selectedIndex = index;
-                  _isSelected[widget.selectedIndex] = !_isSelected[index];
-                });
                 widget.onSelect(index);
               },
             ),
