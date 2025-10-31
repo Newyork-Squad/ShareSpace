@@ -38,7 +38,7 @@ class RoomImageSlider extends StatelessWidget {
         ),
 
         Positioned(
-          bottom: 12,
+          top: 210,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: BackdropFilter(

@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       colors: AppColors.light,
       typography: AppTypography(),
     child: MaterialApp(
-
+      debugShowCheckedModeBanner: false,
       home: const RoomDetailsScreen(),
     ));
   }

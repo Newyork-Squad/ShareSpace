@@ -45,39 +45,86 @@ The room can be booked by the hour, with the option to extend the time directly 
     final pageController = PageController();
     final theme = AppTheme.of(context);
 
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: RoomImageSlider(
-            images: roomImages,
-            currentIndex: _currentIndex,
-            controller: pageController,
-            rate: '5',
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: RoomHeaderSection(
-            title: roomName,
-            location: location,
-            services: services,
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: RoomOwnerSection(
-            name: ownerName,
-            role: ownerRole,
-            imagePath: ownerImagePath,
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16), 
-            child: Text(
-              roomDescription,
-              style: theme.typography.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w400,
-                color: theme.colors.body,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: CustomScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: RoomImageSlider(
+                  images: roomImages,
+                  currentIndex: _currentIndex,
+                  controller: pageController,
+                  rate: '5',
+                ),
               ),
+            ],
+          ),
+        ),
+
+        Positioned(
+          top: 240,
+          left: 0,
+          right: 0,
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(24),
+                topRight: Radius.circular(24),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RoomHeaderSection(
+                  title: roomName,
+                  location: location,
+                  services: services,
+                ),
+
+                Container(
+                  width: double.infinity,
+                  height: 0.5,
+                  color: const Color(0x1F1F1F14),
+                ),
+
+                RoomOwnerSection(
+                  name: ownerName,
+                  role: ownerRole,
+                  imagePath: ownerImagePath,
+                ),
+
+                Container(
+                  width: double.infinity,
+                  height: 0.5,
+                  color: const Color(0x1F1F1F14),
+                ),
+
+                Padding(
+                  padding:  EdgeInsets.only(
+                    top: 12,
+                    left: 16,
+                    right: 16,
+                    bottom: MediaQuery.of(context).padding.bottom,
+                    ),
+                  child: SizedBox(
+                    height: 300,
+                    child: SingleChildScrollView(
+                      physics:  BouncingScrollPhysics(),
+                      child: Text(
+                        roomDescription,
+                        style: theme.typography.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: theme.colors.body,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
