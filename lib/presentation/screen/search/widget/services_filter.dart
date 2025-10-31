@@ -21,24 +21,26 @@ class ServicesFilter extends StatefulWidget {
 class _ServicesFilterState extends State<ServicesFilter> {
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.start,
-      spacing: 8.0,
-      runSpacing: 8.0,
-      children: [
-        for (var index = 0; index < widget.options.length; index++)
-          CustomChip(
-            label: widget.options[index],
-            icon: iconPathFor(widget.options[index]),
-            isSelected: widget.selectedIndices.contains(index),
-            onSelect: () {
-              widget.onSelect(index);
-            },
-          ),
-      ],
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Wrap(
+        alignment: WrapAlignment.start,
+        spacing: 8.0,
+        runSpacing: 8.0,
+        children: [
+          for (var index = 0; index < widget.options.length; index++)
+            CustomChip(
+              label: widget.options[index],
+              icon: iconPathFor(widget.options[index]),
+              isSelected: widget.selectedIndices.contains(index),
+              onSelect: () {
+                widget.onSelect(index);
+              },
+            ),
+        ],
+      ),
     );
   }
-
 
   String iconPathFor(String label) {
     final key = label.trim().toLowerCase();
@@ -50,10 +52,4 @@ class _ServicesFilterState extends State<ServicesFilter> {
     };
     return icons[key] ?? '';
   }
-
-
 }
-
-
-
-
