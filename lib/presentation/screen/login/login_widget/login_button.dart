@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+import '../../../design_system/colors/app_color.dart';
+import '../../../design_system/typography/app_typography.dart';
+
+class LoginButton extends StatelessWidget {
+  final bool isEnabled;
+  final VoidCallback? onPressed; // 👈 خليها nullable
+
+  const LoginButton({
+    super.key,
+    required this.isEnabled,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: ElevatedButton(
+        onPressed: isEnabled ? onPressed : null, // ✅ بيشتغل مع null
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isEnabled
+              ? AppColors.light.primary
+              : AppColors.light.stroke,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          elevation: 0,
+        ),
+        child: Text(
+          'Login',
+          style: AppTypography().textTheme.labelLarge?.copyWith(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+}
