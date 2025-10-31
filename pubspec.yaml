@@ -59,6 +59,7 @@ flutter:
 
   assets:
     - assets/fonts/
+    - assets/images/
   fonts:
     - family: Rubik
       fonts:
@@ -68,3 +69,7 @@ flutter:
           weight: 500
         - asset: assets/fonts/rubik_semi_bold.ttf
           weight: 600
+    - family: RocknRollOne
+      fonts:
+        - asset: assets/fonts/rockn_roll_one_regular.ttf
+          weight: 400
