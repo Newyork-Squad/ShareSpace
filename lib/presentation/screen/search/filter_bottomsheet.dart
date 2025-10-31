@@ -4,6 +4,9 @@ import 'package:share_space/presentation/screen/search/widget/range_slider.dart'
 import 'package:share_space/presentation/screen/search/widget/rating_filter.dart';
 import 'package:share_space/presentation/screen/search/widget/services_filter.dart';
 
+import '../../design_system/widget/primary_button.dart';
+import '../../design_system/widget/secondary_button.dart';
+
 class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({super.key});
 
@@ -104,6 +107,17 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               }
             });
           },
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: SecondaryButton(onPressed: () {}, label: "Clear"),
+            ),
+            Expanded(
+              child: PrimaryButton(onPressed: () {}, label: "Apply Filters"),
+            ),
+          ],
         ),
       ],
     );
