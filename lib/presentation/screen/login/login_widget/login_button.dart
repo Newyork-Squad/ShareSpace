@@ -4,8 +4,7 @@ import '../../../design_system/typography/app_typography.dart';
 
 class LoginButton extends StatelessWidget {
   final bool isEnabled;
-  final VoidCallback? onPressed; // 👈 خليها nullable
-
+  final VoidCallback? onPressed;
   const LoginButton({
     super.key,
     required this.isEnabled,
@@ -18,7 +17,7 @@ class LoginButton extends StatelessWidget {
       width: double.infinity,
       height: 52,
       child: ElevatedButton(
-        onPressed: isEnabled ? onPressed : null, // ✅ بيشتغل مع null
+        onPressed: isEnabled ? onPressed : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: isEnabled
               ? AppColors.light.primary

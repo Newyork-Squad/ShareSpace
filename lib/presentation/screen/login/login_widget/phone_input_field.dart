@@ -4,7 +4,7 @@ import '../../../design_system/typography/app_typography.dart';
 
 class PhoneInputField extends StatefulWidget {
   final TextEditingController controller;
-  final VoidCallback? onChanged; // 👈 جديد: callback لما النص يتغير
+  final VoidCallback? onChanged;
 
   const PhoneInputField({
     super.key,
@@ -114,7 +114,7 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
                       isCollapsed: true,
                       contentPadding: EdgeInsets.zero,
                     ),
-                    onChanged: (_) => widget.onChanged?.call(), // 👈 استدعاء الكول باك
+                    onChanged: (_) => widget.onChanged?.call(),
                   ),
                 ),
               ],
