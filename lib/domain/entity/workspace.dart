@@ -10,7 +10,7 @@ class Workspace {
   final double rate;
   final double pricePerHour;
   final List<Services> services;
-  final List<String> imageUrl;
+  final List<String> imageUrls;
   final String description;
   final String rules;
   final Long ownerId;
@@ -24,7 +24,7 @@ class Workspace {
     required this.rate,
     required this.pricePerHour,
     required this.services,
-    required this.imageUrl,
+    required this.imageUrls,
     required this.description,
     required this.rules,
     required this.ownerId,
