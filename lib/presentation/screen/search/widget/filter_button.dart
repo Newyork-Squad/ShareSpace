@@ -37,8 +37,8 @@ class FilterButton extends StatelessWidget {
             'assets/icons/filter.svg',
             width: 24,
             height: 24,
-            colorFilter: const ColorFilter.mode(
-              Colors.white, // TODO: use theme colors
+            colorFilter: ColorFilter.mode(
+              theme.colors.surfaceLow,
               BlendMode.srcIn,
             ),
           ),
