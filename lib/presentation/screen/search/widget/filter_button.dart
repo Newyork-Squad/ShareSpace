@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 
+import '../../../design_system/widget/base_bottom_sheet.dart';
+import '../filter_bottomsheet.dart';
+
 class FilterButton extends StatelessWidget {
   const FilterButton({super.key});
 
@@ -18,7 +21,13 @@ class FilterButton extends StatelessWidget {
         elevation: 0,
       ),
       onPressed: () {
-        // TODO: Implement filter action
+        showBaseBottomSheet(
+          context: context,
+          child: FilterBottomSheet(),
+          label: "Filter",
+          onClose: () {},
+          height: 0.65,
+        );
       },
       child: Ink(
         decoration: BoxDecoration(

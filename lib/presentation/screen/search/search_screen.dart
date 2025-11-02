@@ -21,15 +21,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-
-/*
-* onPressed: () {
-          showBaseBottomSheet(
-            context: context,
-            child: FilterBottomSheet(),
-            label: "Filter",
-            onClose: () {},
-            height: 0.65,
-          );
-        },
-* */
