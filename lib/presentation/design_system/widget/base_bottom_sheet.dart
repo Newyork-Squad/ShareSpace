@@ -78,3 +78,32 @@ class _BaseBottomSheetState extends State<BaseBottomSheet> {
     );
   }
 }
+
+Future<T?> showBaseBottomSheet<T>({
+  required BuildContext context,
+  required Widget child,
+  required String label,
+  required double height,
+  VoidCallback? onClose,
+  bool isScrollControlled = true,
+}) {
+  return showModalBottomSheet<T>(
+    isScrollControlled: isScrollControlled,
+    context: context,
+    backgroundColor: AppTheme.of(context).colors.surface,
+    builder: (BuildContext context) {
+      return AppThemeProvider(
+        child: SafeArea(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * height,
+            child: BaseBottomSheet(
+              label: label,
+              onClose: onClose ?? () {},
+              child: child,
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}

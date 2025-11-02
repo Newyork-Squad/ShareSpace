@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:share_space/presentation/screen/search/widget/range_chip.dart';
 import 'package:share_space/presentation/screen/search/widget/range_slider.dart';
 
-
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
@@ -52,3 +51,15 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
+
+/*
+* onPressed: () {
+          showBaseBottomSheet(
+            context: context,
+            child: FilterBottomSheet(),
+            label: "Filter",
+            onClose: () {},
+            height: 0.65,
+          );
+        },
+* */

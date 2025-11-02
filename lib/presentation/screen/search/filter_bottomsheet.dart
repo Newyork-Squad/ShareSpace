@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
-import 'package:share_space/presentation/design_system/widget/base_bottom_sheet.dart';
 import 'package:share_space/presentation/screen/search/widget/range_chip.dart';
 import 'package:share_space/presentation/screen/search/widget/range_slider.dart';
 import 'package:share_space/presentation/screen/search/widget/rating_filter.dart';
@@ -32,12 +31,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    return BaseBottomSheet(
-      label: "Filter",
-      onClose: (){},
-      child: Container(
-        color: theme.colors.surfaceLow,
-        child: Padding(
+    return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Column(
             children: [
@@ -185,8 +179,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        );
   }
 }
