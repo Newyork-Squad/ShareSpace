@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../design_system/theme/app_theme.dart';
 import 'custom_chip.dart';
 
 class RatingFilter extends StatefulWidget {
@@ -21,6 +22,7 @@ class RatingFilter extends StatefulWidget {
 class _RatingFilterState extends State<RatingFilter> {
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -30,6 +32,7 @@ class _RatingFilterState extends State<RatingFilter> {
             child: CustomChip(
               label: widget.options[index],
               icon: (index != 0) ? "assets/icons/star.svg" : "",
+              labelColor: theme.colors.yellow,
               isSelected: widget.selectedIndices.contains(index),
               onSelect: () {
                 widget.onSelect(index);

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../design_system/theme/app_theme.dart';
+
 class RangeSliderWidget extends StatefulWidget {
   final RangeValues maxRange;
   RangeValues? currentRange;
@@ -21,26 +23,36 @@ class RangeSliderWidget extends StatefulWidget {
 class _RangeSliderWidgetState extends State<RangeSliderWidget> {
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('${widget.maxRange.start.round()} ${widget.currency}'),
-            Text('${widget.maxRange.end.round()} ${widget.currency}'),
+            Text(
+              '${widget.maxRange.start.round()} ${widget.currency}',
+              style: theme.typography.textTheme.labelSmall?.copyWith(
+                color: theme.colors.body,
+              ),
+            ),
+            Text(
+              '${widget.maxRange.end.round()} ${widget.currency}',
+              style: theme.typography.textTheme.labelSmall?.copyWith(
+                color: theme.colors.body,
+              ),
+            ),
           ],
         ),
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
-            activeTrackColor: Color(0xFFFF7C38),
-            thumbColor: Color(0xFFFF7C38),
+            activeTrackColor: theme.colors.secondary,
+            thumbColor: theme.colors.secondary,
             overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
-            overlappingShapeStrokeColor: Colors.black,
-            inactiveTrackColor: Color(0xFFF9FBFB).withValues(alpha: 0.8),
+            overlappingShapeStrokeColor: theme.colors.stroke,
+            inactiveTrackColor: theme.colors.surface,
             trackHeight: 8,
             overlayColor: Colors.transparent,
             padding: const EdgeInsets.symmetric(horizontal: 0),
-
           ),
           child: RangeSlider(
             values: widget.currentRange ?? widget.maxRange,

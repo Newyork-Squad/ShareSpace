@@ -4,6 +4,7 @@ import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 
 class CustomChip extends StatefulWidget {
   final String label;
+  Color labelColor;
   final String icon;
   bool isSelected;
   final VoidCallback? onSelect;
@@ -11,8 +12,9 @@ class CustomChip extends StatefulWidget {
   CustomChip({
     super.key,
     required this.label,
-    this.isSelected = false,
+    this.labelColor = const Color(0x991F1F1F),
     this.icon = '',
+    this.isSelected = false,
     this.onSelect,
   });
 
@@ -23,6 +25,7 @@ class CustomChip extends StatefulWidget {
 class _CustomChipState extends State<CustomChip> {
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return GestureDetector(
       onTap: () => setState(() {
         widget.onSelect?.call();
@@ -31,13 +34,13 @@ class _CustomChipState extends State<CustomChip> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: widget.isSelected
-              ? const Color(0xFF0A84FF).withValues(alpha: 0.1)
-              : const Color(0xFFF9FBFB),
+              ?  theme.colors.blueVariant
+              : theme.colors.surface,
           border: Border.all(
             color: widget.isSelected
-                ? const Color(0x3D84E2FE).withValues(alpha: 0.24)
-                : const Color(0x141F1F1F),
-            width: 1,
+                ? theme.colors.primary
+                : theme.colors.stroke,
+            width: 0.5,
           ),
           borderRadius: BorderRadius.circular(20),
         ),
@@ -48,7 +51,7 @@ class _CustomChipState extends State<CustomChip> {
               SvgPicture.asset(
                 widget.icon,
                 colorFilter: widget.isSelected
-                    ? ColorFilter.mode(Colors.blueAccent, BlendMode.srcIn)
+                    ? ColorFilter.mode(theme.colors.primary, BlendMode.srcIn)
                     : null,
                 width: 16,
                 height: 16,
@@ -57,9 +60,8 @@ class _CustomChipState extends State<CustomChip> {
             ],
             Text(
               widget.label,
-              style: TextStyle(
-                color: widget.isSelected ? Colors.blue : Colors.black,
-                fontSize: 14,
+              style: theme.typography.textTheme.labelSmall?.copyWith(
+                color:  widget.isSelected ? theme.colors.primary : widget.labelColor,
               ),
             ),
           ],
