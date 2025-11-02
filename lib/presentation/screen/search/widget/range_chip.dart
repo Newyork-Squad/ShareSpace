@@ -25,16 +25,13 @@ class _RangeChipState extends State<RangeChip> {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
     return Chip(
+      backgroundColor: theme.colors.surface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0)),
       label: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SvgPicture.asset(
-            widget.image,
-            width: 24,
-            height: 24,
-          ),
+          SvgPicture.asset(widget.image, width: 24, height: 24),
 
           Expanded(
             flex: 1,
@@ -51,7 +48,7 @@ class _RangeChipState extends State<RangeChip> {
                   ),
                   Text(
                     widget.value.toString(),
-                    style:  theme.typography.textTheme.labelLarge?.copyWith(
+                    style: theme.typography.textTheme.labelLarge?.copyWith(
                       color: theme.colors.body,
                     ),
                   ),
@@ -59,9 +56,12 @@ class _RangeChipState extends State<RangeChip> {
               ),
             ),
           ),
-          Text(widget.unit, style: theme.typography.textTheme.labelSmall?.copyWith(
-            color: theme.colors.primary,
-          )),
+          Text(
+            widget.unit,
+            style: theme.typography.textTheme.labelSmall?.copyWith(
+              color: theme.colors.primary,
+            ),
+          ),
         ],
       ),
     );
