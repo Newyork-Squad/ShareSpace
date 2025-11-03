@@ -1,5 +1,3 @@
-// lib/presentation/screens/onboarding/onboarding_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
 import '../../design_system/typography/app_typography.dart';
@@ -29,6 +27,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _onNextPressed() {
