@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../design_system/theme/app_theme.dart';
 
 class OverAllReviewRate extends StatelessWidget {
-  const OverAllReviewRate({super.key});
+  final double rating;
+  final int totalReviews;
+
+  const OverAllReviewRate({
+    super.key,
+    required this.rating,
+    required this.totalReviews,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,7 @@ class OverAllReviewRate extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          '4.0',
+          rating.toStringAsFixed(1),
           style: theme.typography.textTheme.titleMedium?.copyWith(
             color: theme.colors.title,
             fontWeight: FontWeight.w600,
@@ -30,7 +36,7 @@ class OverAllReviewRate extends StatelessWidget {
           itemPadding: const EdgeInsets.symmetric(horizontal: 4),
           itemBuilder: (context, index) {
             return SvgPicture.asset(
-              index < 3
+              index <rating-1
                   ? 'assets/icons/filled_star.svg'
                   : 'assets/icons/star_outline.svg',
               color: theme.colors.yellow,
@@ -39,7 +45,7 @@ class OverAllReviewRate extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Text(
-          'based on 122 reviews',
+          'based on $totalReviews reviews',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: theme.typography.textTheme.labelSmall?.copyWith(

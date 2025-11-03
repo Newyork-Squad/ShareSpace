@@ -42,21 +42,6 @@ class ReviewsIndicator extends StatelessWidget {
           ),
         ),
       ],
-
-      /* const SizedBox(width: 16),
-        Expanded(
-          flex: 3,
-          child: Padding(
-            padding: EdgeInsets.only(top: 43),
-            child: Text(
-              '4.0',
-              style: theme.typography.textTheme.headlineSmall?.copyWith(
-                color: theme.colors.title,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),*/
     );
   }
 }

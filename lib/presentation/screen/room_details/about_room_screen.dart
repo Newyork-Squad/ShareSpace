@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/overall_review_rate.dart';
+import 'package:share_space/presentation/screen/room_details/widgets/review_list.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/reviews_header.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/reviews_indecator.dart';
 
@@ -57,21 +58,24 @@ class AboutRoomScreen extends StatelessWidget {
                         flex: 6,
                         child: Column(
                           children: [
-                            ReviewsIndicator(rateNumber: '5', rateValue: 1.0),
-                            ReviewsIndicator(rateNumber: '4', rateValue: 0.8),
-                            ReviewsIndicator(rateNumber: '3', rateValue: 0.6),
-                            ReviewsIndicator(rateNumber: '2', rateValue: 0.4),
-                            ReviewsIndicator(rateNumber: '1', rateValue: 0.2),
+                            ReviewsIndicator(rateNumber: '5', rateValue: 0.8),
+                            ReviewsIndicator(rateNumber: '4', rateValue: 0.6),
+                            ReviewsIndicator(rateNumber: '3', rateValue: 0.4),
+                            ReviewsIndicator(rateNumber: '2', rateValue: 0.2),
+                            ReviewsIndicator(rateNumber: '1', rateValue: 0.1),
                           ],
                         ),
                       ),
                       const SizedBox(width: 16),
-                      Expanded(flex: 4, child: OverAllReviewRate()),
+                      Expanded(flex: 4, child: OverAllReviewRate(rating: 4.0,totalReviews: 122,)),
                     ],
                   ),
                 ),
                 const SizedBox(height: 24),
-                ReviewsHeader()
+                ReviewsHeader(),
+                const SizedBox(height: 12),
+                const ReviewsList(),
+
               ],
             ),
           ),
