@@ -1,7 +1,9 @@
+// lib/presentation/screens/onboarding/onboarding_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
-
 import '../../design_system/typography/app_typography.dart';
+import 'onboarding_data.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -13,30 +15,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   late final PageController _controller;
   int _currentPage = 0;
-
-  final List<Map<String, String>> onboardingData = [
-    {
-      'image': 'assets/images/onboarding_slider_1.png',
-      'title': 'Find Your Perfect Workspace',
-      'subtitle':
-      'Easily discover workspaces around you—from quiet offices to lively cafes. Book your space with just one click and start your day productively.',
-      'button': 'Next',
-    },
-    {
-      'image': 'assets/images/onboarding_slider_2.png',
-      'title': 'Book Instantly & Work Freely',
-      'subtitle':
-      'Choose your time, reserve your desk, and get started right away. No lengthy subscriptions or complicated procedures—everything in an instant.',
-      'button': 'Next',
-    },
-    {
-      'image': 'assets/images/onboarding_slider_3.png',
-      'title': 'AI-Powered Productivity',
-      'subtitle':
-      'Choose your time, reserve your desk, and get started right away. No lengthy subscriptions or complicated procedures—everything in an instant.',
-      'button': 'Start now',
-    },
-  ];
 
   @override
   void initState() {
@@ -94,9 +72,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 14),
-
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.42,
                     child: PageView.builder(
@@ -105,7 +81,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       itemBuilder: (context, index) {
                         final data =
                         onboardingData[index % onboardingData.length];
-
                         return AnimatedBuilder(
                           animation: _controller,
                           builder: (context, child) {
@@ -116,14 +91,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               value = _controller.page! - index;
                             }
 
-                            double scale = (1 - (value.abs() * 0.2)).clamp(
-                              0.8,
-                              1.0,
-                            );
+                            double scale = (1 - (value.abs() * 0.2)).clamp(0.8, 1.0);
                             double rotation = value * -0.3;
                             double verticalOffset = -35 * value.abs();
                             double horizontalOverlap = 100 * value;
-
                             final isCenter = value.abs() < 0.5;
 
                             return Stack(
@@ -131,7 +102,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               children: [
                                 if (!isCenter)
                                   _buildImageCard(
-                                    context,
                                     data['image']!,
                                     horizontalOverlap,
                                     verticalOffset,
@@ -140,7 +110,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   ),
                                 if (isCenter)
                                   _buildImageCard(
-                                    context,
                                     data['image']!,
                                     horizontalOverlap,
                                     verticalOffset,
@@ -158,7 +127,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
-
           Positioned(
             top: 0,
             left: 0,
@@ -172,7 +140,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
-
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -186,10 +153,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 32,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -212,7 +176,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ],
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -228,18 +191,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               decoration: BoxDecoration(
                                 color: _currentPage == index
                                     ? AppColors.light.primary
-                                    : AppColors.light.primary.withValues(
-                                  alpha: 0.3,
-                                ),
+                                    : AppColors.light.primary.withValues(alpha: 0.3),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
                           ),
                         ),
                         TextButton(
-                          onPressed: current['button'] == 'Start now'
-                              ? null
-                              : _onNextPressed,
+                          onPressed:
+                          current['button'] == 'Start now' ? null : _onNextPressed,
                           child: Text(
                             current['button']!,
                             style: AppTypography().textTheme.labelMedium?.copyWith(
@@ -260,7 +220,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildImageCard(
-      BuildContext context,
       String imagePath,
       double horizontalOverlap,
       double verticalOffset,
