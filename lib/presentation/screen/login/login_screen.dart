@@ -18,13 +18,27 @@ class _LoginScreenState extends State<LoginScreen> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
 
-  bool get _isFormValid =>
-      phoneController.text.isNotEmpty && passwordController.text.isNotEmpty;
+  final ValueNotifier<bool> isFormValid = ValueNotifier(false);
+
+  void _validateForm() {
+    final valid = phoneController.text.isNotEmpty && passwordController.text.isNotEmpty;
+    if (isFormValid.value != valid) {
+      isFormValid.value = valid;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    phoneController.addListener(_validateForm);
+    passwordController.addListener(_validateForm);
+  }
 
   @override
   void dispose() {
     phoneController.dispose();
     passwordController.dispose();
+    isFormValid.dispose();
     super.dispose();
   }
 
@@ -40,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
               fit: BoxFit.cover,
             ),
           ),
-
           SafeArea(
             child: Column(
               children: [
@@ -67,41 +80,33 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 32),
-                        PhoneInputField(
-                          controller: phoneController,
-                          onChanged: () => setState(() {}),
-                        ),
+                        PhoneInputField(controller: phoneController),
                         const SizedBox(height: 16),
-                        PasswordInputField(
-                          controller: passwordController,
-                          onChanged: () => setState(() {}),
-                        ),
+                        PasswordInputField(controller: passwordController),
                       ],
                     ),
                   ),
                 ),
 
-                Container(
-                  color: AppColors.light.surfaceLow.withOpacity(0.9),
-                  padding: const EdgeInsets.only(left: 16, right: 16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      LoginButton(
-                        isEnabled: _isFormValid,
-                        onPressed: _isFormValid
-                            ? () {
-                        }
-                            : null,
+                ValueListenableBuilder<bool>(
+                  valueListenable: isFormValid,
+                  builder: (context, valid, _) {
+                    return Container(
+                      color: AppColors.light.surfaceLow.withOpacity(0.9),
+                      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          LoginButton(
+                            isEnabled: valid,
+                            onPressed: valid ? () {} : null,
+                          ),
+                          const SizedBox(height: 12),
+                          RegisterText(onTap: () {}),
+                        ],
                       ),
-                      const SizedBox(height: 12),
-                      RegisterText(
-                        onTap: () {
-                        },
-                      ),
-                      const SizedBox(height: 16)
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ],
             ),
