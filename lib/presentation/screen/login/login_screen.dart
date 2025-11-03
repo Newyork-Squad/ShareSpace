@@ -20,7 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final ValueNotifier<bool> isFormValid = ValueNotifier(false);
 
   void _validateForm() {
-    final valid = phoneController.text.isNotEmpty && passwordController.text.isNotEmpty;
+    final valid = phoneController.text.trim().isNotEmpty &&
+        passwordController.text.trim().isNotEmpty;
     if (isFormValid.value != valid) {
       isFormValid.value = valid;
     }
