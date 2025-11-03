@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 Container(
                   color: AppColors.light.surfaceLow.withOpacity(0.9),
-                  padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 8),
+                  padding: const EdgeInsets.only(left: 16, right: 16),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -99,6 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                         },
                       ),
+                      const SizedBox(height: 16)
                     ],
                   ),
                 ),
