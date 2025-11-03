@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:share_space/presentation/design_system/colors/app_color.dart';
+import 'package:share_space/presentation/design_system/theme/app_theme.dart';
+import 'package:share_space/presentation/design_system/typography/app_typography.dart';
+import 'package:share_space/presentation/screen/login/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
