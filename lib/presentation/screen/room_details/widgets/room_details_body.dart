@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/room_header_section.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/room_image_slider.dart';
+import 'package:share_space/presentation/screen/room_details/widgets/room_tab_section.dart';
 
 import '../../../design_system/theme/app_theme.dart';
 import 'owner_section.dart';
@@ -43,7 +44,6 @@ The room can be booked by the hour, with the option to extend the time directly 
   @override
   Widget build(BuildContext context) {
     final pageController = PageController();
-    final theme = AppTheme.of(context);
 
     return Stack(
       children: [
@@ -104,25 +104,13 @@ The room can be booked by the hour, with the option to extend the time directly 
                 ),
 
                 Padding(
-                  padding:  EdgeInsets.only(
+                  padding: EdgeInsets.only(
                     top: 12,
                     left: 16,
                     right: 16,
                     bottom: MediaQuery.of(context).padding.bottom,
-                    ),
-                  child: SizedBox(
-                    height: 300,
-                    child: SingleChildScrollView(
-                      physics:  BouncingScrollPhysics(),
-                      child: Text(
-                        roomDescription,
-                        style: theme.typography.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: theme.colors.body,
-                        ),
-                      ),
-                    ),
                   ),
+                  child: RoomTabsSection(description: roomDescription),
                 ),
               ],
             ),
