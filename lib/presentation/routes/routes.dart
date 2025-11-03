@@ -9,7 +9,7 @@ import 'package:share_space/presentation/screen/onboarding/onboarding_screen.dar
 import 'package:share_space/presentation/screen/profile/profile_screen.dart';
 import 'package:share_space/presentation/screen/room_details/room_details_screen.dart';
 import 'package:share_space/presentation/screen/search/search_screen.dart';
-import 'package:share_space/presentation/screen/splash_screen.dart';
+import 'package:share_space/presentation/screen/splash/splash_screen.dart';
 
 class Routes {
   static const String splashScreen = '/';

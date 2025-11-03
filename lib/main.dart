@@ -2,24 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 import 'package:share_space/presentation/design_system/typography/app_typography.dart';
-import 'package:share_space/presentation/screen/room_details/room_details_screen.dart';
+
+import 'presentation/routes/app_router.dart';
+import 'presentation/routes/routes.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp(appRouter: AppRouter()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AppRouter appRouter;
 
-  // This widget is the root of your application.
+  const MyApp({super.key, required this.appRouter});
+
   @override
   Widget build(BuildContext context) {
     return AppTheme(
       colors: AppColors.light,
       typography: AppTypography(),
-    child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const RoomDetailsScreen(),
-    ));
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: Routes.onboardingScreen,
+        onGenerateRoute: appRouter.generateRoute,
+      ),
+    );
   }
 }
