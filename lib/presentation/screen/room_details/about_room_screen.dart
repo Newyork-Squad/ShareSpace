@@ -21,7 +21,9 @@ class AboutRoomScreen extends StatelessWidget {
           backgroundColor: theme.colors.surfaceLow,
           titleSpacing: 0,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              print(' on back click');
+            },
             icon: SvgPicture.asset(
               'assets/icons/arrow_left.svg',
               color: theme.colors.title,

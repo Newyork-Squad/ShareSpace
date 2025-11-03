@@ -7,7 +7,6 @@ class ReviewsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Example list of items (you can replace this with your data)
     final reviews = List.generate(10, (index) => index);
 
     return SizedBox(
