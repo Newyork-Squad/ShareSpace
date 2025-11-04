@@ -74,28 +74,23 @@ class BookingCard extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: onClick,
                   style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(120, 60),
                     backgroundBuilder: (context, _, __) => Container(
                       decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 12,
+                          strokeAlign: BorderSide.strokeAlignCenter,
+                        ),
                         borderRadius: BorderRadius.circular(30),
                         color: theme.colors.primary,
                       ),
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
                   ),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: Text(
-                      'Book Now',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  child: Text(
+                    'Book',
+                    style: theme.typography.textTheme.labelSmall?.copyWith(
+                      color: Colors.white, //theme.colors.onPrimary,
                     ),
                   ),
                 ),
