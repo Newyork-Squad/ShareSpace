@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_space/presentation/screen/room_details/widgets/room_details_appbar.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/room_header_section.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/room_image_slider.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/room_tab_section.dart';
@@ -45,11 +46,11 @@ The room can be booked by the hour, with the option to extend the time directly 
   Widget build(BuildContext context) {
     final pageController = PageController();
 
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: CustomScrollView(
-            physics: const NeverScrollableScrollPhysics(),
+    return Scaffold(
+      body: Stack(
+        children: [
+          /// Scrollable content
+          CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
                 child: RoomImageSlider(
@@ -59,64 +60,55 @@ The room can be booked by the hour, with the option to extend the time directly 
                   rate: '5',
                 ),
               ),
+              SliverToBoxAdapter(
+                child: Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RoomHeaderSection(
+                        title: roomName,
+                        location: location,
+                        services: services,
+                      ),
+
+                      Divider(color: const Color(0x1F1F1F14), height: 1),
+
+                      RoomOwnerSection(
+                        name: ownerName,
+                        role: ownerRole,
+                        imagePath: ownerImagePath,
+                      ),
+
+                      Divider(color: const Color(0x1F1F1F14), height: 1),
+
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 12,
+                          left: 16,
+                          right: 16,
+                          bottom: MediaQuery.of(context).padding.bottom,
+                        ),
+                        child: RoomTabsSection(description: roomDescription),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
-        ),
 
-        Positioned(
-          top: 240,
-          left: 0,
-          right: 0,
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(24),
-                topRight: Radius.circular(24),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RoomHeaderSection(
-                  title: roomName,
-                  location: location,
-                  services: services,
-                ),
-
-                Container(
-                  width: double.infinity,
-                  height: 0.5,
-                  color: const Color(0x1F1F1F14),
-                ),
-
-                RoomOwnerSection(
-                  name: ownerName,
-                  role: ownerRole,
-                  imagePath: ownerImagePath,
-                ),
-
-                Container(
-                  width: double.infinity,
-                  height: 0.5,
-                  color: const Color(0x1F1F1F14),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 12,
-                    left: 16,
-                    right: 16,
-                    bottom: MediaQuery.of(context).padding.bottom,
-                  ),
-                  child: RoomTabsSection(description: roomDescription),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
+          /// Fixed appbar (doesn't scroll)
+          const RoomDetailsAppbar(rate: '5'),
+        ],
+      ),
     );
   }
 }

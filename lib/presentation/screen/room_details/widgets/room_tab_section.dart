@@ -15,16 +15,16 @@ class RoomTabsSection extends StatelessWidget {
       child: Column(
         children: [
           TabBar(
-            indicatorColor: theme.colors.primary,
-            labelColor: theme.colors.primary,
-            unselectedLabelColor: theme.colors.body.withOpacity(0.6),
+            indicatorColor: theme.colors.secondary,
+            labelColor: theme.colors.title,
+            unselectedLabelColor: theme.colors.hint,
             tabs: const [
               Tab(text: 'About room'),
               Tab(text: 'Room rules'),
             ],
           ),
           SizedBox(
-            height: 300,
+            height: 700,
             child: TabBarView(
               children: [
                 Padding(
@@ -32,9 +32,7 @@ class RoomTabsSection extends StatelessWidget {
                     horizontal: 16,
                     vertical: 12,
                   ),
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Text(
+                  child: Text(
                       description,
                       style: theme.typography.textTheme.bodyMedium?.copyWith(
                         color: theme.colors.body,
@@ -42,7 +40,6 @@ class RoomTabsSection extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
                 const Center(child: Text('Room rules will appear here soon.')),
               ],
             ),
