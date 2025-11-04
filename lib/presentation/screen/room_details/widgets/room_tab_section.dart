@@ -11,35 +11,41 @@ class RoomTabsSection extends StatelessWidget {
     final theme = AppTheme.of(context);
 
     return DefaultTabController(
+      initialIndex: 0,
       length: 2,
       child: Column(
         children: [
-          TabBar(
-            indicatorColor: theme.colors.secondary,
-            labelColor: theme.colors.title,
-            unselectedLabelColor: theme.colors.hint,
-            tabs: const [
-              Tab(text: 'About room'),
-              Tab(text: 'Room rules'),
-            ],
-          ),
+            TabBar(
+              indicatorColor: theme.colors.secondary,
+              labelColor: theme.colors.title,
+              unselectedLabelColor: theme.colors.hint,
+              indicatorWeight: 2,
+              indicatorSize: TabBarIndicatorSize.label,
+              labelStyle: theme.typography.textTheme.labelMedium?.copyWith(
+                color: theme.colors.title,
+                fontWeight: FontWeight.w500,
+              ),
+              tabs: const [
+                Tab(text: 'About room'),
+                Tab(text: 'Room rules'),
+              ],
+            ),
+
           SizedBox(
             height: 700,
             child: TabBarView(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                   child: Text(
-                      description,
-                      style: theme.typography.textTheme.bodyMedium?.copyWith(
-                        color: theme.colors.body,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    description,
+                    style: theme.typography.textTheme.bodyMedium?.copyWith(
+                      color: theme.colors.body,
+                      fontWeight: FontWeight.w400,
                     ),
+                    textAlign: TextAlign.justify,
                   ),
+                ),
                 const Center(child: Text('Room rules will appear here soon.')),
               ],
             ),

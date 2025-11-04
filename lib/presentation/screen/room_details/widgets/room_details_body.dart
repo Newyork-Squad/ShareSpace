@@ -89,15 +89,8 @@ The room can be booked by the hour, with the option to extend the time directly 
 
                       Divider(color: const Color(0x1F1F1F14), height: 1),
 
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 12,
-                          left: 16,
-                          right: 16,
-                          bottom: MediaQuery.of(context).padding.bottom,
-                        ),
-                        child: RoomTabsSection(description: roomDescription),
-                      ),
+                        RoomTabsSection(description: roomDescription),
+
                     ],
                   ),
                 ),
@@ -106,7 +99,7 @@ The room can be booked by the hour, with the option to extend the time directly 
           ),
 
           /// Fixed appbar (doesn't scroll)
-          const RoomDetailsAppbar(rate: '5', isScrolled: false),
+          const RoomDetailsAppbar(rate: '5', isScrolled: true),
         ],
       ),
     );
