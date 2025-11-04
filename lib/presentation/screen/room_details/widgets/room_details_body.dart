@@ -106,7 +106,7 @@ The room can be booked by the hour, with the option to extend the time directly 
           ),
 
           /// Fixed appbar (doesn't scroll)
-          const RoomDetailsAppbar(rate: '5'),
+          const RoomDetailsAppbar(rate: '5', isScrolled: false),
         ],
       ),
     );

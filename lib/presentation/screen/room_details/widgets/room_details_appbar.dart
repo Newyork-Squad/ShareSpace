@@ -4,10 +4,12 @@ import '../../../design_system/theme/app_theme.dart';
 
 class RoomDetailsAppbar extends StatelessWidget {
   final String rate;
+  final bool isScrolled;
 
   const RoomDetailsAppbar({
     super.key,
     required this.rate,
+    required this.isScrolled,
   });
 
   @override
@@ -23,7 +25,7 @@ class RoomDetailsAppbar extends StatelessWidget {
           child: IconButton(
             icon: SvgPicture.asset(
               'assets/icons/arrow_left.svg',
-              color: theme.colors.onPrimary,
+              color:isScrolled ? theme.colors.onPrimary: theme.colors.title,
               width: 24,
               height: 24,
             ),
@@ -40,7 +42,7 @@ class RoomDetailsAppbar extends StatelessWidget {
           child: IconButton(
             icon: SvgPicture.asset(
               'assets/icons/bookmark.svg',
-              color: theme.colors.onPrimary,
+              color: isScrolled?theme.colors.onPrimary: theme.colors.title,
               width: 24,
               height: 24,
             ),
@@ -57,7 +59,7 @@ class RoomDetailsAppbar extends StatelessWidget {
           child: IconButton(
             icon: SvgPicture.asset(
               'assets/icons/information.svg',
-              color: theme.colors.onPrimary,
+              color: isScrolled?theme.colors.onPrimary: theme.colors.title,
               width: 24,
               height: 24,
             ),
@@ -75,7 +77,7 @@ class RoomDetailsAppbar extends StatelessWidget {
             width: 36,
             height: 22,
             decoration: BoxDecoration(
-              color: theme.colors.surfaceLow,
+              color: isScrolled ? theme.colors.surfaceLow: theme.colors.yellowVariant,
               borderRadius: BorderRadius.circular(100),
             ),
             child: Row(
