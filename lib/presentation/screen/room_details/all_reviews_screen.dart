@@ -13,7 +13,7 @@ class AllReviewsScreen extends StatelessWidget {
     final reviews = List.generate(10, (index) => index);
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.only(left: 16,right: 16,top: 12),
       child: Scaffold(
         backgroundColor: theme.colors.surfaceLow,
         appBar: AppBar(
