@@ -37,7 +37,7 @@ class BookingCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   image: DecorationImage(
                     image: NetworkImage(imageUrl),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Padding(
@@ -70,27 +70,27 @@ class BookingCard extends StatelessWidget {
               ),
               Positioned(
                 right: 16,
-                bottom: 0,
+                bottom: -8,
                 child: ElevatedButton(
-                  onPressed: onClick,
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(120, 60),
-                    backgroundBuilder: (context, _, __) => Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 12,
-                          strokeAlign: BorderSide.strokeAlignCenter,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                        color: theme.colors.primary,
-                      ),
-                    ),
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(Colors.transparent),
                   ),
-                  child: Text(
-                    'Book',
-                    style: theme.typography.textTheme.labelSmall?.copyWith(
-                      color: Colors.white, //theme.colors.onPrimary,
+                  onPressed: onClick,
+                  child: Ink(
+                    width: 90,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: theme.colors.primary,
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(color: Colors.white, width: 4),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Book Now',
+                        style: theme.typography.textTheme.labelSmall?.copyWith(
+                          color: theme.colors.onPrimary,
+                        ),
+                      ),
                     ),
                   ),
                 ),
