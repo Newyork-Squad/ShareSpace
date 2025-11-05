@@ -23,7 +23,7 @@ class BookingCard extends StatelessWidget {
       color: theme.colors.surfaceLow,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       clipBehavior: Clip.antiAlias,
-      elevation: 6,
+      elevation: 0,
       child: InkWell(
         onTap: onClick,
         child: SizedBox(
