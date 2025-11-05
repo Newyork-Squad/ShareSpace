@@ -5,6 +5,7 @@ import 'package:share_space/presentation/design_system/typography/app_typography
 import 'package:share_space/presentation/screen/room_details/about_room_screen.dart';
 import 'package:share_space/presentation/screen/room_details/all_reviews_screen.dart';
 import 'package:share_space/presentation/screen/room_details/room_details_screen.dart';
+import 'package:share_space/presentation/screen/login/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       typography: AppTypography(),
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const AboutRoomScreen(),
+      home: const RoomDetailsScreen(),
     ));
   }
 }
