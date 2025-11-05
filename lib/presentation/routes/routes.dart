@@ -5,8 +5,8 @@ import 'package:share_space/presentation/screen/chat/chat_screen.dart';
 import 'package:share_space/presentation/screen/createAccount/create_account_screen.dart';
 import 'package:share_space/presentation/screen/home/home_screen.dart';
 import 'package:share_space/presentation/screen/login/login_screen.dart';
+import 'package:share_space/presentation/screen/my_account/my_account_screen.dart';
 import 'package:share_space/presentation/screen/onboarding/onboarding_screen.dart';
-import 'package:share_space/presentation/screen/profile/profile_screen.dart';
 import 'package:share_space/presentation/screen/room_details/room_details_screen.dart';
 import 'package:share_space/presentation/screen/search/search_screen.dart';
 import 'package:share_space/presentation/screen/splash/splash_screen.dart';
@@ -23,7 +23,7 @@ class Routes {
   static const String bookingScreen = '/bookingScreen';
   static const String bookingHistoryScreen = '/bookingHistoryScreen';
   static const String searchScreen = '/searchScreen';
-  static const String profileScreen = '/profileScreen';
+  static const String myAccountScreen = '/myAccountScreen';
   static const String chatScreen = '/chatScreen';
 
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -37,7 +37,7 @@ class Routes {
     bookingScreen: (context) => BookingScreen(),
     bookingHistoryScreen: (context) => BookingHistoryScreen(),
     searchScreen: (context) => SearchScreen(),
-    profileScreen: (context) => ProfileScreen(),
+    myAccountScreen: (context) => MyAccountScreen(),
     chatScreen: (context) => ChatScreen(),
   };
 }

@@ -1,10 +1,39 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:share_space/presentation/design_system/colors/app_color.dart';
+import 'package:share_space/presentation/screen/room_details/room_details_screen.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const RoomDetailsScreen()),
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('Splash Screen')));
+    return Scaffold(
+      backgroundColor: AppColors.light.surfaceLow,
+      body: Center(
+        child: Image.asset(
+          'assets/images/splash_screen_icon.png',
+          width: 104,
+          height: 127,
+          fit: BoxFit.contain,
+        ),
+      ),
+    );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/screen/bookingHistory/booking_history_screen.dart';
 import 'package:share_space/presentation/screen/chat/chat_screen.dart';
 import 'package:share_space/presentation/screen/home/home_screen.dart';
-import 'package:share_space/presentation/screen/profile/profile_screen.dart';
+import 'package:share_space/presentation/screen/my_account/my_account_screen.dart';
 import 'package:share_space/presentation/screen/search/search_screen.dart';
 
 import '../design_system/theme/app_theme.dart';
@@ -22,7 +22,7 @@ class _AppNavigationBarState extends State<AppNavigationBar> {
     HomeScreen(),
     SearchScreen(),
     BookingHistoryScreen(),
-    ProfileScreen(),
+    MyAccountScreen(),
     ChatScreen(),
   ];
 
