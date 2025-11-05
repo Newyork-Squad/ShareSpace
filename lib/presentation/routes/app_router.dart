@@ -10,6 +10,7 @@ import '../screen/onboarding/onboarding_screen.dart';
 import '../screen/room_details/room_details_screen.dart';
 import '../screen/search/search_screen.dart';
 import '../screen/splash/splash_screen.dart';
+import '../widgets/app_navigation_bar.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -23,6 +24,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case Routes.createAccountScreen:
         return MaterialPageRoute(builder: (_) => CreateAccountScreen());
+      case Routes.appNavigationBar:
+        return MaterialPageRoute(builder: (_) => AppNavigationBar());
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.roomDetailsScreen:

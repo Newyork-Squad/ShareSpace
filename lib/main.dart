@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       typography: AppTypography(),
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.onboardingScreen,
+      initialRoute: Routes.appNavigationBar,  // TODO:
       onGenerateRoute: appRouter.generateRoute,
     ));
   }
