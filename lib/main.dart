@@ -23,8 +23,7 @@ class ShareSpaceApp extends StatelessWidget {
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.white,
         ),
-        initialRoute: Routes.appNavigationBar,
-        // TODO: change it later
+        initialRoute: Routes.splashScreen,
         onGenerateRoute: appRouter.generateRoute,
       ),
     );
