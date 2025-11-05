@@ -17,95 +17,110 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
+  final ValueNotifier<bool> isFormValid = ValueNotifier(false);
 
-  bool get _isFormValid =>
-      phoneController.text.isNotEmpty && passwordController.text.isNotEmpty;
+  void _validateForm() {
+    final valid = phoneController.text.trim().isNotEmpty &&
+        passwordController.text.trim().isNotEmpty;
+    if (isFormValid.value != valid) {
+      isFormValid.value = valid;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    phoneController.addListener(_validateForm);
+    passwordController.addListener(_validateForm);
+  }
 
   @override
   void dispose() {
     phoneController.dispose();
     passwordController.dispose();
+    isFormValid.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.light.surfaceLow,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/login_screen_shapes.png',
-              fit: BoxFit.cover,
-            ),
-          ),
 
-          SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(left: 16, right: 16, top: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const AppLogo(),
-                        const SizedBox(height: 24),
-                        Text(
-                          "Welcome Back",
-                          style: AppTypography().textTheme.titleMedium?.copyWith(
-                            color: AppColors.light.title,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        behavior: HitTestBehavior.translucent,
+
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/login_screen_shapes.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.only(left: 16, right: 16, top: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const AppLogo(),
+                          const SizedBox(height: 24),
+                          Text(
+                            "Welcome Back",
+                            style: AppTypography().textTheme.titleMedium?.copyWith(
+                              color: AppColors.light.title,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Please enter your phone number and password to access your booking",
-                          textAlign: TextAlign.center,
-                          style: AppTypography().textTheme.bodyMedium?.copyWith(
-                            color: AppColors.light.body,
+                          const SizedBox(height: 4),
+                          Text(
+                            "Please enter your phone number and password to access your booking",
+                            textAlign: TextAlign.center,
+                            style: AppTypography().textTheme.bodyMedium?.copyWith(
+                              color: AppColors.light.body,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 32),
-                        PhoneInputField(
-                          controller: phoneController,
-                          onChanged: () => setState(() {}),
-                        ),
-                        const SizedBox(height: 16),
-                        PasswordInputField(
-                          controller: passwordController,
-                          onChanged: () => setState(() {}),
-                        ),
-                      ],
+                          const SizedBox(height: 32),
+                          PhoneInputField(controller: phoneController),
+                          const SizedBox(height: 16),
+                          PasswordInputField(controller: passwordController),
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-                Container(
-                  color: AppColors.light.surfaceLow.withOpacity(0.9),
-                  padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 8),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      LoginButton(
-                        isEnabled: _isFormValid,
-                        onPressed: _isFormValid
-                            ? () {
-                        }
-                            : null,
-                      ),
-                      const SizedBox(height: 12),
-                      RegisterText(
-                        onTap: () {
-                        },
-                      ),
-                    ],
+                  ValueListenableBuilder<bool>(
+                    valueListenable: isFormValid,
+                    builder: (context, valid, _) {
+                      return Container(
+                        color: AppColors.light.surfaceLow.withOpacity(0.9),
+                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            LoginButton(
+                              isEnabled: valid,
+                              onPressed: valid ? () {} : null,
+                            ),
+                            const SizedBox(height: 12),
+                            RegisterText(onTap: () {}),
+                          ],
+                        ),
+                      );
+                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

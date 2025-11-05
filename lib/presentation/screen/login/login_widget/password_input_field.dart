@@ -46,7 +46,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
             onTap: () => setState(() => _obscure = !_obscure),
             child: Image.asset(
               _obscure
-                  ? 'assets/images/show_password_icon.png'
+                  ? 'assets/images/hide_password_icon.png'
                   : 'assets/images/show_password_icon.png',
               width: 20,
               height: 20,

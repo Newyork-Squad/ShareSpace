@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       typography: AppTypography(),
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const AboutRoomScreen(),
+      home: const RoomDetailsScreen(),
     ));
   }
 }
