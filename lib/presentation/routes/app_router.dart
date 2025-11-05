@@ -14,37 +14,31 @@ import '../widgets/app_navigation_bar.dart';
 import 'routes.dart';
 
 class AppRouter {
-  Route generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case Routes.splashScreen:
-        return MaterialPageRoute(builder: (_) => SplashScreen());
-      case Routes.onboardingScreen:
-        return MaterialPageRoute(builder: (_) => OnboardingScreen());
-      case Routes.loginScreen:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
-      case Routes.createAccountScreen:
-        return MaterialPageRoute(builder: (_) => CreateAccountScreen());
-      case Routes.appNavigationBar:
-        return MaterialPageRoute(builder: (_) => AppNavigationBar());
-      case Routes.homeScreen:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
-      case Routes.roomDetailsScreen:
-        return MaterialPageRoute(builder: (_) => RoomDetailsScreen());
-      case Routes.searchScreen:
-        return MaterialPageRoute(builder: (_) => SearchScreen());
-      case Routes.bookingScreen:
-        return MaterialPageRoute(builder: (_) => BookingScreen());
-      case Routes.bookingHistoryScreen:
-        return MaterialPageRoute(builder: (_) => BookingHistoryScreen());
-      case Routes.chatScreen:
-        return MaterialPageRoute(builder: (_) => ChatScreen());
+  final Map<String, WidgetBuilder> _routes = {
+    Routes.splashScreen: (_) => SplashScreen(),
+    Routes.onboardingScreen: (_) => OnboardingScreen(),
+    Routes.loginScreen: (_) => LoginScreen(),
+    Routes.createAccountScreen: (_) => CreateAccountScreen(),
+    Routes.appNavigationBar: (_) => AppNavigationBar(),
+    Routes.homeScreen: (_) => HomeScreen(),
+    Routes.roomDetailsScreen: (_) => RoomDetailsScreen(),
+    Routes.searchScreen: (_) => SearchScreen(),
+    Routes.bookingScreen: (_) => BookingScreen(),
+    Routes.bookingHistoryScreen: (_) => BookingHistoryScreen(),
+    Routes.chatScreen: (_) => ChatScreen(),
+  };
 
-      default:
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(child: Text('No route defined for ${settings.name}')),
-          ),
-        );
+  Route generateRoute(RouteSettings settings) {
+    final builder = _routes[settings.name];
+    if (builder != null) {
+      return MaterialPageRoute(builder: builder, settings: settings);
     }
+
+    return MaterialPageRoute(
+      builder: (_) => Scaffold(
+        body: Center(child: Text('No route defined for ${settings.name}')),
+      ),
+      settings: settings,
+    );
   }
 }
