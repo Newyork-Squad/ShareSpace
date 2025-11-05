@@ -19,15 +19,9 @@ class BookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    return Card(
-      color: theme.colors.surfaceLow,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      clipBehavior: Clip.antiAlias,
-      elevation: 0,
-      child: InkWell(
-        onTap: onClick,
-        child: SizedBox(
+    return SizedBox(
           height: 172,
+          width: 320,
           child: Stack(
             children: [
               Container(
@@ -97,8 +91,6 @@ class BookingCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        );
   }
 }
