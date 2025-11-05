@@ -1,17 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_space/presentation/screen/bookingHistory/booking_history_screen.dart';
+import 'package:share_space/presentation/screen/chat/chat_screen.dart';
+import 'package:share_space/presentation/screen/home/home_screen.dart';
+import 'package:share_space/presentation/screen/profile/profile_screen.dart';
+import 'package:share_space/presentation/screen/search/search_screen.dart';
 
 import '../design_system/theme/app_theme.dart';
 
-class AppNavigationBar extends StatelessWidget {
+class AppNavigationBar extends StatefulWidget {
   const AppNavigationBar({super.key});
+
+  @override
+  State<AppNavigationBar> createState() => _AppNavigationBarState();
+}
+
+class _AppNavigationBarState extends State<AppNavigationBar> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = [
+    HomeScreen(),
+    SearchScreen(),
+    BookingHistoryScreen(),
+    ProfileScreen(),
+    ChatScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
     return Scaffold(
+      body: _screens[_currentIndex],
       bottomNavigationBar: NavigationBar(
         indicatorColor: theme.colors.blueVariant,
+        onDestinationSelected: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+        },
+        selectedIndex: _currentIndex,
         backgroundColor: theme.colors.surfaceLow,
         destinations: [
           NavigationDestination(
