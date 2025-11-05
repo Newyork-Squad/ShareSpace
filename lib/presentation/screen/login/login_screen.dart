@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
 import 'package:share_space/presentation/design_system/typography/app_typography.dart';
+import 'package:share_space/presentation/routes/routes.dart';
 import 'login_widget/app_logo.dart';
 import 'login_widget/login_button.dart';
 import 'login_widget/password_input_field.dart';
@@ -107,10 +108,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             LoginButton(
                               isEnabled: valid,
-                              onPressed: valid ? () {} : null,
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(context, Routes.appNavigationBar);
+                              }
                             ),
                             const SizedBox(height: 12),
-                            RegisterText(onTap: () {}),
+                            RegisterText(onTap: () {
+                              Navigator.pushNamed(context, Routes.createAccountScreen);
+                            }),
                           ],
                         ),
                       );

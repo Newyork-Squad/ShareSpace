@@ -1,7 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
-import 'package:share_space/presentation/screen/room_details/room_details_screen.dart';
+import 'package:share_space/presentation/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,10 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const RoomDetailsScreen()),
-      );
+      Navigator.pushReplacementNamed(context, Routes.onboardingScreen); // change it later based on if the app is launched for the first time or not
     });
   }
 

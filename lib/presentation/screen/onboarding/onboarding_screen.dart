@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
+
 import '../../design_system/typography/app_typography.dart';
+import '../../routes/routes.dart';
 import 'onboarding_data.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -67,7 +69,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            Routes.loginScreen,
+                          );
+                        },
                         child: Text(
                           'Skip',
                           style: AppTypography().textTheme.labelMedium
@@ -202,8 +209,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         ),
                         TextButton(
-                          onPressed:
-                          current['button'] == 'Start now' ? null : _onNextPressed,
+                          onPressed: current['button'] == 'Start now'
+                              ? () => Navigator.pushReplacementNamed(
+                                  context,
+                                  Routes.loginScreen,
+                                )
+                              : _onNextPressed,
                           child: Text(
                             current['button']!,
                             style: AppTypography().textTheme.labelMedium?.copyWith(
