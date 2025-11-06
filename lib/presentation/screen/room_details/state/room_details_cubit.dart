@@ -9,8 +9,6 @@ class RoomDetailsCubit extends Cubit<RoomDetailsState> {
     emit(RoomDetailsLoading());
 
     try {
-      await Future.delayed(const Duration(seconds: 1));
-
       emit(RoomDetailsLoaded(
         roomImages: const [
           'assets/images/room_image.png',
