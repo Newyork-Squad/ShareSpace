@@ -43,6 +43,7 @@ dependencies:
   isar_flutter_libs: ^4.0.0-dev.13
   path_provider: ^2.1.5
   get_it: ^8.3.0
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
