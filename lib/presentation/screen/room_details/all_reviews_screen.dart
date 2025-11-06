@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:share_space/presentation/screen/room_details/state/about_room/about_room_state.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/reviewer_card.dart';
 import '../../design_system/theme/app_theme.dart';
 
 class AllReviewsScreen extends StatelessWidget {
-  const AllReviewsScreen({super.key});
+  final List<ReviewModel> reviews;
+
+  const AllReviewsScreen({super.key, required this.reviews});
 
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-
-    final reviews = List.generate(10, (index) => index);
 
     return Padding(
       padding: EdgeInsets.only(left: 16,right: 16,top: 12),
@@ -43,15 +44,15 @@ class AllReviewsScreen extends StatelessWidget {
             itemCount: reviews.length,
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) {
+              final review = reviews[index];
               return Padding(
                 padding: EdgeInsets.only(bottom: 12),
                 child: ReviewCard(
-                  reviewerName: 'Hamsa Ali Hussain',
-                  reviewerImage: 'assets/images/owner.png',
-                  reviewDate: '12-04-2024',
-                  rating: 5,
-                  reviewText:
-                      'Cozy and quiet workspace! The WiFi was fast, and the chairs were super comfy. Perfect for long study sessions.',
+                  reviewerName: review.reviewerName,
+                  reviewerImage: review.reviewerImage,
+                  reviewDate: review.reviewDate,
+                  rating: review.rating,
+                  reviewText: review.reviewText,
                 ),
               );
             },

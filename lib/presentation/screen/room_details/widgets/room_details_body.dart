@@ -3,7 +3,7 @@ import 'package:share_space/presentation/screen/room_details/widgets/room_detail
 import 'package:share_space/presentation/screen/room_details/widgets/room_header_section.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/room_image_slider.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/room_tab_section.dart';
-import '../state/room_details_state.dart';
+import '../state/room_details/room_details_state.dart';
 import 'owner_section.dart';
 
 class RoomDetailsBody extends StatelessWidget {

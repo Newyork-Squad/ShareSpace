@@ -1,5 +1,5 @@
 import 'package:share_space/presentation/screen/room_details/widgets/room_header_section.dart';
-import 'package:share_space/presentation/screen/room_details/state/room_details_state.dart';
+import 'package:share_space/presentation/screen/room_details/state/room_details/room_details_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RoomDetailsCubit extends Cubit<RoomDetailsState> {
