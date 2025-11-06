@@ -64,7 +64,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   }
 
   void _onLoginTap() {
-    print('Navigate to Login Screen');
+    Navigator.pop(context);
   }
 
   @override
