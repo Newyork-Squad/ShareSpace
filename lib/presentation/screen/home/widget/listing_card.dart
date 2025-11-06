@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
+import 'package:share_space/presentation/design_system/widget/custom_chip.dart';
+
+import '../../../util/get_service_icon_path.dart';
 
 class ListingCard extends StatelessWidget {
   final String imageUrl;
@@ -28,7 +31,7 @@ class ListingCard extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ImageWithRating(),
+            ImageWithRating(theme),
             const SizedBox(width: 8),
             Details(theme),
           ],
@@ -39,45 +42,29 @@ class ListingCard extends StatelessWidget {
     );
   }
 
-  Widget ImageWithRating() {
+  Widget ImageWithRating(AppTheme theme) {
     return Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.network(
-              imageUrl,
-              width: 106,
-              height: 68,
-              fit: BoxFit.cover,
-            ),
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Image.network(
+            imageUrl,
+            width: 106,
+            height: 68,
+            fit: BoxFit.cover,
           ),
-          Positioned(
-            top: 4,
-            left: 4,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.star, color: Colors.amber, size: 16),
-                  const SizedBox(width: 4),
-                  Text(
-                    rating.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+        ),
+        Positioned(
+          top: 4,
+          left: 4,
+          child: CustomChip(
+            label: rating.toString(),
+            labelColor: theme.colors.yellow,
+            icon: "assets/icons/star.svg",
           ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 
   Widget Details(AppTheme theme) {
@@ -124,12 +111,12 @@ class ListingCard extends StatelessWidget {
 
   Widget Amenities(AppTheme theme) {
     return Wrap(
-      spacing: 6.0,
+      alignment: WrapAlignment.start,
+      runAlignment: WrapAlignment.start,
+      spacing: 0.0,
       runSpacing: 4.0,
       children: amenities.map((amenity) {
-        return Chip(
-          label: Text(amenity, style: theme.typography.textTheme.labelSmall),
-        );
+        return CustomChip(label: amenity, icon: getServiceIconPath(amenity));
       }).toList(),
     );
   }
