@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../design_system/typography/app_typography.dart';
 import '../login/login_screen.dart';
 import 'onboarding_data.dart';
@@ -68,8 +69,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TextButton(
-                        onPressed: () {
-                          // الضغط على Skip
+                        onPressed: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setBool(
+                            'seenOnboarding',
+                            true,
+                          ); // حفظ الحالة
+
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -221,8 +228,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         TextButton(
                           onPressed: current['button'] == 'Start now'
-                              ? () {
-                                  // الضغط على Start now
+                              ? () async {
+                                  // حفظ حالة مشاهدة Onboarding
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  await prefs.setBool('seenOnboarding', true);
+
+                                  // الانتقال للـ LoginScreen
+                                  if (!mounted) return;
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
