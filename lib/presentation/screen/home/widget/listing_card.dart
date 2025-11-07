@@ -98,7 +98,7 @@ class ListingCard extends StatelessWidget {
             SvgPicture.asset("assets/icons/location.svg", width: 16),
             const SizedBox(width: 4),
             Text(
-              price,
+              location,
               style: theme.typography.textTheme.labelSmall?.copyWith(
                 color: theme.colors.body,
               ),
