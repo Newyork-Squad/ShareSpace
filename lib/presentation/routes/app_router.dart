@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../screen/booking/booking_screen.dart';
 import '../screen/bookingHistory/booking_history_screen.dart';
 import '../screen/chat/chat_screen.dart';
-import '../screen/createAccount/create_account_screen.dart';
+import '../screen/create_account/create_account_screen.dart';
 import '../screen/home/home_screen.dart';
 import '../screen/login/login_screen.dart';
 import '../screen/onboarding/onboarding_screen.dart';
