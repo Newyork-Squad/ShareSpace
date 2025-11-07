@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../design_system/typography/app_typography.dart';
-import '../login/login_screen.dart';
+import '../../routes/routes.dart';
 import 'onboarding_data.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -77,11 +77,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             true,
                           ); // حفظ الحالة
 
-                          Navigator.pushReplacement(
+                          Navigator.pushReplacementNamed(
                             context,
-                            MaterialPageRoute(
-                              builder: (_) => const LoginScreen(),
-                            ),
+                            Routes.loginScreen,
                           );
                         },
                         child: Text(
@@ -236,11 +234,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                                   // الانتقال للـ LoginScreen
                                   if (!mounted) return;
-                                  Navigator.pushReplacement(
+                                  Navigator.pushReplacementNamed(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const LoginScreen(),
-                                    ),
+                                    Routes.loginScreen,
                                   );
                                 }
                               : _onNextPressed,

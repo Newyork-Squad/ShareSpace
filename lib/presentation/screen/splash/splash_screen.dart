@@ -1,13 +1,12 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
-import 'onboarding/onboarding_screen.dart';
-import 'login/login_screen.dart'; // تأكد من المسار الصحيح للـ LoginScreen
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:share_space/presentation/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
-  final bool seenOnboarding;
-  const SplashScreen({super.key, required this.seenOnboarding});
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -17,21 +16,22 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () async {
-      if (widget.seenOnboarding) {
-        // لو شوفت الـ Onboarding قبل كده
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const LoginScreen()),
-        );
-      } else {
-        // لو أول مرة
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const OnboardingScreen()),
-        );
-      }
-    });
+    _navigateToNextScreen();
+  }
+
+  Future<void> _navigateToNextScreen() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    final prefs = await SharedPreferences.getInstance();
+    final seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+
+    if (!mounted) return;
+
+    if (seenOnboarding) {
+      Navigator.pushReplacementNamed(context, Routes.loginScreen);
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.onboardingScreen);
+    }
   }
 
   @override

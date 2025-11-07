@@ -1,27 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:share_space/presentation/screen/splash_screen.dart';
-import 'package:share_space/presentation/design_system/colors/app_color.dart';
-import 'package:share_space/presentation/design_system/theme/app_theme.dart';
-import 'package:share_space/presentation/design_system/typography/app_typography.dart';
-import 'package:share_space/presentation/screen/room_details/about_room_screen.dart';
-import 'package:share_space/presentation/screen/room_details/room_details_screen.dart';
 
 import 'presentation/design_system/theme/app_theme_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'presentation/routes/app_router.dart';
+import 'presentation/routes/routes.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // الحصول على حالة ظهور الـ Onboarding
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
-
-  runApp(ShareSpaceApp(seenOnboarding: seenOnboarding));
+void main() {
+  runApp(ShareSpaceApp(appRouter: AppRouter()));
 }
 
 class ShareSpaceApp extends StatelessWidget {
-  final bool seenOnboarding;
-  const ShareSpaceApp({super.key, required this.seenOnboarding});
+  final AppRouter appRouter;
+  const ShareSpaceApp({super.key, required this.appRouter});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +22,8 @@ class ShareSpaceApp extends StatelessWidget {
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: SplashScreen(seenOnboarding: seenOnboarding), // تمرير الحالة للـ SplashScreen
+        initialRoute: Routes.splashScreen,
+        onGenerateRoute: appRouter.generateRoute,
       ),
     );
   }
