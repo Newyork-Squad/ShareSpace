@@ -27,6 +27,7 @@ class ListingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
