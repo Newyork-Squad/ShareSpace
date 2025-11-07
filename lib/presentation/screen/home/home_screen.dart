@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:share_space/presentation/screen/home/widget/booking_card.dart';
+import 'package:share_space/presentation/screen/home/widget/category_chip.dart';
+import 'package:share_space/presentation/screen/home/widget/home_app_bar.dart';
+import 'package:share_space/presentation/screen/home/widget/listing_card.dart';
+
+import '../../design_system/theme/app_theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,8 +14,115 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String tempImage =
+      "https://www.erfurt.com/fileadmin/user_upload/tipps-inspirationen/tipps-tricks/raumwirkung/Leerer-Raum-graue-Wand-weisser-streifenunten-weissedecke_620x417px.jpg";
+  List<String> categories = [
+    "All",
+    "Rooms",
+    "Apartments",
+    "Offices",
+    "Hotels",
+    "Hostels",
+    "Resorts",
+    "Guest Houses",
+    "Guest Homes",
+  ];
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Home Screen'));
+    final theme = AppTheme.of(context);
+    return Container(
+      color: theme.colors.surfaceLow,
+      child: CustomScrollView(
+        slivers: [
+          HomeAppBar(
+            userName: "Ahmed Hussein",
+            location: "Cairo, Egypt",
+            profileImageUrl: tempImage,
+          ),
+          // Book now section
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 172,
+              width: 200,
+              child: FutureBuilder(
+                future: Future.delayed(const Duration(seconds: 2)),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categories.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 16, 4, 28),
+                          child: BookingCard(
+                            label: categories[index],
+                            description: 'wow room',
+                            imageUrl: tempImage,
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
+          // Chips row
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 40,
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  return CategoryChip(
+                    label: categories[index],
+                    isSelected: _selectedIndex == index,
+                    onTap: () {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(width: 8),
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 24)),
+          // Cards
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 320,
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                separatorBuilder: (context, index) => const SizedBox(width: 4),
+                itemBuilder: (context, index) => SizedBox(
+                  width: 328,
+                  child: ListingCard(
+                    imageUrl: tempImage,
+                    rating: 4.5,
+                    title: 'Night Owl Room',
+                    price: '12,000 IQD/h',
+                    location: 'Baghdad, Iraq',
+                    amenities: const ['WiFi', 'A/C', 'Whiteboard'],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
