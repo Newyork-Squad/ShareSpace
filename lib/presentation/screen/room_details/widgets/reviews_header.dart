@@ -3,9 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/screen/room_details/all_reviews_screen.dart';
 
 import '../../../design_system/theme/app_theme.dart';
+import '../state/about_room/about_room_state.dart';
 
 class ReviewsHeader extends StatelessWidget {
-  const ReviewsHeader({super.key});
+  final int numberOfReviews;
+  final List<ReviewModel> reviews;
+
+  const ReviewsHeader({super.key, required this.numberOfReviews, required this.reviews});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class ReviewsHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'Reviews (122)',
+          'Reviews ($numberOfReviews)',
           style: theme.typography.textTheme.titleSmall?.copyWith(
             color: theme.colors.title,
             fontWeight: FontWeight.w600,
@@ -27,7 +31,7 @@ class ReviewsHeader extends StatelessWidget {
           onTap: () {Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AllReviewsScreen(),
+              builder: (context) =>  AllReviewsScreen( reviews:reviews),
             ),
           );},
           child: Row(
