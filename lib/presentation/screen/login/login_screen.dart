@@ -21,7 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final ValueNotifier<bool> isFormValid = ValueNotifier(false);
 
   void _validateForm() {
-    final valid = phoneController.text.trim().isNotEmpty &&
+    final valid =
+        phoneController.text.trim().isNotEmpty &&
         passwordController.text.trim().isNotEmpty;
     if (isFormValid.value != valid) {
       isFormValid.value = valid;
@@ -68,7 +69,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Expanded(
                     child: SingleChildScrollView(
-                      padding: const EdgeInsets.only(left: 16, right: 16, top: 24),
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        top: 24,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -76,17 +81,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 24),
                           Text(
                             "Welcome Back",
-                            style: AppTypography().textTheme.titleMedium?.copyWith(
-                              color: AppColors.light.title,
-                            ),
+                            style: AppTypography().textTheme.titleMedium
+                                ?.copyWith(color: AppColors.light.title),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             "Please enter your phone number and password to access your booking",
                             textAlign: TextAlign.center,
-                            style: AppTypography().textTheme.bodyMedium?.copyWith(
-                              color: AppColors.light.body,
-                            ),
+                            style: AppTypography().textTheme.bodyMedium
+                                ?.copyWith(color: AppColors.light.body),
                           ),
                           const SizedBox(height: 32),
                           PhoneInputField(controller: phoneController),
@@ -102,7 +105,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     builder: (context, valid, _) {
                       return Container(
                         color: AppColors.light.surfaceLow.withOpacity(0.9),
-                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          bottom: 12,
+                        ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [

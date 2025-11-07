@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../design_system/typography/app_typography.dart';
 import '../../routes/routes.dart';
 import 'onboarding_data.dart';
@@ -69,7 +69,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setBool(
+                            'seenOnboarding',
+                            true,
+                          ); // حفظ الحالة
+
                           Navigator.pushReplacementNamed(
                             context,
                             Routes.loginScreen,
@@ -91,18 +98,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       onPageChanged: _onPageChanged,
                       itemBuilder: (context, index) {
                         final data =
-                        onboardingData[index % onboardingData.length];
+                            onboardingData[index % onboardingData.length];
                         return AnimatedBuilder(
                           animation: _controller,
                           builder: (context, child) {
                             double value = 0.0;
                             if (!_controller.position.haveDimensions) {
-                              value = (_controller.initialPage - index).toDouble();
+                              value = (_controller.initialPage - index)
+                                  .toDouble();
                             } else {
                               value = _controller.page! - index;
                             }
 
-                            double scale = (1 - (value.abs() * 0.2)).clamp(0.8, 1.0);
+                            double scale = (1 - (value.abs() * 0.2)).clamp(
+                              0.8,
+                              1.0,
+                            );
                             double rotation = value * -0.3;
                             double verticalOffset = -35 * value.abs();
                             double horizontalOverlap = 100 * value;
@@ -164,7 +175,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 32,
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -194,7 +208,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: List.generate(
                             onboardingData.length,
-                                (index) => AnimatedContainer(
+                            (index) => AnimatedContainer(
                               duration: const Duration(milliseconds: 250),
                               margin: const EdgeInsets.symmetric(horizontal: 2),
                               width: _currentPage == index ? 4 : 3,
@@ -202,7 +216,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               decoration: BoxDecoration(
                                 color: _currentPage == index
                                     ? AppColors.light.primary
-                                    : AppColors.light.primary.withValues(alpha: 0.3),
+                                    : AppColors.light.primary.withValues(
+                                        alpha: 0.3,
+                                      ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
@@ -210,16 +226,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         TextButton(
                           onPressed: current['button'] == 'Start now'
-                              ? () => Navigator.pushReplacementNamed(
-                                  context,
-                                  Routes.loginScreen,
-                                )
+                              ? () async {
+                                  // حفظ حالة مشاهدة Onboarding
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  await prefs.setBool('seenOnboarding', true);
+
+                                  // الانتقال للـ LoginScreen
+                                  if (!mounted) return;
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    Routes.loginScreen,
+                                  );
+                                }
                               : _onNextPressed,
                           child: Text(
                             current['button']!,
-                            style: AppTypography().textTheme.labelMedium?.copyWith(
-                              color: AppColors.light.primaryVariant,
-                            ),
+                            style: AppTypography().textTheme.labelMedium
+                                ?.copyWith(
+                                  color: AppColors.light.primaryVariant,
+                                ),
                           ),
                         ),
                       ],
@@ -235,12 +261,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _buildImageCard(
-      String imagePath,
-      double horizontalOverlap,
-      double verticalOffset,
-      double rotation,
-      double scale,
-      ) {
+    String imagePath,
+    double horizontalOverlap,
+    double verticalOffset,
+    double rotation,
+    double scale,
+  ) {
     return Positioned.fill(
       child: Transform.translate(
         offset: Offset(horizontalOverlap, verticalOffset),
