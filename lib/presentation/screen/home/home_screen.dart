@@ -106,9 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 scrollDirection: Axis.horizontal,
                 itemCount: 5,
-                separatorBuilder: (context, index) => const SizedBox(width: 12),
+                separatorBuilder: (context, index) => const SizedBox(width: 4),
                 itemBuilder: (context, index) => SizedBox(
-                  width: 300,
+                  width: 328,
                   child: ListingCard(
                     imageUrl: tempImage,
                     rating: 4.5,
