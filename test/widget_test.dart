@@ -11,8 +11,7 @@ import 'package:share_space/main.dart';
 
 void main() {
   testWidgets('My Account screen renders', (WidgetTester tester) async {
-    await tester.pumpWidget(const ShareSpaceApp());
-
+    await tester.pumpWidget(const ShareSpaceApp(seenOnboarding: false));
     expect(find.text('My Account'), findsOneWidget);
     expect(find.text('Account informations'), findsOneWidget);
   });
