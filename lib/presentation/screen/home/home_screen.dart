@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String tempImage =
-      "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+      "https://www.erfurt.com/fileadmin/user_upload/tipps-inspirationen/tipps-tricks/raumwirkung/Leerer-Raum-graue-Wand-weisser-streifenunten-weissedecke_620x417px.jpg";
   List<String> categories = [
     "All",
     "Rooms",
@@ -71,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          // Chips row
           SliverToBoxAdapter(
             child: SizedBox(
               height: 40,
@@ -94,28 +95,30 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => Padding(
+          // Cards
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 320,
+              child: ListView.separated(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 8,
                 ),
-                child: ListingCard(
-                  imageUrl: tempImage,
-                  rating: 4.5,
-                  title: 'Night Owl Room',
-                  price: '12,000 IQD/h',
-                  location: 'Baghdad, Iraq',
-                  amenities: const [
-                    'WiFi',
-                    'A/C',
-                    'Whiteboard',
-                    'Power Backup',
-                  ],
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                separatorBuilder: (context, index) => const SizedBox(width: 12),
+                itemBuilder: (context, index) => SizedBox(
+                  width: 300,
+                  child: ListingCard(
+                    imageUrl: tempImage,
+                    rating: 4.5,
+                    title: 'Night Owl Room',
+                    price: '12,000 IQD/h',
+                    location: 'Baghdad, Iraq',
+                    amenities: const ['WiFi', 'A/C', 'Whiteboard'],
+                  ),
                 ),
               ),
-              childCount: 5,
             ),
           ),
         ],
