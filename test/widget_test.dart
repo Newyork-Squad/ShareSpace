@@ -12,7 +12,7 @@ import 'package:share_space/presentation/routes/app_router.dart';
 
 void main() {
   testWidgets('My Account screen renders', (WidgetTester tester) async {
-    await tester.pumpWidget(ShareSpaceApp(seenOnboarding: false, appRouter: AppRouter()));
+    await tester.pumpWidget(ShareSpaceApp(appRouter: AppRouter()));
     expect(find.text('My Account'), findsOneWidget);
     expect(find.text('Account informations'), findsOneWidget);
   });

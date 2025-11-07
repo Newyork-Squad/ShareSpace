@@ -6,8 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share_space/presentation/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
-  final bool seenOnboarding;
-  const SplashScreen({super.key, required this.seenOnboarding});
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -17,15 +16,22 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () async {
-      if (widget.seenOnboarding) {
-        // لو شوفت الـ Onboarding قبل كده
-        Navigator.pushReplacementNamed(context, Routes.loginScreen);
-      } else {
-        // لو أول مرة
-        Navigator.pushReplacementNamed(context, Routes.onboardingScreen);
-      }
-    });
+    _navigateToNextScreen();
+  }
+
+  Future<void> _navigateToNextScreen() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    final prefs = await SharedPreferences.getInstance();
+    final seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+
+    if (!mounted) return;
+
+    if (seenOnboarding) {
+      Navigator.pushReplacementNamed(context, Routes.loginScreen);
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.onboardingScreen);
+    }
   }
 
   @override
