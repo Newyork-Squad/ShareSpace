@@ -2,7 +2,7 @@
 import 'dart:ffi';
 
 class User {
-  final Long id;
+  final int id;
   final String name;
   final Gender gender;
   final String email;
