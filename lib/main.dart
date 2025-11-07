@@ -4,22 +4,28 @@ import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 import 'package:share_space/presentation/design_system/typography/app_typography.dart';
 import 'package:share_space/presentation/screen/room_details/room_details_screen.dart';
 
+import 'presentation/design_system/theme/app_theme_provider.dart';
+import 'presentation/screen/my_account/my_account_screen.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(const ShareSpaceApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ShareSpaceApp extends StatelessWidget {
+  const ShareSpaceApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return AppTheme(
-      colors: AppColors.light,
-      typography: AppTypography(),
-    child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const RoomDetailsScreen(),
-    ));
+    return AppThemeProvider(
+      child: MaterialApp(
+        title: 'ShareSpace',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          scaffoldBackgroundColor: Colors.white,
+        ),
+        home: const MyAccountScreen(),
+      ),
+    );
   }
 }
