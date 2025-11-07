@@ -2,7 +2,7 @@
 import 'dart:ffi';
 
 class Workspace {
-  final Long id;
+  final int id;
   final String name;
   final String locationName;
   final double longitude;
@@ -13,7 +13,7 @@ class Workspace {
   final List<String> imageUrls;
   final String description;
   final String rules;
-  final Long ownerId;
+  final int ownerId;
 
   Workspace({
     required this.id,

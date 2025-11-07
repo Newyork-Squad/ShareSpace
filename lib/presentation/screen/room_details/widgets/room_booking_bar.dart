@@ -47,7 +47,7 @@ class RoomBookingBar extends StatelessWidget {
           ),
 
           GestureDetector(
-            onTap: (){print('book now');},
+            onTap: (){},
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 150),
               width: 160,
@@ -64,7 +64,6 @@ class RoomBookingBar extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(50),
                 boxShadow: [
-
                   const BoxShadow(
                     color: Color(0x8036CEFB),
                     blurRadius: 12,
