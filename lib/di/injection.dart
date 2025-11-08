@@ -1,9 +1,15 @@
 import 'package:get_it/get_it.dart';
+import 'package:share_space/data/remote/auth_api_service.dart';
+import 'package:share_space/data/repository/authentication_repository_impl.dart';
 import 'package:share_space/data/repository/room_details_repository_impl.dart';
 import 'package:share_space/data/repository/workspace_repository_impl.dart';
 import 'package:share_space/domain/repository/room_details_repository.dart';
+import 'package:share_space/domain/repository/authentication_repository.dart';
 import 'package:share_space/domain/repository/workspace_repository.dart';
 import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
+import 'package:share_space/domain/usecase/authentication/login_usecase.dart';
+import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
+
 import '../data/remote/dio_client.dart';
 import '../data/remote/workspace_api_service.dart';
 import '../data/remote/workspace_api_service_impl.dart';
@@ -28,4 +34,14 @@ void setupDependencies() {
   getIt.registerFactory(
     () => GetRoomDetailsUseCase(getIt()),
   );
+
+  getIt.registerLazySingleton(() => AuthApiService(getIt()));
+
+  getIt.registerLazySingleton<AuthenticationRepository>(
+    () => AuthenticationRepositoryImpl(getIt()),
+  );
+
+  getIt.registerLazySingleton(() => LoginUseCase(getIt()));
+
+  getIt.registerFactory(() => LoginCubit(getIt()));
 }
