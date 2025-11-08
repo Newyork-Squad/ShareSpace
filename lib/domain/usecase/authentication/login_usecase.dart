@@ -5,7 +5,7 @@ class LoginUseCase {
 
   LoginUseCase(this._authenticationRepository);
 
-  Future<bool> execute(String username, String password) {
-    return _authenticationRepository.login(username, password);
+  Future<bool> call(String phoneNumber, String password) {
+    return _authenticationRepository.login(phoneNumber, password);
   }
 }

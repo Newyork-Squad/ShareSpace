@@ -22,7 +22,7 @@ class AuthApiService {
       if (response.data['success'] == true) {
         final token = response.data['data']['accessToken'];
         debugPrint("Login successful, token: $token");
-        saveToken(token);
+        await SecureStorage().saveToken(token);
         return true;
       } else {
         throw Exception(
