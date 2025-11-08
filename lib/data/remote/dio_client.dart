@@ -35,10 +35,10 @@ class DioClient {
         InterceptorsWrapper(
           onRequest: (options, handler) async {
             // Add token to headers if available
-            // final token = await getToken();
-            // if (token != null) {
-            //   options.headers['Authorization'] = 'Bearer $token';
-            // }
+            final token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4ZjkzOTQ4NS03NDNhLTQyNDYtYjc1OS0xNzVjODg2OGMyMDIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzYyNjA4MDAwLCJleHAiOjE3NjMyMTI4MDB9.Km3CS2MnmJbXAHUy6crafRtk6Q92bHGxyUhv5Mc11Y8"; //await getToken();
+            if (token != null) {
+              options.headers['Authorization'] = 'Bearer $token';
+            }
             return handler.next(options);
           },
           onError: (error, handler) async {

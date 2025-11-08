@@ -53,6 +53,12 @@ class ListingCard extends StatelessWidget {
             width: 106,
             height: 68,
             fit: BoxFit.cover,
+            //   errorBuilder: (context, error, stackTrace) => Image.network(
+            //   'https://img-cdn.inc.com/image/upload/f_webp,c_fit,w_1920,q_auto/images/panoramic/getty_517610514_353435.jpg',
+            //   width: 106,
+            //   height: 68,
+            //   fit: BoxFit.cover,
+            // ),
           ),
         ),
         Positioned(
@@ -78,7 +84,7 @@ class ListingCard extends StatelessWidget {
           style: theme.typography.textTheme.titleMedium?.copyWith(
             color: theme.colors.title,
           ),
-          maxLines: 2,
+          maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         Row(
@@ -103,6 +109,8 @@ class ListingCard extends StatelessWidget {
               style: theme.typography.textTheme.labelSmall?.copyWith(
                 color: theme.colors.body,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
