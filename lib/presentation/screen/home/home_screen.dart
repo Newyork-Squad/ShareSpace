@@ -5,7 +5,6 @@ import 'package:share_space/presentation/screen/home/state/home_state.dart';
 import 'package:share_space/presentation/screen/home/widget/booking_card.dart';
 import 'package:share_space/presentation/screen/home/widget/category_chip.dart';
 import 'package:share_space/presentation/screen/home/widget/home_app_bar.dart';
-import 'package:share_space/presentation/screen/home/widget/listing_card.dart';
 import 'package:share_space/presentation/screen/home/widget/workspaces_grid.dart';
 
 import '../../../di/injection.dart';
@@ -47,37 +46,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: SizedBox(
                       height: 172,
                       width: 200,
-                      child: FutureBuilder(
-                        future: Future.delayed(const Duration(seconds: 2)),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else {
-                            return ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: state.categories.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    12,
-                                    16,
-                                    4,
-                                    28,
-                                  ),
-                                  child: BookingCard(
-                                    label: state.categories[index].name,
-                                    description:
-                                        state.categories[index].description,
-                                    imageUrl: state.categories[index]
-                                        .getImage(),
-                                  ),
-                                );
-                              },
-                            );
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: state.categories.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == 0 || index == 1) {
+                            return const SizedBox.shrink();
                           }
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 16, 4, 28),
+                            child: BookingCard(
+                              label: state.categories[index].name,
+                              description: state.categories[index].description,
+                              imageUrl: state.categories[index].getImage(),
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -114,7 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: state.categories
-                                .where((category) => (category.workspaces?.isNotEmpty ?? false))
+                                .where(
+                                  (category) =>
+                                      (category.workspaces.isNotEmpty),
+                                )
                                 .expand(
                                   (category) => [
                                     Padding(
@@ -123,9 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       child: Text(
                                         category.name,
-                                        style:  theme.typography.textTheme.titleSmall?.copyWith(
-                                            color: theme.colors.title),
-                                        ),
+                                        style: theme
+                                            .typography
+                                            .textTheme
+                                            .titleSmall
+                                            ?.copyWith(
+                                              color: theme.colors.title,
+                                            ),
+                                      ),
                                     ),
                                     const SizedBox(height: 12),
                                     WorkspacesGrid(category: category),
@@ -142,9 +133,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: Text(
                                   state.categories[state.selectedIndex].name,
-                                  style: theme.typography.textTheme.titleSmall?.copyWith(
-                                    color: theme.colors.title
-                                  ),
+                                  style: theme.typography.textTheme.titleSmall
+                                      ?.copyWith(color: theme.colors.title),
                                 ),
                               ),
                               const SizedBox(height: 12),
