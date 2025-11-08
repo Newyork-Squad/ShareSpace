@@ -36,5 +36,7 @@ enum Services {
   wifi,
   ac,
   whiteboard,
-  powerBackup
+  powerBackup,
+  parking,
+  coffee,
 }

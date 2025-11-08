@@ -122,18 +122,22 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   List<Services> _mapAmenities(List<String> amenities) {
     List<Services> services = [];
     for (var amenity in amenities) {
+      print("Btatssdas $amenity");
       switch (amenity.toLowerCase()) {
-        case 'wifi':
+        case 'wi_fi':
           services.add(Services.wifi);
           break;
         case 'ac':
-        case 'air conditioning':
+        case 'air_conditioning':
           services.add(Services.ac);
           break;
         case 'whiteboard':
           services.add(Services.whiteboard);
           break;
-        case 'power backup':
+        case 'coffe_machine':
+          services.add(Services.coffee);
+          break;
+        case 'power_backup':
         case 'powerbackup':
           services.add(Services.powerBackup);
           break;
