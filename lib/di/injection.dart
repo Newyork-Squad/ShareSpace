@@ -1,7 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:share_space/data/repository/room_details_repository_impl.dart';
+import 'package:share_space/data/remote/auth_api_service.dart';
+import 'package:share_space/data/repository/authentication_repository_impl.dart';
 import 'package:share_space/data/repository/workspace_repository_impl.dart';
 import 'package:share_space/domain/repository/room_details_repository.dart';
+import 'package:share_space/domain/repository/authentication_repository.dart';
 import 'package:share_space/domain/repository/workspace_repository.dart';
 import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
 import '../data/remote/dio_client.dart';
@@ -27,5 +30,13 @@ void setupDependencies() {
 
   getIt.registerFactory(
     () => GetRoomDetailsUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton<AuthApiService>(
+    () => AuthApiService(getIt()),
+  );
+
+  getIt.registerLazySingleton<AuthenticationRepository>(
+    () => AuthenticationRepositoryImpl(getIt()),
   );
 }

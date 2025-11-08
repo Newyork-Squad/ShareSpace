@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../util/secure_storage.dart';
 import 'api_constants.dart';
 
 class DioClient {
@@ -34,11 +35,10 @@ class DioClient {
       _dio!.interceptors.add(
         InterceptorsWrapper(
           onRequest: (options, handler) async {
-            // Add token to headers if available
-            // final token = await getToken();
-            // if (token != null) {
-            //   options.headers['Authorization'] = 'Bearer $token';
-            // }
+            final token = await getToken();
+            if (token != null) {
+              options.headers['Authorization'] = 'Bearer $token';
+            }
             return handler.next(options);
           },
           onError: (error, handler) async {

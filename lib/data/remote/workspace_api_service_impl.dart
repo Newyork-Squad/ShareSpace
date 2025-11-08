@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'dto/WorkspaceResponse.dart';
+import 'error_handler.dart';
 import 'workspace_api_service.dart';
 
 class WorkspaceApiServiceImpl implements WorkspaceApiService {
@@ -35,7 +36,7 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
         );
       }
     } on DioException catch (e) {
-      throw _handleError(e);
+      throw handleError(e);
     }
   }
 
@@ -60,7 +61,7 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
         );
       }
     } on DioException catch (e) {
-      throw _handleError(e);
+      throw handleError(e);
     }
   }
 
@@ -91,7 +92,7 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
         );
       }
     } on DioException catch (e) {
-      throw _handleError(e);
+      throw handleError(e);
     }
   }
 
@@ -115,7 +116,7 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
         );
       }
     } on DioException catch (e) {
-      throw _handleError(e);
+      throw handleError(e);
     }
   }
 
@@ -131,22 +132,7 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
         throw Exception(response.data['message'] ?? 'Workspace not found');
       }
     } on DioException catch (e) {
-      throw _handleError(e);
-    }
-  }
-
-  Exception _handleError(DioException e) {
-    if (e.response != null) {
-      final message = e.response?.data['message'] ?? 'Server error occurred';
-      return Exception(message);
-    } else if (e.type == DioExceptionType.connectionTimeout) {
-      return Exception('Connection timeout');
-    } else if (e.type == DioExceptionType.receiveTimeout) {
-      return Exception('Receive timeout');
-    } else if (e.type == DioExceptionType.connectionError) {
-      return Exception('No internet connection');
-    } else {
-      return Exception('Unexpected error occurred');
+      throw handleError(e);
     }
   }
 }

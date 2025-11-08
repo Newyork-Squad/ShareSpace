@@ -45,6 +45,7 @@ dependencies:
   path_provider: ^2.1.5
   get_it: ^8.3.0
   image_picker: ^1.1.2
+  flutter_secure_storage: ^9.2.4
 
 dev_dependencies:
   flutter_test:
