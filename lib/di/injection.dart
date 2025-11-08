@@ -42,6 +42,7 @@ void setupDependencies() {
       getIt(),
     ),
   );
+
   getIt.registerLazySingleton<RoomDetailsRepository>(
     () => RoomDetailsRepositoryImpl(getIt()),
   );

@@ -85,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Chips row
                   SliverToBoxAdapter(
                     child: SizedBox(
+                      height: 40,
                       child: ListView.separated(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         scrollDirection: Axis.horizontal,
@@ -101,31 +102,66 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                         separatorBuilder: (context, index) =>
-                            const SizedBox(width: 8),
+                            const SizedBox(height: 8, width: 8),
                       ),
                     ),
                   ),
                   const SliverToBoxAdapter(child: SizedBox(height: 24)),
-                  SliverToBoxAdapter(child: Text(state.categories[state.selectedIndex].name, style: theme.typography.textTheme.titleSmall,)),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        state.categories[state.selectedIndex].name,
+                        style: theme.typography.textTheme.titleSmall,
+                      ),
+                    ),
+                  ),
                   const SliverToBoxAdapter(child: SizedBox(height: 12)),
                   // Cards
                   SliverToBoxAdapter(
                     child: SizedBox(
                       height: 320,
                       child: ListView.separated(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
                         scrollDirection: Axis.horizontal,
-                        itemCount: state.categories[state.selectedIndex].workspaces.length,
-                        separatorBuilder: (context, index) => const SizedBox(width: 4),
+                        itemCount: state
+                            .categories[state.selectedIndex]
+                            .workspaces
+                            .length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 4),
                         itemBuilder: (context, index) => SizedBox(
                           width: 328,
                           child: ListingCard(
-                            imageUrl: state.categories[state.selectedIndex].workspaces[index].imageUrls[0],
-                            rating: state.categories[state.selectedIndex].workspaces[index].rate,
-                            title: state.categories[state.selectedIndex].workspaces[index].name,
-                            price: state.categories[state.selectedIndex].workspaces[index].pricePerHour.toInt().toString(),
-                            location: state.categories[state.selectedIndex].workspaces[index].locationName,
-                            amenities: state.categories[state.selectedIndex].workspaces[index].services
+                            imageUrl: state
+                                .categories[state.selectedIndex]
+                                .workspaces[index]
+                                .imageUrls[0],
+                            rating: state
+                                .categories[state.selectedIndex]
+                                .workspaces[index]
+                                .rate,
+                            title: state
+                                .categories[state.selectedIndex]
+                                .workspaces[index]
+                                .name,
+                            price: state
+                                .categories[state.selectedIndex]
+                                .workspaces[index]
+                                .pricePerHour
+                                .toInt()
+                                .toString(),
+                            location: state
+                                .categories[state.selectedIndex]
+                                .workspaces[index]
+                                .locationName,
+                            amenities: state
+                                .categories[state.selectedIndex]
+                                .workspaces[index]
+                                .services
                                 .map((e) => e.name)
                                 .toList(),
                           ),
@@ -137,7 +173,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else if (state is HomeError) {
-            return Center(child: Text(state.message));
+            return Center(
+              child: Text(
+                "Please Check your connection", //state.message,
+                style: theme.typography.textTheme.labelSmall,
+              ),
+            );
           }
           return const SizedBox.shrink();
         },

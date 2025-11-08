@@ -53,12 +53,12 @@ class ListingCard extends StatelessWidget {
             width: 106,
             height: 68,
             fit: BoxFit.cover,
-            //   errorBuilder: (context, error, stackTrace) => Image.network(
-            //   'https://img-cdn.inc.com/image/upload/f_webp,c_fit,w_1920,q_auto/images/panoramic/getty_517610514_353435.jpg',
-            //   width: 106,
-            //   height: 68,
-            //   fit: BoxFit.cover,
-            // ),
+            errorBuilder: (context, error, stackTrace) => Image.network(
+              'https://img-cdn.inc.com/image/upload/f_webp,c_fit,w_1920,q_auto/images/panoramic/getty_517610514_353435.jpg',
+              width: 106,
+              height: 68,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Positioned(
@@ -79,13 +79,16 @@ class ListingCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: theme.typography.textTheme.titleMedium?.copyWith(
-            color: theme.colors.title,
+        SizedBox(
+          width: 200,
+          child: Text(
+            title,
+            style: theme.typography.textTheme.titleMedium?.copyWith(
+              color: theme.colors.title,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
         ),
         Row(
           children: [
@@ -104,13 +107,16 @@ class ListingCard extends StatelessWidget {
           children: [
             SvgPicture.asset("assets/icons/location.svg", width: 16),
             const SizedBox(width: 4),
-            Text(
-              location,
-              style: theme.typography.textTheme.labelSmall?.copyWith(
-                color: theme.colors.body,
+            SizedBox(
+              width: 150,
+              child: Text(
+                location,
+                style: theme.typography.textTheme.labelSmall?.copyWith(
+                  color: theme.colors.body,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
