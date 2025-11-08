@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'di/injection.dart';
 import 'presentation/design_system/theme/app_theme_provider.dart';
 import 'presentation/routes/app_router.dart';
 import 'presentation/routes/routes.dart';
 
 void main() {
+  setupDependencies();
   runApp(ShareSpaceApp(appRouter: AppRouter()));
 }
 
