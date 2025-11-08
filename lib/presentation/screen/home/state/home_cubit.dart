@@ -44,7 +44,7 @@ class HomeCubit extends Cubit<HomeState> {
         bestPrice,
         popular,
         nearToYou,
-        topRated,
+        topRated
       ));
     } catch (e) {
       emit(HomeError(e.toString()));
