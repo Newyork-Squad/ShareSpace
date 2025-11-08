@@ -8,7 +8,6 @@ import 'presentation/routes/routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
   setupDependencies();
   runApp(ShareSpaceApp(appRouter: AppRouter()));
 }

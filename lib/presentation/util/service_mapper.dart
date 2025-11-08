@@ -6,16 +6,14 @@ import 'get_service_icon_path.dart';
 const _fallbackServiceIcon = 'assets/icons/wifi.svg';
 
 List<Service> mapServicesToPresentation(List<Services> services) {
-  return services
-      .map((service) {
-        final label = serviceLabel(service);
-        final iconPath = getServiceIconPath(label);
-        return Service(
-          name: label,
-          imagePath: iconPath.isNotEmpty ? iconPath : _fallbackServiceIcon,
-        );
-      })
-      .toList();
+  return services.map((service) {
+    final label = serviceLabel(service);
+    final iconPath = getServiceIconPath(label);
+    return Service(
+      name: label,
+      imagePath: iconPath.isNotEmpty ? iconPath : _fallbackServiceIcon,
+    );
+  }).toList();
 }
 
 String serviceLabel(Services service) {
@@ -28,6 +26,9 @@ String serviceLabel(Services service) {
       return 'Whiteboard';
     case Services.powerBackup:
       return 'Power Backup';
+    case Services.parking:
+      return 'Parking';
+    case Services.coffee:
+      return 'Coffee';
   }
 }
-
