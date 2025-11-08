@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleLogin(BuildContext context) {
-    final phoneNumber = phoneController.text.trim();
+    final phoneNumber = "+964${phoneController.text.trim()}";  // TODO: Handle country code properly
     final password = passwordController.text.trim();
     context.read<LoginCubit>().login(phoneNumber, password);
   }

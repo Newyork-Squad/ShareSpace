@@ -8,10 +8,10 @@ class LoginInitial extends LoginState {}
 class LoginLoading extends LoginState {}
 
 class LoginLoaded extends LoginState {
-  final String poneNumber;
+  final String phoneNumber;
   final String password;
 
-  LoginLoaded(this.poneNumber, this.password);
+  LoginLoaded(this.phoneNumber, this.password);
 }
 
 class LoginError extends LoginState {
