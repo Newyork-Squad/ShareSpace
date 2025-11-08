@@ -14,6 +14,7 @@ class HomeLoaded extends HomeState {
   final List<Workspace> nearToYou;
   final List<Workspace> topRated;
   late List<Category> categories = [
+    Category(name: "All", description: "All workspaces", workspaces: []),
     Category(name: "Best", description: "A room with quality that reflects your achievement", workspaces: best),
     Category(name: "Best Price", description: "Best prices for your needs", workspaces: bestPrice),
     Category(name: "Popular", description: "Many people use it", workspaces: popular),

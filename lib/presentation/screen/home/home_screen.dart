@@ -107,67 +107,52 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SliverToBoxAdapter(child: SizedBox(height: 24)),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        state.categories[state.selectedIndex].name,
-                        style: theme.typography.textTheme.titleSmall,
-                      ),
-                    ),
-                  ),
-                  const SliverToBoxAdapter(child: SizedBox(height: 12)),
+
                   // Cards
                   SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 320,
-                      child: ListView.separated(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: state
-                            .categories[state.selectedIndex]
-                            .workspaces
-                            .length,
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 4),
-                        itemBuilder: (context, index) => SizedBox(
-                          width: 328,
-                          child: ListingCard(
-                            imageUrl: state
-                                .categories[state.selectedIndex]
-                                .workspaces[index]
-                                .imageUrls[0],
-                            rating: state
-                                .categories[state.selectedIndex]
-                                .workspaces[index]
-                                .rate,
-                            title: state
-                                .categories[state.selectedIndex]
-                                .workspaces[index]
-                                .name,
-                            price: state
-                                .categories[state.selectedIndex]
-                                .workspaces[index]
-                                .pricePerHour
-                                .toInt()
-                                .toString(),
-                            location: state
-                                .categories[state.selectedIndex]
-                                .workspaces[index]
-                                .locationName,
-                            amenities: state
-                                .categories[state.selectedIndex]
-                                .workspaces[index]
-                                .services
-                                .map((e) => e.name)
+                    child: state.selectedIndex == 0
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: state.categories
+                                .where((category) => (category.workspaces?.isNotEmpty ?? false))
+                                .expand(
+                                  (category) => [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                      ),
+                                      child: Text(
+                                        category.name,
+                                        style:  theme.typography.textTheme.titleSmall?.copyWith(
+                                            color: theme.colors.title),
+                                        ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    WorkspacesGrid(category: category),
+                                  ],
+                                )
                                 .toList(),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: Text(
+                                  state.categories[state.selectedIndex].name,
+                                  style: theme.typography.textTheme.titleSmall?.copyWith(
+                                    color: theme.colors.title
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              WorkspacesGrid(
+                                category: state.categories[state.selectedIndex],
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                    ),
                   ),
                 ],
               ),
