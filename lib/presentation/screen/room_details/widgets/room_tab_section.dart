@@ -3,8 +3,13 @@ import '../../../design_system/theme/app_theme.dart';
 
 class RoomTabsSection extends StatelessWidget {
   final String description;
+  final String rules;
 
-  const RoomTabsSection({super.key, required this.description});
+  const RoomTabsSection({
+    super.key,
+    required this.description,
+    required this.rules,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +51,19 @@ class RoomTabsSection extends StatelessWidget {
                     textAlign: TextAlign.justify,
                   ),
                 ),
-                const Center(child: Text('Room rules will appear here soon.')),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  child: Text(
+                    rules.isNotEmpty
+                        ? rules
+                        : 'Room rules will appear here soon.',
+                    style: theme.typography.textTheme.bodyMedium?.copyWith(
+                      color: theme.colors.body,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
               ],
             ),
           ),

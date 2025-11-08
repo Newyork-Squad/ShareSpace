@@ -1,6 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:share_space/data/repository/room_details_repository_impl.dart';
 import 'package:share_space/data/repository/workspace_repository_impl.dart';
+import 'package:share_space/domain/repository/room_details_repository.dart';
 import 'package:share_space/domain/repository/workspace_repository.dart';
+import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
 import '../data/remote/dio_client.dart';
 import '../data/remote/workspace_api_service.dart';
 import '../data/remote/workspace_api_service_impl.dart';
@@ -8,7 +11,6 @@ import '../data/remote/workspace_api_service_impl.dart';
 final getIt = GetIt.instance;
 
 void setupDependencies() {
-
   getIt.registerLazySingleton(() => DioClient.instance);
 
   getIt.registerLazySingleton<WorkspaceApiService>(
@@ -17,5 +19,13 @@ void setupDependencies() {
 
   getIt.registerLazySingleton<WorkspaceRepository>(
     () => WorkspaceRepositoryImpl(getIt()),
+  );
+
+  getIt.registerLazySingleton<RoomDetailsRepository>(
+    () => RoomDetailsRepositoryImpl(getIt()),
+  );
+
+  getIt.registerFactory(
+    () => GetRoomDetailsUseCase(getIt()),
   );
 }

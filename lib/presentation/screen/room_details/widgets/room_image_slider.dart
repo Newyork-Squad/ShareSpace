@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 
 class RoomImageSlider extends StatelessWidget {
+  static const _placeholderImage = 'assets/images/room_image.png';
+
   final List<String> images;
   final String rate;
-  final ValueNotifier<int> currentIndex;
+  final int currentIndex;
   final PageController controller;
+  final ValueChanged<int> onPageChanged;
 
   const RoomImageSlider({
     super.key,
@@ -14,11 +17,15 @@ class RoomImageSlider extends StatelessWidget {
     required this.currentIndex,
     required this.controller,
     required this.rate,
+    required this.onPageChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
+    final displayImages =
+        images.isNotEmpty ? images : const [_placeholderImage];
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -26,16 +33,12 @@ class RoomImageSlider extends StatelessWidget {
           height: 266,
           child: PageView.builder(
             controller: controller,
-            itemCount: images.length,
-            onPageChanged: (index) => currentIndex.value = index,
-            itemBuilder: (context, index) => Image.asset(
-              images[index],
-              fit: BoxFit.cover,
-              width: double.infinity,
-            ),
+            itemCount: displayImages.length,
+            onPageChanged: onPageChanged,
+            itemBuilder: (context, index) =>
+                _buildImage(displayImages[index]),
           ),
         ),
-
         Positioned(
           top: 210,
           child: ClipRRect(
@@ -44,36 +47,59 @@ class RoomImageSlider extends StatelessWidget {
               filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
               child: Container(
                 color: theme.colors.onPrimaryStroke,
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-
-                child: ValueListenableBuilder<int>(
-                  valueListenable: currentIndex,
-                  builder: (_, current, __) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        images.length,
-                        (index) => AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          width: current == index ? 8 : 5,
-                          height: current == index ? 8 : 5,
-                          decoration: BoxDecoration(
-                            color: current == index
-                                ? theme.colors.onPrimary
-                                : theme.colors.onPrimaryBody,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    displayImages.length,
+                    (index) => AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      width: currentIndex == index ? 8 : 5,
+                      height: currentIndex == index ? 8 : 5,
+                      decoration: BoxDecoration(
+                        color: currentIndex == index
+                            ? theme.colors.onPrimary
+                            : theme.colors.onPrimaryBody,
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                    );
-                  },
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildImage(String image) {
+    final isNetworkImage = image.startsWith('http');
+    final placeholder = Image.asset(
+      _placeholderImage,
+      fit: BoxFit.cover,
+      width: double.infinity,
+    );
+
+    if (isNetworkImage) {
+      return Image.network(
+        image,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return placeholder;
+        },
+        errorBuilder: (_, __, ___) => placeholder,
+      );
+    }
+
+    return Image.asset(
+      image,
+      fit: BoxFit.cover,
+      width: double.infinity,
     );
   }
 }
