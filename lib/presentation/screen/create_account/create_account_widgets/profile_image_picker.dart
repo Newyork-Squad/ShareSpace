@@ -1,11 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // ✅ استيراد مكتبة SVG
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../design_system/colors/app_color.dart';
 
 class ProfileImagePicker extends StatefulWidget {
-  const ProfileImagePicker({super.key});
+  final Function(String?)? onImageSelected;
+
+  const ProfileImagePicker({
+    super.key,
+    this.onImageSelected,
+  });
 
   @override
   State<ProfileImagePicker> createState() => _ProfileImagePickerState();
@@ -23,6 +28,8 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
       setState(() {
         _selectedImage = File(pickedFile.path);
       });
+
+      widget.onImageSelected?.call(pickedFile.path);
     }
   }
 
@@ -63,7 +70,6 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
             ),
           ),
         ),
-
         if (hasImage)
           Positioned(
             bottom: -28,
