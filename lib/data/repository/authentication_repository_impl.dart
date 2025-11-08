@@ -8,7 +8,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationRepositoryImpl(this._apiService);
 
   @override
-  Future<bool> login(String username, String password) {
-    return _apiService.login(username, password);
+  Future<bool> login(String phoneNumber, String password) {
+    return _apiService.login(phoneNumber, password);
   }
 }
