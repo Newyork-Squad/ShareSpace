@@ -5,9 +5,14 @@ import '../../../design_system/theme/app_theme.dart';
 import 'listing_card.dart';
 
 class WorkspacesGrid extends StatelessWidget {
-  const WorkspacesGrid({required this.category, super.key});
+  const WorkspacesGrid({
+    required this.category,
+    required this.onClick,
+    super.key,
+  });
 
   final Category category;
+  final Function(String) onClick;
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +25,18 @@ class WorkspacesGrid extends StatelessWidget {
         separatorBuilder: (context, index) => const SizedBox(width: 4),
         itemBuilder: (context, index) => SizedBox(
           width: 328,
-          child: ListingCard(
-            imageUrl: category.workspaces[index].imageUrls[0],
-            rating: category.workspaces[index].rate,
-            title: category.workspaces[index].name,
-            price: category.workspaces[index].pricePerHour.toInt().toString(),
-            location: category.workspaces[index].locationName,
-            amenities: category.workspaces[index].services
-                .map((e) => e.name)
-                .toList(),
+          child: GestureDetector(
+            onTap: () => onClick(category.workspaces[index].id.toString()),
+            child: ListingCard(
+              imageUrl: category.workspaces[index].imageUrls[0],
+              rating: category.workspaces[index].rate,
+              title: category.workspaces[index].name,
+              price: category.workspaces[index].pricePerHour.toInt().toString(),
+              location: category.workspaces[index].locationName,
+              amenities: category.workspaces[index].services
+                  .map((e) => e.name)
+                  .toList(),
+            ),
           ),
         ),
       ),

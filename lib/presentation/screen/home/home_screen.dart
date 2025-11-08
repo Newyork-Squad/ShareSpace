@@ -9,6 +9,7 @@ import 'package:share_space/presentation/screen/home/widget/workspaces_grid.dart
 
 import '../../../di/injection.dart';
 import '../../design_system/theme/app_theme.dart';
+import '../../routes/routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -119,7 +120,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 12),
-                                    WorkspacesGrid(category: category),
+                                    WorkspacesGrid(
+                                      onClick: (roomId) {
+                                        Navigator.pushNamed(
+                                          context,
+                                          Routes.roomDetailsScreen,
+                                          arguments: roomId,
+                                        );
+                                      },
+                                      category: category,
+                                    ),
                                   ],
                                 )
                                 .toList(),
@@ -139,6 +149,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               const SizedBox(height: 12),
                               WorkspacesGrid(
+                                onClick: (roomId) {
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.roomDetailsScreen,
+                                    arguments: roomId,
+                                  );
+                                },
                                 category: state.categories[state.selectedIndex],
                               ),
                             ],
@@ -150,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state is HomeError) {
             return Center(
               child: Text(
-                "Please Check your connection", //state.message,
+                "Please Check your internet connection", //state.message,
                 style: theme.typography.textTheme.labelSmall,
               ),
             );
