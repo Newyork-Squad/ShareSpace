@@ -9,7 +9,7 @@ class AuthApiService {
   final Dio _dio;
   AuthApiService(this._dio);
 
-  Future<bool> login(String phoneNumber, String password) async{
+  Future<bool> login(String phoneNumber, String password) async {
     try {
       final response = await _dio.post(
         ApiConstants.login,
@@ -18,6 +18,7 @@ class AuthApiService {
           'password': password,
         },
       );
+
       if (response.data['success'] == true) {
         final token = response.data['data']['accessToken'];
         debugPrint("Login successful, token: $token");
@@ -26,6 +27,42 @@ class AuthApiService {
       } else {
         throw Exception(
           response.data['message'] ?? 'Login failed',
+        );
+      }
+    } on DioException catch (e) {
+      throw handleError(e);
+    }
+  }
+
+  Future<bool> createAccount({
+    required String email,
+    required String password,
+    required String name,
+    required String phoneNumber,
+    required String gender,
+    String? imageUrl,
+    String? bio,
+  }) async {
+    try {
+      final response = await _dio.post(
+        ApiConstants.signup,
+        data: {
+          'email': email,
+          'password': password,
+          'name': name,
+          'phoneNumber': phoneNumber,
+          'gender': gender,
+          'imageUrl': imageUrl ?? '',
+          'bio': bio ?? '',
+        },
+      );
+
+      if (response.data['success'] == true) {
+        debugPrint("Create account successful: ${response.data['message']}");
+        return true;
+      } else {
+        throw Exception(
+          response.data['message'] ?? 'Failed to create account',
         );
       }
     } on DioException catch (e) {
