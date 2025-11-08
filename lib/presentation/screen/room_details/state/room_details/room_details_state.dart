@@ -15,6 +15,7 @@ class RoomDetailsLoaded extends RoomDetailsState {
   final String ownerRole;
   final String ownerImagePath;
   final String roomDescription;
+  final String roomRules;
   final String price;
   final String rate;
   final int currentImageIndex;
@@ -29,6 +30,7 @@ class RoomDetailsLoaded extends RoomDetailsState {
     required this.ownerRole,
     required this.ownerImagePath,
     required this.roomDescription,
+    required this.roomRules,
     required this.price,
     required this.rate,
     required this.currentImageIndex,
@@ -44,6 +46,7 @@ class RoomDetailsLoaded extends RoomDetailsState {
     String? ownerRole,
     String? ownerImagePath,
     String? roomDescription,
+    String? roomRules,
     String? price,
     String? rate,
     int? currentImageIndex,
@@ -58,6 +61,7 @@ class RoomDetailsLoaded extends RoomDetailsState {
       ownerRole: ownerRole ?? this.ownerRole,
       ownerImagePath: ownerImagePath ?? this.ownerImagePath,
       roomDescription: roomDescription ?? this.roomDescription,
+      roomRules: roomRules ?? this.roomRules,
       price: price ?? this.price,
       rate: rate ?? this.rate,
       currentImageIndex: currentImageIndex ?? this.currentImageIndex,
