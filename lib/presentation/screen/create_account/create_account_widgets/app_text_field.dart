@@ -10,6 +10,8 @@ class AppTextField extends StatefulWidget {
   final bool isPassword;
   final int maxLines;
   final bool isBioField;
+  final String? errorText; // ✅ إضافة errorText
+  final Function(String)? onChanged; // ✅ إضافة onChanged callback
 
   const AppTextField({
     super.key,
@@ -19,6 +21,8 @@ class AppTextField extends StatefulWidget {
     this.isPassword = false,
     this.maxLines = 1,
     this.isBioField = false,
+    this.errorText,
+    this.onChanged,
   });
 
   @override
@@ -33,7 +37,7 @@ class _AppTextFieldState extends State<AppTextField> {
       return Padding(
         padding: const EdgeInsets.only(left: 16, right: 12),
         child: SvgPicture.asset(
-          'assets/icons/security_lock_icon.svg', // هنا استخدمنا svg
+          'assets/icons/security_lock_icon.svg',
           width: 24,
           height: 24,
         ),
@@ -54,70 +58,91 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final hasError = widget.errorText != null;
+    final borderColor = hasError ? AppColors.light.red : AppColors.light.stroke;
+
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(widget.isBioField ? 16 : 30),
       borderSide: BorderSide(
-        color: AppColors.light.stroke,
+        color: borderColor,
         width: 0.5,
       ),
     );
 
-    return SizedBox(
-      height: widget.isBioField ? 150 : null,
-      child: TextField(
-        controller: widget.controller,
-        obscureText: widget.isPassword && _obscure,
-        obscuringCharacter: '*',
-        maxLines: widget.isBioField ? null : widget.maxLines,
-        expands: widget.isBioField,
-        textAlignVertical: widget.isBioField
-            ? TextAlignVertical.top
-            : TextAlignVertical.center,
-        style: AppTypography().textTheme.bodyMedium?.copyWith(
-          color: AppColors.light.title,
-        ),
-        decoration: InputDecoration(
-          hintText: widget.hintText,
-          hintStyle: AppTypography().textTheme.labelMedium?.copyWith(
-            color: AppColors.light.body,
-          ),
-          prefixIcon: _buildPrefixIcon(),
-          prefixIconConstraints: const BoxConstraints(
-            minWidth: 40,
-            minHeight: 40,
-          ),
-          suffixIcon: widget.isPassword
-              ? Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: GestureDetector(
-              onTap: () => setState(() => _obscure = !_obscure),
-              child: SvgPicture.asset(
-                _obscure
-                    ? 'assets/icons/hide_password_icon.svg'
-                    : 'assets/icons/show_password_icon.svg',
-                width: 20,
-                height: 20,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: widget.isBioField ? 150 : null,
+          child: TextField(
+            controller: widget.controller,
+            obscureText: widget.isPassword && _obscure,
+            obscuringCharacter: '*',
+            maxLines: widget.isBioField ? null : widget.maxLines,
+            expands: widget.isBioField,
+            textAlignVertical: widget.isBioField
+                ? TextAlignVertical.top
+                : TextAlignVertical.center,
+            style: AppTypography().textTheme.bodyMedium?.copyWith(
+              color: AppColors.light.title,
+            ),
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              hintStyle: AppTypography().textTheme.labelMedium?.copyWith(
                 color: AppColors.light.body,
               ),
+              prefixIcon: _buildPrefixIcon(),
+              prefixIconConstraints: const BoxConstraints(
+                minWidth: 40,
+                minHeight: 40,
+              ),
+              suffixIcon: widget.isPassword
+                  ? Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: GestureDetector(
+                  onTap: () => setState(() => _obscure = !_obscure),
+                  child: SvgPicture.asset(
+                    _obscure
+                        ? 'assets/icons/hide_password_icon.svg'
+                        : 'assets/icons/show_password_icon.svg',
+                    width: 20,
+                    height: 20,
+                    color: AppColors.light.body,
+                  ),
+                ),
+              )
+                  : null,
+              suffixIconConstraints: const BoxConstraints(
+                minWidth: 40,
+                minHeight: 40,
+              ),
+              filled: widget.isBioField || widget.isPassword,
+              fillColor:
+              widget.isPassword ? Colors.white : AppColors.light.surfaceLow,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 15,
+              ),
+              border: border,
+              enabledBorder: border,
+              focusedBorder: border,
+              errorBorder: border,
+              focusedErrorBorder: border,
             ),
-          )
-              : null,
-          suffixIconConstraints: const BoxConstraints(
-            minWidth: 40,
-            minHeight: 40,
+            onChanged: widget.onChanged,
           ),
-          filled: widget.isBioField || widget.isPassword,
-          fillColor:
-          widget.isPassword ? Colors.white : AppColors.light.surfaceLow,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 15,
-          ),
-          border: border,
-          enabledBorder: border,
-          focusedBorder: border,
         ),
-      ),
+        if (hasError)
+          Padding(
+            padding: const EdgeInsets.only(left: 16, top: 8),
+            child: Text(
+              widget.errorText!,
+              style: AppTypography().textTheme.labelSmall?.copyWith(
+                color: AppColors.light.red,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

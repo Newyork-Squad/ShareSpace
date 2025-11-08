@@ -1,19 +1,11 @@
 import 'package:share_space/domain/repository/authentication_repository.dart';
 
-import '../remote/auth_api_service.dart';
+class CreateAccountUseCase {
+  final AuthenticationRepository _repository;
 
-class AuthenticationRepositoryImpl implements AuthenticationRepository {
-  final AuthApiService _apiService;
+  CreateAccountUseCase(this._repository);
 
-  AuthenticationRepositoryImpl(this._apiService);
-
-  @override
-  Future<bool> login(String phoneNumber, String password) {
-    return _apiService.login(phoneNumber, password);
-  }
-
-  @override
-  Future<bool> createAccount({
+  Future<void> execute({
     required String email,
     required String password,
     required String name,
@@ -21,8 +13,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String gender,
     String? imageUrl,
     String? bio,
-  }) {
-    return _apiService.createAccount(
+  }) async {
+    final success = await _repository.createAccount(
       email: email,
       password: password,
       name: name,
@@ -31,5 +23,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       imageUrl: imageUrl,
       bio: bio,
     );
+
+    if (!success) {
+      throw Exception('Failed to create account');
+    }
   }
 }

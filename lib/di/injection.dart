@@ -13,6 +13,7 @@ import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 import '../data/remote/dio_client.dart';
 import '../data/remote/workspace_api_service.dart';
 import '../data/remote/workspace_api_service_impl.dart';
+import '../domain/usecase/authentication/create_account_usecase.dart';
 
 final getIt = GetIt.instance;
 
@@ -31,17 +32,19 @@ void setupDependencies() {
     () => RoomDetailsRepositoryImpl(getIt()),
   );
 
-  getIt.registerFactory(
-    () => GetRoomDetailsUseCase(getIt()),
-  );
+  getIt.registerFactory(() => GetRoomDetailsUseCase(getIt()));
 
   getIt.registerLazySingleton(() => AuthApiService(getIt()));
+
+  getIt.registerLazySingleton(() => LoginUseCase(getIt()));
 
   getIt.registerLazySingleton<AuthenticationRepository>(
     () => AuthenticationRepositoryImpl(getIt()),
   );
 
-  getIt.registerLazySingleton(() => LoginUseCase(getIt()));
-
   getIt.registerFactory(() => LoginCubit(getIt()));
+
+  getIt.registerFactory<CreateAccountUseCase>(
+    () => CreateAccountUseCase(getIt()),
+  );
 }
