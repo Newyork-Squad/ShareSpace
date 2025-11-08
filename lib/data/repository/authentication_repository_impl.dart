@@ -11,4 +11,25 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<bool> login(String username, String password) {
     return _apiService.login(username, password);
   }
+
+  @override
+  Future<bool> createAccount({
+    required String email,
+    required String password,
+    required String name,
+    required String phoneNumber,
+    required String gender,
+    String? imageUrl,
+    String? bio,
+  }) {
+    return _apiService.createAccount(
+      email: email,
+      password: password,
+      name: name,
+      phoneNumber: phoneNumber,
+      gender: gender,
+      imageUrl: imageUrl,
+      bio: bio,
+    );
+  }
 }
