@@ -17,10 +17,12 @@ class RoomOwnerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
+    final avatarProvider = _resolveImageProvider(imagePath);
     return
       ListTile(
       leading: CircleAvatar(
-        backgroundImage: Image.asset(imagePath).image,
+        backgroundImage: avatarProvider,
+        backgroundColor: theme.colors.surfaceLow,
       ),
       title: Text(
         name,
@@ -46,4 +48,14 @@ class RoomOwnerSection extends StatelessWidget {
         },
       ),
     );  }
+
+  ImageProvider _resolveImageProvider(String path) {
+    if (path.isNotEmpty && path.startsWith('http')) {
+      return NetworkImage(path);
+    }
+    if (path.isNotEmpty) {
+      return AssetImage(path);
+    }
+    return const AssetImage('assets/images/owner.png');
+  }
 }
