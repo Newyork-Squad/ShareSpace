@@ -36,13 +36,7 @@ void setupDependencies() {
 
   getIt.registerLazySingleton(() => AuthApiService(getIt()));
 
-  getIt.registerLazySingleton<AuthenticationRepository>(
-    () => AuthenticationRepositoryImpl(getIt()),
-  );
-
   getIt.registerLazySingleton(() => LoginUseCase(getIt()));
-
-  getIt.registerLazySingleton<AuthApiService>(() => AuthApiService(getIt()));
 
   getIt.registerLazySingleton<AuthenticationRepository>(
     () => AuthenticationRepositoryImpl(getIt()),
