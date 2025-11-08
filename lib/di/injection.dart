@@ -10,6 +10,7 @@ import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
 import '../data/remote/dio_client.dart';
 import '../data/remote/workspace_api_service.dart';
 import '../data/remote/workspace_api_service_impl.dart';
+import '../domain/usecase/authentication/create_account_usecase.dart';
 
 final getIt = GetIt.instance;
 
@@ -37,6 +38,10 @@ void setupDependencies() {
   );
 
   getIt.registerLazySingleton<AuthenticationRepository>(
-    () => AuthenticationRepositoryImpl(getIt()),
+        () => AuthenticationRepositoryImpl(getIt()),
+  );
+
+  getIt.registerFactory<CreateAccountUseCase>(
+        () => CreateAccountUseCase(getIt()),
   );
 }
