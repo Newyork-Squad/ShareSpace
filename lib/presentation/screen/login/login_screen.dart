@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _validateForm() {
     final valid =
         phoneController.text.trim().isNotEmpty &&
-            passwordController.text.trim().isNotEmpty;
+        passwordController.text.trim().isNotEmpty;
     if (isFormValid.value != valid) {
       isFormValid.value = valid;
     }
@@ -105,18 +105,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(height: 24),
                               Text(
                                 "Welcome Back",
-                                style: AppTypography()
-                                    .textTheme
-                                    .titleMedium
+                                style: AppTypography().textTheme.titleMedium
                                     ?.copyWith(color: AppColors.light.title),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 "Please enter your phone number and password to access your booking",
                                 textAlign: TextAlign.center,
-                                style: AppTypography()
-                                    .textTheme
-                                    .bodyMedium
+                                style: AppTypography().textTheme.bodyMedium
                                     ?.copyWith(color: AppColors.light.body),
                               ),
                               const SizedBox(height: 32),
@@ -137,8 +133,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             valueListenable: isFormValid,
                             builder: (context, valid, _) {
                               return Container(
-                                color: AppColors.light.surfaceLow
-                                    .withOpacity(0.9),
+                                color: AppColors.light.surfaceLow.withValues(
+                                  alpha: 0.9,
+                                ),
                                 padding: const EdgeInsets.only(
                                   left: 16,
                                   right: 16,
