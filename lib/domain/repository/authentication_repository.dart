@@ -10,4 +10,8 @@ abstract class AuthenticationRepository {
     String? imageUrl,
     String? bio,
   });
+
+  Future<bool> isLoggedIn();
+
+  Future<void> logout();
 }
