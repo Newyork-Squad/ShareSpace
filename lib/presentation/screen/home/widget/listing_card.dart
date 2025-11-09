@@ -28,6 +28,7 @@ class ListingCard extends StatelessWidget {
     final theme = AppTheme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +66,7 @@ class ListingCard extends StatelessWidget {
           top: 4,
           left: 4,
           child: CustomChip(
-            label: rating.toString(),
+            label: rating.toInt().toString(),
             labelColor: theme.colors.yellow,
             icon: "assets/icons/star.svg",
           ),
