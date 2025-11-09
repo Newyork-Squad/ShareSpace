@@ -32,4 +32,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       bio: bio,
     );
   }
+
+  @override
+  Future<bool> isLoggedIn() {
+    return _apiService.isLoggedIn();
+  }
+
+  @override
+  Future<void> logout() {
+    return _apiService.logout();
+  }
 }
