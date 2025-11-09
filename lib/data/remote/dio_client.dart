@@ -1,56 +1,188 @@
-import 'package:dio/dio.dart';
+import 'dart:async';
 
-import '../util/secure_storage.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+
+import '../local/token_storage.dart';
 import 'api_constants.dart';
 
 class DioClient {
   static Dio? _dio;
+  static bool _isRefreshing = false;
+  static final List<void Function()> _refreshCallbacks = [];
+  static TokenStorage? _tokenStorage;
+  static bool _isInitialized = false;
+
+  DioClient(TokenStorage tokenStorage) {
+    _tokenStorage = tokenStorage;
+    _initializeDio();
+  }
+
+  static void _initializeDio() {
+    if (_isInitialized) return;
+
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstants.apiBaseUrl,
+        connectTimeout: const Duration(seconds: 1000),
+        receiveTimeout: const Duration(seconds: 1000),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      ),
+    );
+
+    _dio!.interceptors.add(
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        error: true,
+        requestHeader: true,
+        responseHeader: false,
+      ),
+    );
+
+    _dio!.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          if (options.path.contains('auth/login') ||
+              options.path.contains('auth/register')) {
+            return handler.next(options);
+          }
+
+          final token = await _tokenStorage?.getAccessToken();
+          if (token != null) {
+            options.headers['Authorization'] = 'Bearer $token';
+            debugPrint('Adding token to request: ${options.path}');
+          } else {
+            debugPrint('No token found for request: ${options.path}');
+          }
+          return handler.next(options);
+        },
+        onError: (error, handler) async {
+          if (error.response?.statusCode == 401) {
+            if (error.requestOptions.path.contains('auth/login') ||
+                error.requestOptions.path.contains('auth/register') ||
+                error.requestOptions.path.contains('auth/refresh')) {
+              return handler.next(error);
+            }
+
+            try {
+              if (_isRefreshing) {
+                await _waitForRefresh();
+                final response = await _retry(error.requestOptions);
+                return handler.resolve(response);
+              }
+
+              _isRefreshing = true;
+              final newAccessToken = await _refreshToken();
+
+              if (newAccessToken != null) {
+                error.requestOptions.headers['Authorization'] =
+                    'Bearer $newAccessToken';
+
+                _notifyRefreshCallbacks();
+
+                final response = await _retry(error.requestOptions);
+                return handler.resolve(response);
+              } else {
+                await _tokenStorage?.deleteTokens();
+                return handler.next(error);
+              }
+            } catch (e) {
+              debugPrint('Error refreshing token: $e');
+              await _tokenStorage?.deleteTokens();
+              return handler.next(error);
+            } finally {
+              _isRefreshing = false;
+              _refreshCallbacks.clear();
+            }
+          }
+
+          return handler.next(error);
+        },
+      ),
+    );
+
+    _isInitialized = true;
+  }
 
   static Dio get instance {
-    if (_dio == null) {
-      _dio = Dio(
-        BaseOptions(
-          baseUrl: ApiConstants.apiBaseUrl,
-          connectTimeout: const Duration(seconds: 30),
-          receiveTimeout: const Duration(seconds: 30),
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-        ),
-      );
-
-      // Add interceptors for logging and token management
-      _dio!.interceptors.add(
-        LogInterceptor(
-          requestBody: true,
-          responseBody: true,
-          error: true,
-          requestHeader: true,
-          responseHeader: false,
-        ),
-      );
-
-      // Add auth interceptor
-      _dio!.interceptors.add(
-        InterceptorsWrapper(
-          onRequest: (options, handler) async {
-            final token = await SecureStorage().getToken();
-            if (token != null) {
-              options.headers['Authorization'] = 'Bearer $token';
-            }
-            return handler.next(options);
-          },
-          onError: (error, handler) async {
-            // Handle 401 errors and refresh token
-            if (error.response?.statusCode == 401) {
-              // Refresh token logic here
-            }
-            return handler.next(error);
-          },
-        ),
+    if (_dio == null || !_isInitialized) {
+      throw StateError(
+        'DioClient not initialized. Call DioClient(tokenStorage) first.',
       );
     }
     return _dio!;
+  }
+
+  static Future<void> _waitForRefresh() async {
+    final completer = Completer<void>();
+    _refreshCallbacks.add(() => completer.complete());
+    return completer.future;
+  }
+
+  static void _notifyRefreshCallbacks() {
+    for (var callback in _refreshCallbacks) {
+      callback();
+    }
+  }
+
+  static Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
+    final options = Options(
+      method: requestOptions.method,
+      headers: requestOptions.headers,
+    );
+
+    return _dio!.request<dynamic>(
+      requestOptions.path,
+      data: requestOptions.data,
+      queryParameters: requestOptions.queryParameters,
+      options: options,
+    );
+  }
+
+  static Future<String?> _refreshToken() async {
+    try {
+      final refreshToken = await _tokenStorage?.getRefreshToken();
+      if (refreshToken == null) {
+        debugPrint('No refresh token available');
+        return null;
+      }
+
+      debugPrint('Attempting to refresh token...');
+      final response = await _dio!.post(
+        ApiConstants.refresh,
+        data: {'refreshToken': refreshToken},
+        options: Options(headers: {'Content-Type': 'application/json'}),
+      );
+
+      if (response.data['success'] == true) {
+        final newAccessToken = response.data['data']['accessToken'];
+        final newRefreshToken = response.data['data']['refreshToken'];
+
+        await _tokenStorage?.saveTokens(
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken,
+        );
+
+        debugPrint('Token refreshed successfully');
+        return newAccessToken;
+      }
+      return null;
+    } catch (e) {
+      debugPrint('Failed to refresh token: $e');
+      return null;
+    }
+  }
+
+  static void resetInstance() {
+    _dio?.close();
+    _dio = null;
+    _isRefreshing = false;
+    _refreshCallbacks.clear();
+    _tokenStorage = null;
+    _isInitialized = false;
   }
 }
