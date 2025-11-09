@@ -89,12 +89,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           },
                           separatorBuilder: (context, index) =>
-                              const SizedBox(height: 8, width: 8),
+                              const SizedBox(width: 8),
                         ),
                       ),
                     ),
-                    const SliverToBoxAdapter(child: SizedBox(height: 24)),
-
+                    const SliverToBoxAdapter(child: SizedBox(height: 12)),
                     // Cards
                     SliverToBoxAdapter(
                       child: state.selectedIndex == 0
@@ -122,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                         ),
                                       ),
-                                      const SizedBox(height: 12),
+                                      // const SizedBox(height: 12),
                                       WorkspacesGrid(
                                         onClick: (roomId) {
                                           Navigator.pushNamed(
