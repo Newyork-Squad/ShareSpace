@@ -14,8 +14,7 @@ class Category {
 
   String getImage() {
     try {
-      final img = workspaces.first.imageUrls[0];
-      return img;
+      return workspaces.first.imageUrls[0];
     } catch (e) {
       return '';
     }
