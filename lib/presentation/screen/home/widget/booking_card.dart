@@ -20,7 +20,7 @@ class BookingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
     return SizedBox(
-      height: 180,
+      height: 172,
       width: 320,
       child: Stack(
         children: [
@@ -63,7 +63,7 @@ class BookingCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 16,
+            right: 0,
             bottom: -8,
             child: ElevatedButton(
               style: ButtonStyle(
