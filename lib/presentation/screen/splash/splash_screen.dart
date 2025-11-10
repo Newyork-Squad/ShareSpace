@@ -2,8 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share_space/presentation/routes/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../di/injection.dart';
+import '../../../domain/usecase/authentication/is_loggedIn_usecase.dart';
+
+// TODO: Implement splash screen properly using native launch screen instead of fixed delay.
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,16 +27,22 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigateToNextScreen() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    final prefs = await SharedPreferences.getInstance();
+    final results = await Future.wait<dynamic>([
+      SharedPreferences.getInstance(),
+      getIt<IsLoggedInUseCase>()(),
+    ]);
+
+    final prefs = results[0] as SharedPreferences;
+    final isLoggedIn = results[1] as bool;
     final seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
 
     if (!mounted) return;
 
-    if (seenOnboarding) {
-      Navigator.pushReplacementNamed(context, Routes.loginScreen);
-    } else {
-      Navigator.pushReplacementNamed(context, Routes.onboardingScreen);
-    }
+    final nextRoute = seenOnboarding
+        ? (isLoggedIn ? Routes.appNavigationBar : Routes.loginScreen)
+        : Routes.onboardingScreen;
+
+    Navigator.pushReplacementNamed(context, nextRoute);
   }
 
   @override
