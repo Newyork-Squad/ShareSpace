@@ -72,6 +72,7 @@ void setupDependencies() {
       getIt(),
       getIt(),
       getIt(),
+      getIt(),
     ),
   );
   

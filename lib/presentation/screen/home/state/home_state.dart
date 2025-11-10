@@ -53,7 +53,7 @@ class HomeLoaded extends HomeState {
     this.popular,
     this.nearToYou,
     this.topRated,
-    this.featured
+    this.featured,
     this.userName,
     this.userImageUrl,
   );
