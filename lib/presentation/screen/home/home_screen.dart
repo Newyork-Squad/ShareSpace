@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                         ),
                                       ),
-                                      // const SizedBox(height: 12),
+                                      const SizedBox(height: 12),
                                       WorkspacesGrid(
                                         onClick: (roomId) {
                                           Navigator.pushNamed(
@@ -134,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         category: category,
                                       ),
+                                      const SizedBox(height: 12),
                                     ],
                                   )
                                   .toList(),
