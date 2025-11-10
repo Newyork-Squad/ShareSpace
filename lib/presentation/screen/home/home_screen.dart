@@ -52,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemCount: state.categories.length,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           itemBuilder: (BuildContext context, int index) {
                             if (index == 0) {
                               return const SizedBox.shrink();
@@ -63,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
+                            if (index == 0) return const SizedBox(width: 0);
                             return const SizedBox(width: 16);
                           },
                         ),
