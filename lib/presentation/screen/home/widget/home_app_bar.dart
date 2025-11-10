@@ -127,6 +127,10 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       ),
                     ),
                     child: TextField(
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.searchScreen);
+                      },
+                      readOnly: true,
                       decoration: InputDecoration(
                         hintText: 'Search',
                         hintStyle: theme.typography.textTheme.labelMedium
