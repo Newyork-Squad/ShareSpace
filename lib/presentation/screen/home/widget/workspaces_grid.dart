@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share_space/presentation/screen/home/state/category.dart';
 
 import '../../../design_system/theme/app_theme.dart';
+import '../../../util/service_mapper.dart';
 import 'listing_card.dart';
 
 class WorkspacesGrid extends StatelessWidget {
@@ -37,7 +38,7 @@ class WorkspacesGrid extends StatelessWidget {
             price: category.workspaces[index].pricePerHour.toInt().toString(),
             location: category.workspaces[index].locationName,
             amenities: category.workspaces[index].services
-                .map((e) => e.name)
+                .map((e) => serviceLabel(e))
                 .toList(),
           ),
         ),
