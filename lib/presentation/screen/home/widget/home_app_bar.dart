@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../design_system/theme/app_theme.dart';
+import '../../../routes/routes.dart';
 
 class HomeAppBar extends StatefulWidget {
   final String userName;
@@ -38,12 +39,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
           ),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                16,
-                32,
-                16,
-                12,
-              ),
+              padding: const EdgeInsets.fromLTRB(16, 32, 16, 12),
               child: Column(
                 children: [
                   Row(
@@ -77,7 +73,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                               const SizedBox(width: 4),
                               Text(
                                 widget.location,
-                                style: theme.typography.textTheme.bodyMedium
+                                style: theme.typography.textTheme.labelSmall
                                     ?.copyWith(
                                       color: theme.colors.onPrimaryBody,
                                     ),
@@ -86,6 +82,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                               Icon(
                                 Icons.keyboard_arrow_down,
                                 color: theme.colors.onPrimaryBody,
+                                size: 16,
                               ),
                             ],
                           ),
@@ -146,7 +143,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                         ),
                       ),
                       style: theme.typography.textTheme.labelMedium?.copyWith(
-                        color: theme.colors.onPrimary,
+                        color: theme.colors.onPrimaryBody,
                       ),
                     ),
                   ),
