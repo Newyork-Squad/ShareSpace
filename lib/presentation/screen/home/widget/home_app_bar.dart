@@ -110,12 +110,34 @@ class _HomeAppBarState extends State<HomeAppBar> {
                             width: 24,
                             height: 24,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: theme.colors.primary,
+                                content: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.check_circle_outline,
+                                      color: theme.colors.onPrimary,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'No new notifications. Enjoy your day.',
+                                      style: theme.typography.textTheme.labelMedium
+                                          ?.copyWith(
+                                              color: theme.colors.onPrimary),
+                                    ),
+                                  ],
+                                ),
+                                duration: const Duration(seconds: 4),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
