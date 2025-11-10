@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
+import 'package:share_space/presentation/design_system/typography/app_typography.dart';
 import 'package:share_space/presentation/design_system/widget/custom_chip.dart';
 
 import '../../../util/get_service_icon_path.dart';
@@ -28,22 +29,23 @@ class ListingCard extends StatelessWidget {
     final theme = AppTheme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ImageWithRating(theme),
+            imageWithRating(theme),
             const SizedBox(width: 8),
-            Details(theme),
+            details(theme),
           ],
         ),
-        const SizedBox(height: 12),
-        Amenities(theme),
+        const SizedBox(height: 4),
+        amenitiesRow(theme),
       ],
     );
   }
 
-  Widget ImageWithRating(AppTheme theme) {
+  Widget imageWithRating(AppTheme theme) {
     return Stack(
       children: [
         ClipRRect(
@@ -65,7 +67,7 @@ class ListingCard extends StatelessWidget {
           top: 4,
           left: 4,
           child: CustomChip(
-            label: rating.toString(),
+            label: rating.toInt().toString(),
             labelColor: theme.colors.yellow,
             icon: "assets/icons/star.svg",
           ),
@@ -74,7 +76,7 @@ class ListingCard extends StatelessWidget {
     );
   }
 
-  Widget Details(AppTheme theme) {
+  Widget details(AppTheme theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -96,7 +98,7 @@ class ListingCard extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               price,
-              style: theme.typography.textTheme.labelSmall?.copyWith(
+              style: AppTypography.labelXSmall.copyWith(
                 color: theme.colors.body,
               ),
             ),
@@ -111,7 +113,7 @@ class ListingCard extends StatelessWidget {
               width: 150,
               child: Text(
                 location,
-                style: theme.typography.textTheme.labelSmall?.copyWith(
+                style: AppTypography.labelXSmall.copyWith(
                   color: theme.colors.body,
                 ),
                 maxLines: 1,
@@ -124,11 +126,11 @@ class ListingCard extends StatelessWidget {
     );
   }
 
-  Widget Amenities(AppTheme theme) {
+  Widget amenitiesRow(AppTheme theme) {
     return Wrap(
       alignment: WrapAlignment.start,
       runAlignment: WrapAlignment.start,
-      spacing: 0.0,
+      spacing: 4.0,
       runSpacing: 4.0,
       children: amenities.map((amenity) {
         return CustomChip(label: amenity, icon: getServiceIconPath(amenity));

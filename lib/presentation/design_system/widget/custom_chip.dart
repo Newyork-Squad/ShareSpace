@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 
+import '../typography/app_typography.dart';
+
 class CustomChip extends StatefulWidget {
   final String label;
   Color labelColor;
   final String icon;
   bool isSelected;
   final VoidCallback? onSelect;
+  final int width;
+  final int height;
 
   CustomChip({
     super.key,
@@ -16,6 +20,8 @@ class CustomChip extends StatefulWidget {
     this.icon = '',
     this.isSelected = false,
     this.onSelect,
+    this.width = 37,
+    this.height = 22,
   });
 
   @override
@@ -31,10 +37,10 @@ class _CustomChipState extends State<CustomChip> {
         widget.onSelect?.call();
       }),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: BoxDecoration(
           color: widget.isSelected
-              ?  theme.colors.blueVariant
+              ? theme.colors.blueVariant
               : theme.colors.surface,
           border: Border.all(
             color: widget.isSelected
@@ -42,7 +48,7 @@ class _CustomChipState extends State<CustomChip> {
                 : theme.colors.stroke,
             width: 0.5,
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(100),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -53,15 +59,17 @@ class _CustomChipState extends State<CustomChip> {
                 colorFilter: widget.isSelected
                     ? ColorFilter.mode(theme.colors.primary, BlendMode.srcIn)
                     : null,
-                width: 16,
-                height: 16,
+                width: 12,
+                height: 12,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 2),
             ],
             Text(
               widget.label,
-              style: theme.typography.textTheme.labelSmall?.copyWith(
-                color:  widget.isSelected ? theme.colors.primary : widget.labelColor,
+              style: AppTypography.labelXSmall.copyWith(
+                color: widget.isSelected
+                    ? theme.colors.primary
+                    : widget.labelColor,
               ),
             ),
           ],

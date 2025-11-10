@@ -20,50 +20,51 @@ class BookingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
     return SizedBox(
-      height: 180,
+      height: 172,
       width: 320,
       child: Stack(
         children: [
-          Container(
-            height: 160,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              image: DecorationImage(
-                image: NetworkImage(imageUrl),
-                fit: BoxFit.fill,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12.0,
-                vertical: 20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    label,
-                    style: theme.typography.textTheme.titleMedium?.copyWith(
-                      color: theme.colors.onPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 0),
-                  Text(
-                    "$description\n",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.typography.textTheme.bodySmall?.copyWith(
-                      color: theme.colors.onPrimary,
-                    ),
-                  ),
-                ],
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 160,
+              errorBuilder: (context, error, stackTrace) => Image.network(
+                'https://img-cdn.inc.com/image/upload/f_webp,c_fit,w_1920,q_auto/images/panoramic/getty_517610514_353435.jpg',
+                width: double.infinity,
+                height: 160,
+                fit: BoxFit.cover,
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  label,
+                  style: theme.typography.textTheme.titleMedium?.copyWith(
+                    color: theme.colors.onPrimary,
+                  ),
+                ),
+                const SizedBox(height: 0),
+                Text(
+                  "$description\n",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.typography.textTheme.bodySmall?.copyWith(
+                    color: theme.colors.onPrimary,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Positioned(
-            right: 16,
+            right: 0,
             bottom: -8,
             child: ElevatedButton(
               style: ButtonStyle(
