@@ -3,12 +3,17 @@ import 'package:get_it/get_it.dart';
 import 'package:share_space/data/local/token_storage.dart';
 import 'package:share_space/data/local/token_storage_impl.dart';
 import 'package:share_space/data/remote/auth_api_service.dart';
+import 'package:share_space/data/remote/user_api_service.dart';
+import 'package:share_space/data/remote/user_api_service_impl.dart';
 import 'package:share_space/data/repository/authentication_repository_impl.dart';
 import 'package:share_space/data/repository/room_details_repository_impl.dart';
+import 'package:share_space/data/repository/user_repository_impl.dart';
 import 'package:share_space/data/repository/workspace_repository_impl.dart';
+import 'package:share_space/domain/repository/UserRepository.dart';
 import 'package:share_space/domain/repository/authentication_repository.dart';
 import 'package:share_space/domain/repository/room_details_repository.dart';
 import 'package:share_space/domain/repository/workspace_repository.dart';
+import 'package:share_space/domain/usecase/User/getUserDetailsUseCase.dart';
 import 'package:share_space/domain/usecase/authentication/login_usecase.dart';
 import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
 import 'package:share_space/domain/usecase/workspace/get_best.dart';
@@ -45,6 +50,12 @@ void setupDependencies() {
     () => WorkspaceRepositoryImpl(getIt()),
   );
 
+  getIt.registerLazySingleton<UserRepository>(
+        () => UserRepositoryImpl(getIt()),
+  );
+
+
+
   getIt.registerLazySingleton(() => GetBestUseCase(getIt()));
   getIt.registerLazySingleton(() => GetBestPriceUseCase(getIt()));
   getIt.registerLazySingleton(() => GetPopularUseCase(getIt()));
@@ -63,6 +74,8 @@ void setupDependencies() {
       getIt(),
     ),
   );
+  
+  getIt.registerLazySingleton(() => GetUserDetailsUseCase(getIt()));
 
   getIt.registerLazySingleton<RoomDetailsRepository>(
     () => RoomDetailsRepositoryImpl(getIt()),
@@ -72,6 +85,9 @@ void setupDependencies() {
 
   getIt.registerLazySingleton<AuthApiService>(
     () => AuthApiServiceImpl(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<UserApiService>(
+        () => UserApiServiceImpl(getIt()),
   );
 
   getIt.registerLazySingleton(() => LoginUseCase(getIt()));

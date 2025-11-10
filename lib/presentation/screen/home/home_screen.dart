@@ -41,9 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CustomScrollView(
                   slivers: [
                     HomeAppBar(
-                      userName: "Ahmed Hussein",
+                      userName: state.userName,
                       location: "Cairo, Egypt",
-                      profileImageUrl: "tempImage",
+                      profileImageUrl: state.userImageUrl ?? "tempImage",
                     ),
                     SliverToBoxAdapter(child: SizedBox(height: 16)),
                     // Book now section
