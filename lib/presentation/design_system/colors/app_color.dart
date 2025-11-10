@@ -15,7 +15,7 @@ class AppColors {
     title: Color(0xDE1F1F1F),
     body: Color(0x991F1F1F),
     hint: Color(0x611F1F1F),
-    stroke: Color(0x1F1F1F1F),
+    stroke: Color(0x141F1F1F),
     onPrimary: Color(0xFFFFFFFF),
     onPrimaryBody: Color(0xA8FFFFFF),
     onPrimaryStroke: Color(0x29E8EBED),
