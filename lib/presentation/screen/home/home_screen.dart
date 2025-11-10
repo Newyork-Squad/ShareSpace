@@ -174,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            "Featured",
+                            "Featured places",
                             style: theme.typography.textTheme.titleSmall
                                 ?.copyWith(color: theme.colors.title),
                           ),
