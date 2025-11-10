@@ -48,8 +48,8 @@ class WorkspaceCardDetails extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           child: Image.network(
             imageUrl,
-            width: 106,
-            height: 68,
+            width: double.infinity,
+            height: 142,
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) => Image.network(
               'https://img-cdn.inc.com/image/upload/f_webp,c_fit,w_1920,q_auto/images/panoramic/getty_517610514_353435.jpg',
@@ -69,9 +69,9 @@ class WorkspaceCardDetails extends StatelessWidget {
                 labelColor: theme.colors.yellow,
                 icon: "assets/icons/star.svg",
               ),
+              const SizedBox(width: 4),
               CustomChip(
-                label: location,
-                // labelColor: theme.colors.yellow,
+                label: price,
                 icon: "assets/icons/attach_money.svg",
               ),
             ],
@@ -97,19 +97,6 @@ class WorkspaceCardDetails extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        // Row(
-        //   children: [
-        //     SvgPicture.asset("assets/icons/attach_money.svg", width: 16),
-        //     const SizedBox(width: 4),
-        //     Text(
-        //       price,
-        //       style: AppTypography.labelXSmall.copyWith(
-        //         color: theme.colors.body,
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // const SizedBox(height: 4),
         Row(
           children: [
             SvgPicture.asset("assets/icons/location.svg", width: 12),
