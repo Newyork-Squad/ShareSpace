@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_space/domain/usecase/User/getUserDetailsUseCase.dart';
+import 'package:share_space/domain/usecase/User/getUserLocationUseCase.dart';
 import 'package:share_space/domain/usecase/workspace/get_best.dart';
 import 'package:share_space/domain/usecase/workspace/get_best_price.dart';
 import 'package:share_space/domain/usecase/workspace/get_featured.dart';
@@ -18,6 +19,7 @@ class HomeCubit extends Cubit<HomeState> {
   final GetFeaturedUseCase _getFeaturedUseCase;
 
   final GetUserDetailsUseCase _getUserDetailsUseCase;
+  final GetCurrentLocationUseCase _getCurrentLocationUseCase;
 
   HomeCubit(
     this._getBestUseCase,
@@ -27,6 +29,7 @@ class HomeCubit extends Cubit<HomeState> {
     this._getTopRatedUseCase,
     this._getFeaturedUseCase,
     this._getUserDetailsUseCase,
+    this._getCurrentLocationUseCase,
   ) : super(HomeInitial());
 
   Future<void> fetchHome() async {
@@ -39,7 +42,8 @@ class HomeCubit extends Cubit<HomeState> {
         topRated,
         nearToYou,
         featured,
-        user
+        user,
+        location,
       ) = await (
         _getBestUseCase(),
         _getPopularUseCase(),
@@ -47,7 +51,8 @@ class HomeCubit extends Cubit<HomeState> {
         _getTopRatedUseCase(),
         _getNearToYouUseCase(latitude: 0.0, longitude: 0.0),
         _getFeaturedUseCase(),
-        _getUserDetailsUseCase()
+        _getUserDetailsUseCase(),
+        _getCurrentLocationUseCase(),
       ).wait;
 
       emit(HomeLoaded(
@@ -58,7 +63,8 @@ class HomeCubit extends Cubit<HomeState> {
         topRated,
         featured,
         user.name,
-        user.profileImageUrl
+        user.profileImageUrl,
+        location,
       ));
     } catch (e) {
       emit(HomeError(e.toString()));

@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   slivers: [
                     HomeAppBar(
                       userName: state.userName,
-                      location: "Cairo, Egypt",
+                      location: state.location,
                       profileImageUrl: state.userImageUrl ?? "tempImage",
                     ),
                     SliverToBoxAdapter(child: SizedBox(height: 16)),
