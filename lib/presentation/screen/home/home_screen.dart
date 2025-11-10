@@ -200,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ? f.imageUrls[0]
                                             : '',
                                         rating: f.rate,
-                                        price: f.pricePerHour.toString(),
+                                        price: f.pricePerHour.toInt().toString(),
                                         location: f.locationName,
                                         amenities: f.services
                                             .map((e) => serviceLabel(e))
