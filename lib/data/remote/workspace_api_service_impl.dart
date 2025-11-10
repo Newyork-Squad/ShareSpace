@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import 'dio_client.dart';
 import 'dto/WorkspaceResponse.dart';
 import 'error_handler.dart';
 import 'workspace_api_service.dart';
@@ -25,16 +26,13 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
           'sortBy': sortBy,
           'direction': direction,
         },
+        options: DioClient.cacheOptions.toOptions(),
       );
 
       if (response.data['success'] == true) {
-        final data = response.data['data']['content'];
-        return WorkspaceResponse.listFromJson(data);
-      } else {
-        throw Exception(
-          response.data['message'] ?? 'Failed to fetch workspaces',
-        );
+        return WorkspaceResponse.listFromJson(response.data['data']['content']);
       }
+      throw Exception(response.data['message'] ?? 'Failed to fetch workspaces');
     } on DioException catch (e) {
       throw handleError(e);
     }
@@ -50,16 +48,13 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
       final response = await _dio.get(
         '/workspace/category',
         queryParameters: {'category': category, 'page': page, 'size': size},
+        options: DioClient.cacheOptions.toOptions(),
       );
 
       if (response.data['success'] == true) {
-        final data = response.data['data']['content'];
-        return WorkspaceResponse.listFromJson(data);
-      } else {
-        throw Exception(
-          response.data['message'] ?? 'Failed to fetch workspaces',
-        );
+        return WorkspaceResponse.listFromJson(response.data['data']['content']);
       }
+      throw Exception(response.data['message'] ?? 'Failed to fetch workspaces');
     } on DioException catch (e) {
       throw handleError(e);
     }
@@ -81,16 +76,13 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
           'page': page,
           'size': size,
         },
+        options: DioClient.cacheOptions.toOptions(),
       );
 
       if (response.data['success'] == true) {
-        final data = response.data['data']['content'];
-        return WorkspaceResponse.listFromJson(data);
-      } else {
-        throw Exception(
-          response.data['message'] ?? 'Failed to fetch workspaces',
-        );
+        return WorkspaceResponse.listFromJson(response.data['data']['content']);
       }
+      throw Exception(response.data['message'] ?? 'Failed to fetch workspaces');
     } on DioException catch (e) {
       throw handleError(e);
     }
@@ -105,16 +97,13 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
       final response = await _dio.get(
         '/workspace/featured',
         queryParameters: {'page': page, 'size': size},
+        options: DioClient.cacheOptions.toOptions(),
       );
 
       if (response.data['success'] == true) {
-        final data = response.data['data']['content'];
-        return WorkspaceResponse.listFromJson(data);
-      } else {
-        throw Exception(
-          response.data['message'] ?? 'Failed to fetch workspaces',
-        );
+        return WorkspaceResponse.listFromJson(response.data['data']['content']);
       }
+      throw Exception(response.data['message'] ?? 'Failed to fetch workspaces');
     } on DioException catch (e) {
       throw handleError(e);
     }
@@ -123,14 +112,15 @@ class WorkspaceApiServiceImpl implements WorkspaceApiService {
   @override
   Future<WorkspaceResponse> getById(String id) async {
     try {
-      final response = await _dio.get('/workspace/$id');
+      final response = await _dio.get(
+        '/workspace/$id',
+        options: DioClient.cacheOptions.toOptions(),
+      );
 
       if (response.data['success'] == true) {
-        final data = response.data['data'];
-        return WorkspaceResponse.fromJson(data);
-      } else {
-        throw Exception(response.data['message'] ?? 'Workspace not found');
+        return WorkspaceResponse.fromJson(response.data['data']);
       }
+      throw Exception(response.data['message'] ?? 'Workspace not found');
     } on DioException catch (e) {
       throw handleError(e);
     }
