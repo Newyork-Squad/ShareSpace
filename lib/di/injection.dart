@@ -8,6 +8,7 @@ import 'package:share_space/domain/repository/authentication_repository.dart';
 import 'package:share_space/domain/repository/workspace_repository.dart';
 import 'package:share_space/domain/usecase/workspace/get_best.dart';
 import 'package:share_space/domain/usecase/workspace/get_best_price.dart';
+import 'package:share_space/domain/usecase/workspace/get_featured.dart';
 import 'package:share_space/domain/usecase/workspace/get_near_to_you.dart';
 import 'package:share_space/domain/usecase/workspace/get_popular.dart';
 import 'package:share_space/domain/usecase/workspace/get_top_rated.dart';
@@ -39,9 +40,12 @@ void setupDependencies() {
   getIt.registerLazySingleton(() => GetPopularUseCase(getIt()));
   getIt.registerLazySingleton(() => GetNearToYouUseCase(getIt()));
   getIt.registerLazySingleton(() => GetTopRatedUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetFeaturedUseCase(getIt()));
+
 
   getIt.registerFactory(
     () => HomeCubit(
+      getIt(),
       getIt(),
       getIt(),
       getIt(),

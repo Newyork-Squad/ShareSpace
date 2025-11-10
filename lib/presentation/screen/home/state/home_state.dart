@@ -13,6 +13,7 @@ class HomeLoaded extends HomeState {
   final List<Workspace> popular;
   final List<Workspace> nearToYou;
   final List<Workspace> topRated;
+  final List<Workspace> featured;
   late List<Category> categories = [
     Category(name: "All", description: "All workspaces", workspaces: []),
     Category(name: "Best", description: "A room with quality that reflects your achievement", workspaces: best),
@@ -29,6 +30,7 @@ class HomeLoaded extends HomeState {
     this.popular,
     this.nearToYou,
     this.topRated,
+    this.featured
   );
 }
 

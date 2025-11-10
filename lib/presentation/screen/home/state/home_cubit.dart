@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_space/domain/usecase/workspace/get_best.dart';
 import 'package:share_space/domain/usecase/workspace/get_best_price.dart';
+import 'package:share_space/domain/usecase/workspace/get_featured.dart';
 import 'package:share_space/domain/usecase/workspace/get_near_to_you.dart';
 import 'package:share_space/domain/usecase/workspace/get_popular.dart';
 import 'package:share_space/domain/usecase/workspace/get_top_rated.dart';
@@ -13,6 +14,8 @@ class HomeCubit extends Cubit<HomeState> {
   final GetPopularUseCase _getPopularUseCase;
   final GetNearToYouUseCase _getNearToYouUseCase;
   final GetTopRatedUseCase _getTopRatedUseCase;
+  final GetFeaturedUseCase _getFeaturedUseCase;
+
 
   HomeCubit(
     this._getBestUseCase,
@@ -20,6 +23,7 @@ class HomeCubit extends Cubit<HomeState> {
     this._getPopularUseCase,
     this._getNearToYouUseCase,
     this._getTopRatedUseCase,
+    this._getFeaturedUseCase,
   ) : super(HomeInitial());
 
   Future<void> fetchHome() async {
@@ -31,12 +35,14 @@ class HomeCubit extends Cubit<HomeState> {
         bestPrice,
         topRated,
         nearToYou,
+        featured,
       ) = await (
         _getBestUseCase(),
         _getPopularUseCase(),
         _getBestPriceUseCase(),
         _getTopRatedUseCase(),
         _getNearToYouUseCase(latitude: 0.0, longitude: 0.0),
+        _getFeaturedUseCase(),
       ).wait;
 
       emit(HomeLoaded(
@@ -44,7 +50,8 @@ class HomeCubit extends Cubit<HomeState> {
         bestPrice,
         popular,
         nearToYou,
-        topRated
+        topRated,
+        featured,
       ));
     } catch (e) {
       emit(HomeError(e.toString()));
