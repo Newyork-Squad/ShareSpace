@@ -136,7 +136,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                             ?.copyWith(color: theme.colors.onPrimaryBody),
                         border: InputBorder.none,
                         icon: SvgPicture.asset(
-                          'assets/icons/search.svg',
+                          'assets/icons/search_filled.svg',
                           colorFilter: ColorFilter.mode(
                             theme.colors.onPrimary,
                             BlendMode.srcIn,
