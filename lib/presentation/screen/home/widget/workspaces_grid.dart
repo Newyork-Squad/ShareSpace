@@ -17,7 +17,7 @@ class WorkspacesGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 110,
+      height: 102,
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
         scrollDirection: Axis.horizontal,
@@ -40,8 +40,6 @@ class WorkspacesGrid extends StatelessWidget {
           ),
         ),
       ),
-      //   ],
-      // ),
     );
   }
 }
