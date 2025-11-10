@@ -31,7 +31,7 @@ class CategoryChip extends StatelessWidget {
       selectedColor: theme.colors.secondary,
       side: isSelected
           ? BorderSide.none
-          : BorderSide(color: theme.colors.stroke, width: 1),
+          : BorderSide(color: theme.colors.stroke, width: 0.5),
       showCheckmark: false,
     );
   }
