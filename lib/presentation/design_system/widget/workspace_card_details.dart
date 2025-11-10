@@ -26,18 +26,28 @@ class WorkspaceCardDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(height: 8),
-        imageWithRating(theme),
-        const SizedBox(width: 4),
-        details(theme),
-        const SizedBox(height: 4),
-        amenitiesRow(theme),
-        const SizedBox(height: 12),
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.colors.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: theme.colors.stroke,
+          width: 0.5,
+        ),
+      ),
+      child: Padding( 
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 12) ,
+          child:Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          imageWithRating(theme),
+          const SizedBox(width: 4),
+          details(theme),
+          const SizedBox(height: 4),
+          amenitiesRow(theme),
+        ],
+      )),
     );
   }
 
@@ -53,8 +63,8 @@ class WorkspaceCardDetails extends StatelessWidget {
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) => Image.network(
               'https://img-cdn.inc.com/image/upload/f_webp,c_fit,w_1920,q_auto/images/panoramic/getty_517610514_353435.jpg',
-              width: 106,
-              height: 68,
+              width: double.infinity,
+              height: 142,
               fit: BoxFit.cover,
             ),
           ),
@@ -70,10 +80,7 @@ class WorkspaceCardDetails extends StatelessWidget {
                 icon: "assets/icons/star.svg",
               ),
               const SizedBox(width: 4),
-              CustomChip(
-                label: price,
-                icon: "assets/icons/attach_money.svg",
-              ),
+              CustomChip(label: price, icon: "assets/icons/attach_money.svg"),
             ],
           ),
         ),
