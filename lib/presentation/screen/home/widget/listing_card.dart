@@ -39,7 +39,7 @@ class ListingCard extends StatelessWidget {
             details(theme),
           ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
         amenitiesRow(theme),
       ],
     );
