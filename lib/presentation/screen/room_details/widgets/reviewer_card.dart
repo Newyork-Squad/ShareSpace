@@ -9,6 +9,7 @@ class ReviewCard extends StatelessWidget {
   final String reviewDate;
   final int rating;
   final String reviewText;
+  final Color? backgroundColor;
 
   const ReviewCard({
     super.key,
@@ -17,6 +18,7 @@ class ReviewCard extends StatelessWidget {
     required this.reviewDate,
     required this.rating,
     required this.reviewText,
+    this.backgroundColor,
   });
 
   @override
@@ -25,7 +27,7 @@ class ReviewCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: theme.colors.surface,
+        color: backgroundColor ?? theme.colors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: theme.colors.stroke, width: 0.5),
       ),

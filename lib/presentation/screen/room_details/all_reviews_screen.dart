@@ -13,50 +13,47 @@ class AllReviewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
 
-    return Padding(
-      padding: EdgeInsets.only(left: 16,right: 16,top: 12),
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: theme.colors.surfaceLow,
+      appBar: AppBar(
         backgroundColor: theme.colors.surfaceLow,
-        appBar: AppBar(
-          backgroundColor: theme.colors.surfaceLow,
-          titleSpacing: 0,
-          leading: IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              'assets/icons/arrow_left.svg',
-              color: theme.colors.title,
-            ),
+        titleSpacing: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: SvgPicture.asset(
+            'assets/icons/arrow_left.svg',
+            color: theme.colors.title,
           ),
-          title: Padding(
-            padding: const EdgeInsets.only(left: 2),
-            child: Text(
-              'Reviews',
-              style: theme.typography.textTheme.titleMedium?.copyWith(
-                color: theme.colors.title,
-                fontWeight: FontWeight.w500,
-              ),
+        ),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 2),
+          child: Text(
+            'Reviews',
+            style: theme.typography.textTheme.titleMedium?.copyWith(
+              color: theme.colors.title,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(vertical: 30, horizontal: 16),
-          child: ListView.builder(
-            itemCount: reviews.length,
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              final review = reviews[index];
-              return Padding(
-                padding: EdgeInsets.only(bottom: 12),
-                child: ReviewCard(
-                  reviewerName: review.reviewerName,
-                  reviewerImage: review.reviewerImage,
-                  reviewDate: review.reviewDate,
-                  rating: review.rating,
-                  reviewText: review.reviewText,
-                ),
-              );
-            },
-          ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        child: ListView.separated(
+          physics: const BouncingScrollPhysics(),
+          itemCount: reviews.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 12),
+          itemBuilder: (context, index) {
+            final review = reviews[index];
+            return ReviewCard(
+              reviewerName: review.reviewerName,
+              reviewerImage: review.reviewerImage,
+              reviewDate: review.reviewDate,
+              rating: review.rating,
+              reviewText: review.reviewText,
+            );
+          },
         ),
       ),
     );
