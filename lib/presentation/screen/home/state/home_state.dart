@@ -16,6 +16,7 @@ class HomeLoaded extends HomeState {
   final List<Workspace> topRated;
   final String userName;
   final String? userImageUrl;
+  final String location;
   late List<Category> categories = [
     Category(name: "All", description: "All workspaces", workspaces: []),
     Category(
@@ -54,6 +55,7 @@ class HomeLoaded extends HomeState {
     this.topRated,
     this.userName,
     this.userImageUrl,
+      this.location
   );
 }
 
