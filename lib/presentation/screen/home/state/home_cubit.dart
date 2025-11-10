@@ -55,17 +55,19 @@ class HomeCubit extends Cubit<HomeState> {
         _getCurrentLocationUseCase(),
       ).wait;
 
-      emit(HomeLoaded(
-        best,
-        bestPrice,
-        popular,
-        nearToYou,
-        topRated,
-        featured,
-        user.name,
-        user.profileImageUrl,
-        location,
-      ));
+      emit(
+        HomeLoaded(
+          best,
+          bestPrice,
+          popular,
+          nearToYou,
+          topRated,
+          featured,
+          user.name,
+          user.profileImageUrl,
+          location,
+        ),
+      );
     } catch (e) {
       emit(HomeError(e.toString()));
     }
