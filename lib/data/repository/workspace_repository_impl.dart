@@ -113,7 +113,7 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
   // Map DTO to Domain Entity
   Workspace _mapToEntity(WorkspaceResponse dto) {
     return Workspace(
-      id: int.tryParse(dto.id) ?? 0,
+      id: dto.id,
       name: dto.title,
       locationName: dto.location,
       longitude: dto.longitude,
@@ -153,5 +153,33 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
       }
     }
     return services;
+  }
+  @override
+  Future<List<Workspace>> getSavedWorkspaces() async {
+    try {
+      final response = await _apiService.getSavedWorkspaces();
+
+      return response.map((savedDto) => _mapToEntity(savedDto.workspace)).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch saved workspaces: $e');
+    }
+  }
+
+  @override
+  Future<void> saveWorkspace(String workspaceId) async {
+    try {
+      await _apiService.saveWorkspace(workspaceId);
+    } catch (e) {
+      throw Exception('Failed to save workspace: $e');
+    }
+  }
+
+  @override
+  Future<void> removeSavedWorkspace(String workspaceId) async {
+    try {
+      await _apiService.removeSavedWorkspace(workspaceId);
+    } catch (e) {
+      throw Exception('Failed to remove saved workspace: $e');
+    }
   }
 }
