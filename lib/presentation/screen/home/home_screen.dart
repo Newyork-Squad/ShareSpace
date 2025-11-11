@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_space/presentation/design_system/widget/error_screen.dart';
 import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
 import 'package:share_space/presentation/design_system/widget/workspace_card_details.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
@@ -206,7 +207,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? room.imageUrls[0]
                                               : '',
                                           rating: room.rate,
-                                          price: "${room.pricePerHour.toInt().toString()}/h",
+                                          price:
+                                              "${room.pricePerHour.toInt().toString()}/h",
                                           location: room.locationName,
                                           amenities: room.services
                                               .map((e) => serviceLabel(e))
@@ -226,12 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             } else if (state is HomeError) {
-              return Center(
-                child: Text(
-                  "Please Check your internet connection", //state.message,
-                  style: theme.typography.textTheme.labelSmall,
-                ),
-              );
+              return ErrorScreen(hasAppBar: false);
             }
             return const SizedBox.shrink();
           },
