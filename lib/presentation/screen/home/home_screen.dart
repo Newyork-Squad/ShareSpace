@@ -136,7 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         category: category,
                                       ),
-                                      const SizedBox(height: 20),
                                     ],
                                   )
                                   .toList(),
@@ -170,6 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                     ),
                     if (state.featured.isNotEmpty) ...[
+                      const SliverToBoxAdapter(child: SizedBox(height: 20)),
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
