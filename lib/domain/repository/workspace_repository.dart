@@ -9,4 +9,7 @@ abstract class WorkspaceRepository {
     required double latitude,
     required double longitude,
   });
+  Future<List<Workspace>> getSavedWorkspaces();
+  Future<void> saveWorkspace(String workspaceId);
+  Future<void> removeSavedWorkspace(String workspaceId);
 }
