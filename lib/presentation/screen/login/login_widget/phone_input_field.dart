@@ -63,6 +63,7 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
                     DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: selectedCountryCode,
+                        dropdownColor: AppColors.light.surface,
                         items: countryCodes
                             .map(
                               (code) => DropdownMenuItem(
