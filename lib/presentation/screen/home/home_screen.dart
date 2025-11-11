@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
 import 'package:share_space/presentation/design_system/widget/workspace_card_details.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_state.dart';
@@ -31,11 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             if (state is HomeLoading) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: AppTheme.of(context).colors.primary,
-                ),
-              );
+              return LoadingScreen();
             } else if (state is HomeLoaded) {
               return Container(
                 color: theme.colors.surfaceLow,
