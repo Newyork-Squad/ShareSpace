@@ -24,11 +24,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   final ValueNotifier<bool> isFormValid = ValueNotifier(false);
   String fullPhoneNumber = '';
+  bool hasPhoneError = false;
 
   void _validateForm() {
-    final valid =
-        phoneController.text.trim().isNotEmpty &&
-        passwordController.text.trim().isNotEmpty;
+    final valid = phoneController.text.trim().isNotEmpty &&
+        passwordController.text.trim().isNotEmpty &&
+        !hasPhoneError;
     if (isFormValid.value != valid) {
       isFormValid.value = valid;
     }
@@ -77,9 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
           resizeToAvoidBottomInset: false,
           backgroundColor: AppColors.light.surfaceLow,
           body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
+            onTap: () => FocusScope.of(context).unfocus(),
             behavior: HitTestBehavior.translucent,
             child: Stack(
               children: [
@@ -106,22 +105,29 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(height: 24),
                               Text(
                                 "Welcome Back",
-                                style: AppTypography().textTheme.titleMedium
+                                style: AppTypography()
+                                    .textTheme
+                                    .titleMedium
                                     ?.copyWith(color: AppColors.light.title),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 "Please enter your phone number and password to access your booking",
                                 textAlign: TextAlign.center,
-                                style: AppTypography().textTheme.bodyMedium
+                                style: AppTypography()
+                                    .textTheme
+                                    .bodyMedium
                                     ?.copyWith(color: AppColors.light.body),
                               ),
                               const SizedBox(height: 32),
                               PhoneInputField(
                                 controller: phoneController,
                                 onChanged: (value) {
-                                  fullPhoneNumber =
-                                      value;
+                                  fullPhoneNumber = value;
+                                },
+                                onValidationChanged: (error) {
+                                  hasPhoneError = error;
+                                  _validateForm();
                                 },
                               ),
                               const SizedBox(height: 16),

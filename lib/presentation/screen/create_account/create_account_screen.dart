@@ -44,6 +44,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   String? selectedImageUrl;
   String? confirmPasswordError;
   bool isFormValid = false;
+  bool hasPhoneError = false;
 
   @override
   void initState() {
@@ -62,7 +63,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
           emailController.text.isNotEmpty &&
           passwordController.text.isNotEmpty &&
           confirmPasswordController.text.isNotEmpty &&
-          context.read<CreateAccountCubit>().gender != null; // ✅ لازم gender يتحدد
+          context.read<CreateAccountCubit>().gender != null &&
+          !hasPhoneError; // ✅ التأكد من أن رقم الهاتف صحيح
     });
   }
 
@@ -82,7 +84,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
     if (passwordController.text != confirmPasswordController.text) {
       setState(() {
-        confirmPasswordError = "Confirm password does not match the password.";
+        confirmPasswordError =
+        "Confirm password does not match the password.";
       });
       return;
     } else {
@@ -102,9 +105,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     required String title,
     required String message,
     bool isError = true,
-    String? iconAsset,
   }) {
-    final entry = showTopSnackBar(
+    showTopSnackBar(
       Overlay.of(context)!,
       SafeArea(
         child: Container(
@@ -122,7 +124,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: isError ? const Color(0x29AF3333) : const Color(0x2933AF80),
+                color: isError
+                    ? const Color(0x29AF3333)
+                    : const Color(0x2933AF80),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -155,7 +159,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       children: [
                         Text(
                           title,
-                          style: AppTypography().textTheme.titleMedium?.copyWith(
+                          style: AppTypography()
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
                             color: AppColors.light.title,
                             decoration: TextDecoration.none,
                           ),
@@ -163,7 +170,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         const SizedBox(height: 4),
                         Text(
                           message,
-                          style: AppTypography().textTheme.bodySmall?.copyWith(
+                          style: AppTypography()
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
                             color: AppColors.light.body,
                             decoration: TextDecoration.none,
                           ),
@@ -194,8 +204,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
             );
             Navigator.pop(context);
           } else if (state is CreateAccountError) {
-            final errorMessage =
-            state.message.trim().isEmpty ? 'Unexpected error occurred.' : state.message;
+            final errorMessage = state.message.trim().isEmpty
+                ? 'Unexpected error occurred.'
+                : state.message;
             showCustomTopSnackBar(
               title: 'Error',
               message: errorMessage,
@@ -225,7 +236,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       const SizedBox(height: 9),
                       Text(
                         'Create account',
-                        style: AppTypography().textTheme.titleMedium?.copyWith(
+                        style: AppTypography()
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(
                           color: AppColors.light.title,
                         ),
                       ),
@@ -233,7 +247,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       Text(
                         'Please enter your information to create account.',
                         textAlign: TextAlign.center,
-                        style: AppTypography().textTheme.bodyMedium?.copyWith(
+                        style: AppTypography()
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(
                           color: AppColors.light.body,
                         ),
                       ),
@@ -254,6 +271,10 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       PhoneInputField(
                         controller: phoneController,
                         onChanged: cubit.updatePhoneNumber,
+                        onValidationChanged: (error) {
+                          hasPhoneError = error;
+                          _validateForm();
+                        },
                       ),
                       const SizedBox(height: 16),
                       AppTextField(
@@ -300,7 +321,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       CreateAccountButton(
                         text: isLoading ? 'Creating...' : 'Create account',
                         isEnabled: !isLoading && isFormValid,
-                        onPressed: (!isLoading && isFormValid) ? _onCreateAccount : null,
+                        onPressed:
+                        (!isLoading && isFormValid) ? _onCreateAccount : null,
                       ),
                       const SizedBox(height: 12),
                       GestureDetector(
@@ -313,14 +335,18 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               style: AppTypography()
                                   .textTheme
                                   .labelMedium
-                                  ?.copyWith(color: AppColors.light.body),
+                                  ?.copyWith(
+                                color: AppColors.light.body,
+                              ),
                             ),
                             Text(
                               'Login',
                               style: AppTypography()
                                   .textTheme
                                   .labelMedium
-                                  ?.copyWith(color: AppColors.light.primary),
+                                  ?.copyWith(
+                                color: AppColors.light.primary,
+                              ),
                             ),
                           ],
                         ),
@@ -332,7 +358,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               if (isLoading)
                 Container(
                   color: Colors.black26,
-                  child: const Center(child: CircularProgressIndicator()),
+                  child:
+                  const Center(child: CircularProgressIndicator()),
                 ),
             ],
           );
