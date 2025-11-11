@@ -53,10 +53,16 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            widget.userName,
-                            style: theme.typography.textTheme.labelMedium
-                                ?.copyWith(color: theme.colors.onPrimary),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 200),
+                            child: Text(
+                              widget.userName,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: theme.typography.textTheme.labelMedium
+                                  ?.copyWith(color: theme.colors.onPrimary),
+                            ),
                           ),
                           const SizedBox(height: 4),
                           Row(
@@ -71,12 +77,18 @@ class _HomeAppBarState extends State<HomeAppBar> {
                                 height: 16,
                               ),
                               const SizedBox(width: 4),
-                              Text(
-                                widget.location,
-                                style: theme.typography.textTheme.labelSmall
-                                    ?.copyWith(
-                                      color: theme.colors.onPrimaryBody,
-                                    ),
+                              ConstrainedBox(
+                                constraints: const BoxConstraints(maxWidth: 200),
+                                child: Text(
+                                  widget.location,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  style: theme.typography.textTheme.labelSmall
+                                      ?.copyWith(
+                                    color: theme.colors.onPrimaryBody,
+                                  ),
+                                ),
                               ),
                               const SizedBox(width: 4),
                               Icon(
