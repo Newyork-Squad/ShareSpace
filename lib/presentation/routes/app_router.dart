@@ -8,6 +8,7 @@ import '../screen/create_account/create_account_screen.dart';
 import '../screen/home/home_screen.dart';
 import '../screen/login/login_screen.dart';
 import '../screen/onboarding/onboarding_screen.dart';
+import '../screen/otp_verification/otp_verification_screen.dart';
 import '../screen/room_details/room_details_screen.dart';
 import '../screen/search/search_screen.dart';
 import '../widgets/app_navigation_bar.dart';
@@ -18,6 +19,13 @@ class AppRouter {
     Routes.onboardingScreen: (_) => OnboardingScreen(),
     Routes.loginScreen: (_) => LoginScreen(),
     Routes.createAccountScreen: (_) => CreateAccountScreen(),
+    Routes.otpVerificationScreen: (context) {
+      final args = ModalRoute.of(context)?.settings.arguments
+          as OtpVerificationArgs?;
+      return OtpVerificationScreen(
+        phoneNumber: args?.phoneNumber ?? '',
+      );
+    },
     Routes.appNavigationBar: (_) => AppNavigationBar(),
     Routes.homeScreen: (_) => HomeScreen(),
     Routes.roomDetailsScreen: (_) => RoomDetailsScreen(),

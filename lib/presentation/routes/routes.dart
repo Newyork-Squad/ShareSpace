@@ -15,6 +15,7 @@ class Routes {
   static const String onboardingScreen = '/';
   static const String loginScreen = '/loginScreen';
   static const String createAccountScreen = '/createAccountScreen';
+  static const String otpVerificationScreen = '/otpVerificationScreen';
   static const String appNavigationBar = '/appNavigationBar';
   static const String homeScreen = '/homeScreen';
   static const String roomDetailsScreen = '/roomDetailsScreen';
