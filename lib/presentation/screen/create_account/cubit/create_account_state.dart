@@ -34,3 +34,9 @@ class CreateAccountValidationError extends CreateAccountState {
           passwordError != null ||
           confirmPasswordError != null;
 }
+
+class GenderUpdated extends CreateAccountState {
+  final String gender;
+
+  GenderUpdated(this.gender);
+}
