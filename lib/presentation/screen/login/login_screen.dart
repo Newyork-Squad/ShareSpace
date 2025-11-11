@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final ValueNotifier<bool> isFormValid = ValueNotifier(false);
+  String fullPhoneNumber = '';
 
   void _validateForm() {
     final valid =
@@ -49,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleLogin(BuildContext context) {
-    final phoneNumber = "+964${phoneController.text.trim()}";  // TODO: Handle country code properly
+    final phoneNumber = fullPhoneNumber.trim();
     final password = passwordController.text.trim();
     context.read<LoginCubit>().login(phoneNumber, password);
   }
@@ -116,7 +117,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ?.copyWith(color: AppColors.light.body),
                               ),
                               const SizedBox(height: 32),
-                              PhoneInputField(controller: phoneController),
+                              PhoneInputField(
+                                controller: phoneController,
+                                onChanged: (value) {
+                                  fullPhoneNumber =
+                                      value;
+                                },
+                              ),
                               const SizedBox(height: 16),
                               PasswordInputField(
                                 controller: passwordController,
