@@ -24,8 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    return Scaffold(
-      body: BlocProvider(
+    return Material(
+      child: BlocProvider(
         create: (context) => getIt<HomeCubit>()..fetchHome(),
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
