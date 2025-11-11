@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_space/presentation/design_system/widget/workspace_card_details.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_state.dart';
 import 'package:share_space/presentation/screen/home/widget/booking_card.dart';
 import 'package:share_space/presentation/screen/home/widget/category_chip.dart';
 import 'package:share_space/presentation/screen/home/widget/home_app_bar.dart';
 import 'package:share_space/presentation/screen/home/widget/workspaces_grid.dart';
+import 'package:share_space/presentation/util/service_mapper.dart';
 
 import '../../../di/injection.dart';
 import '../../design_system/theme/app_theme.dart';
@@ -39,9 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CustomScrollView(
                   slivers: [
                     HomeAppBar(
-                      userName: "Ahmed Hussein",
-                      location: "Cairo, Egypt",
-                      profileImageUrl: "tempImage",
+                      userName: state.userName,
+                      location: state.location,
+                      profileImageUrl: state.userImageUrl ?? "tempImage",
                     ),
                     SliverToBoxAdapter(child: SizedBox(height: 16)),
                     // Book now section
@@ -134,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         category: category,
                                       ),
-                                      const SizedBox(height: 24),
+                                      const SizedBox(height: 20),
                                     ],
                                   )
                                   .toList(),
@@ -167,6 +169,52 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                     ),
+                    if (state.featured.isNotEmpty) ...[
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            "Featured places",
+                            style: theme.typography.textTheme.titleSmall
+                                ?.copyWith(color: theme.colors.title),
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(child: const SizedBox(height: 12)),
+                      SliverToBoxAdapter(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: state.featured
+                              .map(
+                                (f) => Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      WorkspaceCardDetails(
+                                        title: f.name,
+                                        imageUrl: f.imageUrls.isNotEmpty
+                                            ? f.imageUrls[0]
+                                            : '',
+                                        rating: f.rate,
+                                        price: f.pricePerHour.toInt().toString(),
+                                        location: f.locationName,
+                                        amenities: f.services
+                                            .map((e) => serviceLabel(e))
+                                            .toList(),
+                                      ),
+                                      const SizedBox(height: 12),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               );

@@ -8,25 +8,22 @@ class ReviewsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 500,
-      child: ListView.builder(
-        itemCount: reviews.length < 5 ? reviews.length : 5,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          final review=reviews[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child:  ReviewCard(
-              reviewerName: review.reviewerName,
-              reviewerImage: review.reviewerImage,
-              reviewDate:review.reviewDate,
-              rating:review.rating,
-              reviewText:review.reviewText
-            ),
-          );
-        },
-      ),
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: reviews.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        final review = reviews[index];
+        return ReviewCard(
+          reviewerName: review.reviewerName,
+          reviewerImage: review.reviewerImage,
+          reviewDate: review.reviewDate,
+          rating: review.rating,
+          reviewText: review.reviewText,
+        );
+      },
     );
   }
 }
