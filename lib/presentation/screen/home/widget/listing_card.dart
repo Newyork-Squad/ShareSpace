@@ -55,8 +55,8 @@ class ListingCard extends StatelessWidget {
             width: 106,
             height: 68,
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Image.network(
-              'https://img-cdn.inc.com/image/upload/f_webp,c_fit,w_1920,q_auto/images/panoramic/getty_517610514_353435.jpg',
+            errorBuilder: (context, error, stackTrace) => Image.asset(
+              "assets/images/room_image.png",
               width: 106,
               height: 68,
               fit: BoxFit.cover,

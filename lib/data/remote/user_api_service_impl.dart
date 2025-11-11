@@ -4,6 +4,7 @@ import 'package:share_space/data/remote/api_constants.dart';
 import 'package:share_space/data/remote/dto/UserResponse.dart';
 import 'package:share_space/data/remote/user_api_service.dart';
 
+import 'dio_client.dart';
 import 'error_handler.dart';
 
 class UserApiServiceImpl implements UserApiService{
@@ -12,7 +13,7 @@ class UserApiServiceImpl implements UserApiService{
   @override
   Future<UserResponse> getCurrentUser() async {
     try {
-      final response = await _dio.get(ApiConstants.userDetails);
+      final response = await _dio.get(ApiConstants.userDetails,options: DioClient.cacheOptions.toOptions());
 
       if (response.data['success'] == true && response.data['data'] != null) {
 
