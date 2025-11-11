@@ -8,17 +8,17 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
   final CreateAccountUseCase _createAccountUseCase;
 
   CreateAccountCubit(this._createAccountUseCase)
-    : super(CreateAccountInitial());
+      : super(CreateAccountInitial());
 
   String _fullName = '';
   String _phoneNumber = '';
   String _email = '';
   String _bio = '';
-  String _gender = 'Male';
+  String? _gender;
   String _password = '';
   String _confirmPassword = '';
 
-  String get gender => _gender;
+  String? get gender => _gender;
 
   void updateFullName(String value) => _fullName = value;
 
@@ -30,14 +30,41 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
 
   void updateGender(String value) {
     _gender = value;
-    emit(GenderUpdated(_gender));
+    emit(GenderUpdated(_gender ?? ''));
   }
 
   void updatePassword(String value) => _password = value;
 
   void updateConfirmPassword(String value) => _confirmPassword = value;
 
+  bool _validateInputs() {
+    String? passwordError;
+    String? confirmPasswordError;
+
+    if (_password.isEmpty) {
+      passwordError = "Password cannot be empty.";
+    }
+
+    if (_confirmPassword.isEmpty) {
+      confirmPasswordError = "Confirm password cannot be empty.";
+    } else if (_password != _confirmPassword) {
+      confirmPasswordError = "Confirm password does not match the password.";
+    }
+
+    if (passwordError != null || confirmPasswordError != null) {
+      emit(CreateAccountValidationError(
+        passwordError: passwordError,
+        confirmPasswordError: confirmPasswordError,
+      ));
+      return false;
+    }
+
+    return true;
+  }
+
   Future<void> createAccount({String? imageUrl}) async {
+    if (!_validateInputs()) return;
+
     emit(CreateAccountLoading());
 
     try {
@@ -46,7 +73,7 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
         password: _password.trim(),
         name: _fullName.trim(),
         phoneNumber: _phoneNumber.trim(),
-        gender: _gender,
+        gender: _gender ?? '',
         imageUrl: imageUrl,
         bio: _bio.trim().isEmpty ? null : _bio.trim(),
       );
