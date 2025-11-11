@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_space/presentation/screen/my_account/my_account_screen.dart';
 
 import '../screen/booking/booking_screen.dart';
 import '../screen/bookingHistory/booking_history_screen.dart';
@@ -24,6 +25,7 @@ class AppRouter {
     Routes.bookingScreen: (_) => BookingScreen(),
     Routes.bookingHistoryScreen: (_) => BookingHistoryScreen(),
     Routes.chatScreen: (_) => ChatScreen(),
+    Routes.myAccountScreen: (_) => MyAccountScreen()
   };
 
   Route generateRoute(RouteSettings settings) {
