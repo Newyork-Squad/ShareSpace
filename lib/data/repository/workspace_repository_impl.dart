@@ -91,6 +91,16 @@ class WorkspaceRepositoryImpl implements WorkspaceRepository {
     }
   }
 
+  @override
+  Future<List<Workspace>> getFeatured() async {
+    try {
+      final response = await _apiService.getFeatured(page: 0, size: 10);
+      return response.map((dto) => _mapToEntity(dto)).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch best workspaces: $e');
+    }
+  }
+
   Future<Workspace> getById(String id) async {
     try {
       final response = await _apiService.getById(id);

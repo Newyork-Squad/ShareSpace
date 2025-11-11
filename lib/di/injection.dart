@@ -21,6 +21,7 @@ import 'package:share_space/domain/usecase/authentication/login_usecase.dart';
 import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
 import 'package:share_space/domain/usecase/workspace/get_best.dart';
 import 'package:share_space/domain/usecase/workspace/get_best_price.dart';
+import 'package:share_space/domain/usecase/workspace/get_featured.dart';
 import 'package:share_space/domain/usecase/workspace/get_near_to_you.dart';
 import 'package:share_space/domain/usecase/workspace/get_popular.dart';
 import 'package:share_space/domain/usecase/workspace/get_top_rated.dart';
@@ -63,12 +64,22 @@ void setupDependencies() {
   getIt.registerLazySingleton(() => GetPopularUseCase(getIt()));
   getIt.registerLazySingleton(() => GetNearToYouUseCase(getIt()));
   getIt.registerLazySingleton(() => GetTopRatedUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetFeaturedUseCase(getIt()));
   getIt.registerLazySingleton(() => GetUserDetailsUseCase(getIt()));
   getIt.registerLazySingleton(() => GetCurrentLocationUseCase(getIt()));
 
 
   getIt.registerFactory(
-    () => HomeCubit(getIt(), getIt(), getIt(), getIt(), getIt(),getIt(),getIt()),
+    () => HomeCubit(
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+      getIt(),
+    ),
   );
 
   getIt.registerLazySingleton<RoomDetailsRepository>(
