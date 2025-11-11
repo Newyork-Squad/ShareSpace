@@ -48,10 +48,14 @@ dependencies:
   get_it: ^8.3.0
   image_picker: ^1.1.2
   flutter_secure_storage: ^9.2.4
+  geolocator: ^10.1.0
+  geocoding: ^2.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.10
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -88,3 +92,15 @@ flutter:
       fonts:
         - asset: assets/fonts/rockn_roll_one_regular.ttf
           weight: 400
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_icon.png"
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/splash_screen_icon.png
+  android_12:
+    image: assets/images/splash_screen_icon.png
+    color: "#FFFFFF"
