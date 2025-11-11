@@ -33,7 +33,7 @@ class RoomDetailsScreen extends StatelessWidget {
                 child: Center(
               child: CircularProgressIndicator(
                 backgroundColor: theme.colors.surfaceLow,
-                color: theme.colors.yellow,
+                color: theme.colors.primary,
               ),
             ));
           }
