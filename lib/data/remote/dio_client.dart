@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../local/token_storage.dart';
 import 'api_constants.dart';
@@ -13,9 +16,36 @@ class DioClient {
   static TokenStorage? _tokenStorage;
   static bool _isInitialized = false;
 
+  static late CacheOptions cacheOptions;
+
   DioClient(TokenStorage tokenStorage) {
     _tokenStorage = tokenStorage;
     _initializeDio();
+  }
+
+  static Future<void> _initializeCache() async {
+    try {
+      final dir = await getTemporaryDirectory();
+      final cacheStore = HiveCacheStore(dir.path);
+
+      cacheOptions = CacheOptions(
+        store: cacheStore,
+        policy: CachePolicy.forceCache,
+        maxStale: const Duration(days: 30),
+        priority: CachePriority.high,
+        hitCacheOnErrorExcept: [401, 403],
+      );
+    } catch (e) {
+      debugPrint('Cache initialization failed: $e');
+
+      cacheOptions = CacheOptions(
+        store: MemCacheStore(),
+        policy: CachePolicy.forceCache,
+        maxStale: const Duration(days: 30),
+        priority: CachePriority.high,
+        hitCacheOnErrorExcept: [401, 403],
+      );
+    }
   }
 
   static void _initializeDio() {
@@ -30,6 +60,20 @@ class DioClient {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
+      ),
+    );
+
+    _initializeCache();
+
+    _dio!.interceptors.add(
+      DioCacheInterceptor(
+        options: CacheOptions(
+          store: MemCacheStore(),
+          policy: CachePolicy.forceCache,
+          maxStale: const Duration(days: 30),
+          priority: CachePriority.high,
+          hitCacheOnErrorExcept: [401, 403],
+        ),
       ),
     );
 
@@ -174,6 +218,15 @@ class DioClient {
     } catch (e) {
       debugPrint('Failed to refresh token: $e');
       return null;
+    }
+  }
+
+  static Future<void> clearCache() async {
+    try {
+      await cacheOptions.store?.clean();
+      debugPrint('Cache cleared successfully');
+    } catch (e) {
+      debugPrint('Error clearing cache: $e');
     }
   }
 
