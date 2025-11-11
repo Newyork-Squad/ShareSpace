@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../di/injection.dart';
 import '../../../domain/usecase/authentication/create_account_usecase.dart';
 import '../../design_system/colors/app_color.dart';
@@ -18,9 +20,7 @@ class CreateAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CreateAccountCubit(
-        getIt<CreateAccountUseCase>(),
-      ),
+      create: (context) => CreateAccountCubit(getIt<CreateAccountUseCase>()),
       child: const CreateAccountView(),
     );
   }
@@ -63,45 +63,118 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     Navigator.pop(context);
   }
 
+  void showCustomTopSnackBar({
+    required String title,
+    required String message,
+    bool isError = true,
+    String? iconAsset,
+  }) {
+    final entry = showTopSnackBar(
+      Overlay.of(context)!,
+      SafeArea(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                isError
+                    ? 'assets/images/toast_massage_background_error.png'
+                    : 'assets/images/toast_massage_background_success.png',
+              ),
+              fit: BoxFit.fill,
+            ),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: isError
+                    ? Color(0x29AF3333)
+                    : Color(0x2933AF80),
+                blurRadius: 12,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: () => '',
+                  child: SvgPicture.asset('assets/icons/close_icon.svg'),
+                ),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: SvgPicture.asset(
+                      isError
+                          ? 'assets/icons/error_icon.svg'
+                          : 'assets/icons/success_icon.svg',
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: AppTypography().textTheme.titleMedium
+                              ?.copyWith(
+                                color: AppColors.light.title,
+                                decoration: TextDecoration.none,
+                              ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          message,
+                          style: AppTypography().textTheme.bodySmall?.copyWith(
+                            color: AppColors.light.body,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      snackBarPosition: SnackBarPosition.top,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<CreateAccountCubit, CreateAccountState>(
         listener: (context, state) {
           if (state is CreateAccountSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Account created successfully!'),
-                backgroundColor: Colors.green,
-              ),
+            showCustomTopSnackBar(
+              title: 'Success',
+              message: 'Account created successfully!',
+              isError: false,
             );
             Navigator.pop(context);
           } else if (state is CreateAccountError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
-              ),
+            final errorMessage = state.message.trim().isEmpty
+                ? 'Unexpected error occurred.'
+                : state.message;
+            showCustomTopSnackBar(
+              title: 'Error',
+              message: errorMessage,
+              isError: true,
             );
           }
         },
         builder: (context, state) {
           final cubit = context.read<CreateAccountCubit>();
           final isLoading = state is CreateAccountLoading;
-
-          String? nameError;
-          String? phoneError;
-          String? emailError;
-          String? passwordError;
-          String? confirmPasswordError;
-
-          if (state is CreateAccountValidationError) {
-            nameError = state.nameError;
-            phoneError = state.phoneError;
-            emailError = state.emailError;
-            passwordError = state.passwordError;
-            confirmPasswordError = state.confirmPasswordError;
-          }
 
           return Stack(
             children: [
@@ -144,13 +217,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         controller: nameController,
                         hintText: 'Full name',
                         icon: 'assets/icons/user_name_icon.svg',
-                        errorText: nameError,
                         onChanged: cubit.updateFullName,
                       ),
                       const SizedBox(height: 16),
                       PhoneInputField(
                         controller: phoneController,
-                        errorText: phoneError,
                         onChanged: cubit.updatePhoneNumber,
                       ),
                       const SizedBox(height: 16),
@@ -158,7 +229,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         controller: emailController,
                         hintText: 'Email',
                         icon: 'assets/icons/mail_account_icon.svg',
-                        errorText: emailError,
                         onChanged: cubit.updateEmail,
                       ),
                       const SizedBox(height: 16),
@@ -181,7 +251,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         hintText: 'Password',
                         icon: 'assets/icons/user_name_icon.svg',
                         isPassword: true,
-                        errorText: passwordError,
                         onChanged: cubit.updatePassword,
                       ),
                       const SizedBox(height: 12),
@@ -190,14 +259,13 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         hintText: 'Confirm password',
                         icon: 'assets/icons/user_name_icon.svg',
                         isPassword: true,
-                        errorText: confirmPasswordError,
                         onChanged: cubit.updateConfirmPassword,
                       ),
                       const SizedBox(height: 29),
                       CreateAccountButton(
                         text: isLoading ? 'Creating...' : 'Create account',
                         isEnabled: !isLoading,
-                        onPressed: isLoading ? () {} : _onCreateAccount,
+                        onPressed: isLoading ? null : _onCreateAccount,
                       ),
                       const SizedBox(height: 12),
                       GestureDetector(
@@ -207,21 +275,13 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           children: [
                             Text(
                               'Already have account? ',
-                              style: AppTypography()
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(
-                                color: AppColors.light.body,
-                              ),
+                              style: AppTypography().textTheme.labelMedium
+                                  ?.copyWith(color: AppColors.light.body),
                             ),
                             Text(
                               'Login',
-                              style: AppTypography()
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(
-                                color: AppColors.light.primary,
-                              ),
+                              style: AppTypography().textTheme.labelMedium
+                                  ?.copyWith(color: AppColors.light.primary),
                             ),
                           ],
                         ),
@@ -233,9 +293,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               if (isLoading)
                 Container(
                   color: Colors.black26,
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: const Center(child: CircularProgressIndicator()),
                 ),
             ],
           );
