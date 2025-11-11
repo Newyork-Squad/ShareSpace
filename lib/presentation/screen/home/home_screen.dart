@@ -186,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: state.featured
                               .map(
-                                (f) => Padding(
+                                (room) => Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 16,
                                   ),
@@ -199,20 +199,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Navigator.pushNamed(
                                             context,
                                             Routes.roomDetailsScreen,
-                                            arguments: f.id,
+                                            arguments: room.id.toString(),
                                           );
                                         },
                                         child: WorkspaceCardDetails(
-                                          title: f.name,
-                                          imageUrl: f.imageUrls.isNotEmpty
-                                              ? f.imageUrls[0]
+                                          title: room.name,
+                                          imageUrl: room.imageUrls.isNotEmpty
+                                              ? room.imageUrls[0]
                                               : '',
-                                          rating: f.rate,
-                                          price: f.pricePerHour
+                                          rating: room.rate,
+                                          price: room.pricePerHour
                                               .toInt()
                                               .toString(),
-                                          location: f.locationName,
-                                          amenities: f.services
+                                          location: room.locationName,
+                                          amenities: room.services
                                               .map((e) => serviceLabel(e))
                                               .toList(),
                                         ),
