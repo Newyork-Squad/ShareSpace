@@ -100,6 +100,11 @@ class RoomImageSlider extends StatelessWidget {
       image,
       fit: BoxFit.cover,
       width: double.infinity,
+      errorBuilder: (_, __, ___) => Image.asset(
+        "assets/images/room_image.png",
+        fit: BoxFit.cover,
+        width: double.infinity,
+      )
     );
   }
 }
