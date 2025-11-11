@@ -25,6 +25,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
     return SliverAppBar(
+      leading: const SizedBox.shrink(),
       collapsedHeight: 167,
       floating: true,
       backgroundColor: Colors.transparent,
