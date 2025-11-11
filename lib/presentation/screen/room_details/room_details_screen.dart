@@ -26,12 +26,16 @@ class RoomDetailsScreen extends StatelessWidget {
       child: BlocBuilder<RoomDetailsCubit, RoomDetailsState>(
         builder: (context, state) {
           if (state is RoomDetailsLoading) {
-            return Center(
+            return Container(
+              decoration: BoxDecoration(
+                color: theme.colors.surfaceLow,
+              ),
+                child: Center(
               child: CircularProgressIndicator(
                 backgroundColor: theme.colors.surfaceLow,
                 color: theme.colors.yellow,
               ),
-            );
+            ));
           }
 
           if (state is RoomDetailsLoaded) {
