@@ -1,3 +1,4 @@
+import 'dto/SavedWorkspaceResponse.dart';
 import 'dto/WorkspaceResponse.dart';
 
 abstract class WorkspaceApiService {
@@ -24,4 +25,13 @@ abstract class WorkspaceApiService {
   Future<List<WorkspaceResponse>> getFeatured({int page = 0, int size = 10});
 
   Future<WorkspaceResponse> getById(String id);
+
+  Future<List<SavedWorkspaceResponse>> getSavedWorkspaces({
+    int page = 0,
+    int size = 10,
+  });
+
+  Future<SavedWorkspaceResponse> saveWorkspace(String workspaceId);
+
+  Future<void> removeSavedWorkspace(String workspaceId);
 }
