@@ -12,4 +12,5 @@ abstract class WorkspaceRepository {
   Future<List<Workspace>> getSavedWorkspaces();
   Future<void> saveWorkspace(String workspaceId);
   Future<void> removeSavedWorkspace(String workspaceId);
+  Future<List<Workspace>> getFeatured();
 }
