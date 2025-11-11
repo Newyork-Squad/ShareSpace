@@ -209,9 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? room.imageUrls[0]
                                               : '',
                                           rating: room.rate,
-                                          price: room.pricePerHour
-                                              .toInt()
-                                              .toString(),
+                                          price: "${room.pricePerHour.toInt().toString()}/h",
                                           location: room.locationName,
                                           amenities: room.services
                                               .map((e) => serviceLabel(e))
