@@ -81,8 +81,6 @@ void setupDependencies() {
       getIt(),
     ),
   );
-  
-  getIt.registerLazySingleton(() => GetUserDetailsUseCase(getIt()));
 
   getIt.registerLazySingleton<RoomDetailsRepository>(
     () => RoomDetailsRepositoryImpl(getIt()),
