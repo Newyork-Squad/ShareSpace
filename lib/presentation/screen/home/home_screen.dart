@@ -194,17 +194,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      WorkspaceCardDetails(
-                                        title: f.name,
-                                        imageUrl: f.imageUrls.isNotEmpty
-                                            ? f.imageUrls[0]
-                                            : '',
-                                        rating: f.rate,
-                                        price: f.pricePerHour.toInt().toString(),
-                                        location: f.locationName,
-                                        amenities: f.services
-                                            .map((e) => serviceLabel(e))
-                                            .toList(),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            Routes.roomDetailsScreen,
+                                            arguments: f.id,
+                                          );
+                                        },
+                                        child: WorkspaceCardDetails(
+                                          title: f.name,
+                                          imageUrl: f.imageUrls.isNotEmpty
+                                              ? f.imageUrls[0]
+                                              : '',
+                                          rating: f.rate,
+                                          price: f.pricePerHour
+                                              .toInt()
+                                              .toString(),
+                                          location: f.locationName,
+                                          amenities: f.services
+                                              .map((e) => serviceLabel(e))
+                                              .toList(),
+                                        ),
                                       ),
                                       const SizedBox(height: 12),
                                     ],
