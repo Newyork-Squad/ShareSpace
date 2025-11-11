@@ -1,19 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../di/injection.dart';
 import '../../design_system/theme/app_theme.dart';
+import '../../routes/routes.dart';
+import 'cubit/my_account_cubit.dart';
+import 'cubit/my_account_state.dart';
 import 'widgets/account_header.dart';
 import 'widgets/logout_confirmation_sheet.dart';
 import 'widgets/menu_item_tile.dart';
 import 'widgets/selection_sheet.dart';
 
-class MyAccountScreen extends StatefulWidget {
+class MyAccountScreen extends StatelessWidget {
   const MyAccountScreen({super.key});
 
   @override
-  State<MyAccountScreen> createState() => _MyAccountScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => getIt<MyAccountCubit>()..getUserDetails(),
+      child:  _MyAccountScreen(),
+    );
+  }
 }
 
-class _MyAccountScreenState extends State<MyAccountScreen> {
+class _MyAccountScreen extends StatefulWidget {
+  const _MyAccountScreen();
+
+  @override
+  State<_MyAccountScreen> createState() => _MyAccountScreenState();
+}
+
+class _MyAccountScreenState extends State<_MyAccountScreen> {
   String _selectedLanguage = 'English';
   String _selectedTheme = 'Light';
 
@@ -24,21 +41,39 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return Scaffold(
       backgroundColor: theme.colors.surface,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.only(bottom: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const AccountHeader(
-                title: 'My Account',
-                name: 'Sara Mohammed',
-                email: 'Saramohammed2010@gmail.com',
-                bio: 'Cake first, books second... or maybe both at once. 🎂✨',
-                imageUrl: null,
-              ),
-              _buildMenuSection(theme),
-            ],
-          ),
+        child: BlocBuilder<MyAccountCubit, MyAccountState>(
+          builder: (context, state) {
+            if (state is AccountLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is AccountError) {
+              return Center(
+                child: Text(
+                  'Error: ${state.message}',
+                  style: TextStyle(color: theme.colors.errorVariant),
+                ),
+              );
+            } else if (state is AccountLoaded) {
+              final user = state.user;
+              return SingleChildScrollView(
+                padding: const EdgeInsets.only(bottom: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AccountHeader(
+                      title: 'My Account',
+                      name: user.name,
+                      email: user.email,
+                      bio: user.bio ?? '',
+                      imageUrl: user.profileImageUrl,
+                    ),
+                    _buildMenuSection(theme),
+                  ],
+                ),
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
         ),
       ),
     );
@@ -191,6 +226,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
     if (shouldLogout == true) {
       debugPrint('User confirmed logout');
+      await context.read<MyAccountCubit>().logout();
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+      }
     }
   }
 }

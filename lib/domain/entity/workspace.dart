@@ -2,7 +2,7 @@
 import 'dart:ffi';
 
 class Workspace {
-  final int id;
+  final String id;
   final String name;
   final String locationName;
   final double longitude;

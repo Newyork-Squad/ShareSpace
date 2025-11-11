@@ -31,8 +31,8 @@ class BookingCard extends StatelessWidget {
               fit: BoxFit.cover,
               width: double.infinity,
               height: 160,
-              errorBuilder: (context, error, stackTrace) => Image.network(
-                'https://img-cdn.inc.com/image/upload/f_webp,c_fit,w_1920,q_auto/images/panoramic/getty_517610514_353435.jpg',
+              errorBuilder: (context, error, stackTrace) => Image.asset(
+              'assets/images/room_image.png',
                 width: double.infinity,
                 height: 160,
                 fit: BoxFit.cover,

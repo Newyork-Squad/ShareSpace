@@ -34,6 +34,8 @@ import '../data/remote/workspace_api_service.dart';
 import '../data/remote/workspace_api_service_impl.dart';
 import '../domain/usecase/authentication/create_account_usecase.dart';
 import '../domain/usecase/authentication/is_loggedIn_usecase.dart';
+import '../domain/usecase/authentication/logout_usecase.dart';
+import '../presentation/screen/my_account/cubit/my_account_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -109,5 +111,16 @@ void setupDependencies() {
 
   getIt.registerFactory<CreateAccountUseCase>(
     () => CreateAccountUseCase(getIt()),
+  );
+
+  getIt.registerLazySingleton<LogoutUseCase>(
+        () => LogoutUseCase(getIt<AuthenticationRepository>()),
+  );
+
+  getIt.registerFactory<MyAccountCubit>(
+        () => MyAccountCubit(
+      getIt<GetUserDetailsUseCase>(),
+      getIt<LogoutUseCase>(),
+    ),
   );
 }
