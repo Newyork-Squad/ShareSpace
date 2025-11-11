@@ -64,7 +64,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
           passwordController.text.isNotEmpty &&
           confirmPasswordController.text.isNotEmpty &&
           context.read<CreateAccountCubit>().gender != null &&
-          !hasPhoneError; // ✅ التأكد من أن رقم الهاتف صحيح
+          !hasPhoneError;
     });
   }
 

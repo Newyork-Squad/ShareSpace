@@ -14,7 +14,7 @@ class PhoneInputField extends StatefulWidget {
     required this.controller,
     this.errorText,
     this.onChanged,
-    this.onValidationChanged, // ✅ لازم يتضاف هنا
+    this.onValidationChanged,
   });
 
   @override
@@ -34,14 +34,13 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
     '+44',
   ];
 
-  // ✅ عدد الأرقام المطلوب لكل دولة
   final Map<String, int> requiredLengths = {
-    '+964': 10, // العراق
-    '+20': 10,  // مصر
-    '+966': 9,  // السعودية
-    '+971': 9,  // الإمارات
-    '+1': 10,   // أمريكا
-    '+44': 10,  // بريطانيا
+    '+964': 10,
+    '+20': 10,
+    '+966': 9,
+    '+971': 9,
+    '+1': 10,
+    '+44': 10,
   };
 
   void _notifyPhoneChange() {
@@ -59,12 +58,12 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
 
     if (validationMessage == null) {
       setState(() => localError = null);
-      widget.onValidationChanged?.call(false); // ✅ مفيش error
+      widget.onValidationChanged?.call(false);
       final fullPhoneNumber = '$selectedCountryCode$phoneNumber';
       widget.onChanged?.call(fullPhoneNumber);
     } else {
       setState(() => localError = validationMessage);
-      widget.onValidationChanged?.call(true); // ❌ فيه error
+      widget.onValidationChanged?.call(true);
       widget.onChanged?.call('');
     }
   }
@@ -79,7 +78,6 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
       return 'Phone number must be $requiredLength digits only';
     }
 
-    // ✅ التحقق من رقم الدولة
     switch (countryCode) {
       case '+20':
         if (!RegExp(r'^(1[0-5])').hasMatch(phoneNumber)) {
