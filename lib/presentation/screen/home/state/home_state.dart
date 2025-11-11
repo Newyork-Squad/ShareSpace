@@ -14,6 +14,7 @@ class HomeLoaded extends HomeState {
   final List<Workspace> popular;
   final List<Workspace> nearToYou;
   final List<Workspace> topRated;
+  final List<Workspace> featured;
   final String userName;
   final String? userImageUrl;
   final String location;
@@ -53,6 +54,7 @@ class HomeLoaded extends HomeState {
     this.popular,
     this.nearToYou,
     this.topRated,
+    this.featured,
     this.userName,
     this.userImageUrl,
       this.location
