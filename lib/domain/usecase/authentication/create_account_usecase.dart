@@ -1,4 +1,4 @@
-import 'package:share_space/domain/repository/authentication_repository.dart';
+import '../../repository/authentication_repository.dart';
 
 class CreateAccountUseCase {
   final AuthenticationRepository _repository;
@@ -14,18 +14,22 @@ class CreateAccountUseCase {
     String? imageUrl,
     String? bio,
   }) async {
-    final success = await _repository.createAccount(
-      email: email,
-      password: password,
-      name: name,
-      phoneNumber: phoneNumber,
-      gender: gender,
-      imageUrl: imageUrl,
-      bio: bio,
-    );
+    try {
+      final success = await _repository.createAccount(
+        email: email,
+        password: password,
+        name: name,
+        phoneNumber: phoneNumber,
+        gender: gender,
+        imageUrl: imageUrl,
+        bio: bio,
+      );
 
-    if (!success) {
-      throw Exception('Failed to create account');
+      if (!success) {
+        throw Exception('Account creation failed.');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }
