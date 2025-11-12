@@ -6,6 +6,7 @@ import 'package:share_space/presentation/design_system/typography/app_typography
 import 'package:share_space/presentation/routes/routes.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 
+import '../../design_system/theme/app_theme.dart';
 import 'login_widget/app_logo.dart';
 import 'login_widget/login_button.dart';
 import 'login_widget/password_input_field.dart';
@@ -23,11 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final ValueNotifier<bool> isFormValid = ValueNotifier(false);
+  String fullPhoneNumber = '';
+  bool hasPhoneError = false;
 
   void _validateForm() {
     final valid =
         phoneController.text.trim().isNotEmpty &&
-        passwordController.text.trim().isNotEmpty;
+            passwordController.text.trim().isNotEmpty &&
+            !hasPhoneError;
     if (isFormValid.value != valid) {
       isFormValid.value = valid;
     }
@@ -49,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleLogin(BuildContext context) {
-    final phoneNumber = "+964${phoneController.text.trim()}";  // TODO: Handle country code properly
+    final phoneNumber = fullPhoneNumber.trim();
     final password = passwordController.text.trim();
     context.read<LoginCubit>().login(phoneNumber, password);
   }
@@ -76,60 +80,77 @@ class _LoginScreenState extends State<LoginScreen> {
           resizeToAvoidBottomInset: false,
           backgroundColor: AppColors.light.surfaceLow,
           body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
+            onTap: () => FocusScope.of(context).unfocus(),
             behavior: HitTestBehavior.translucent,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    'assets/images/login_screen_shapes.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SafeArea(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          padding: const EdgeInsets.only(
-                            left: 16,
-                            right: 16,
-                            top: 24,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const AppLogo(),
-                              const SizedBox(height: 24),
-                              Text(
-                                "Welcome Back",
-                                style: AppTypography().textTheme.titleMedium
-                                    ?.copyWith(color: AppColors.light.title),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                "Please enter your phone number and password to access your booking",
-                                textAlign: TextAlign.center,
-                                style: AppTypography().textTheme.bodyMedium
-                                    ?.copyWith(color: AppColors.light.body),
-                              ),
-                              const SizedBox(height: 32),
-                              PhoneInputField(controller: phoneController),
-                              const SizedBox(height: 16),
-                              PasswordInputField(
-                                controller: passwordController,
-                              ),
-                            ],
-                          ),
-                        ),
+            child: BlocBuilder<LoginCubit, LoginState>(
+              builder: (context, state) {
+                if (state is LoginLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: AppTheme.of(context).colors.primary,
+                    ),
+                  );
+                }
+                return Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Image.asset(
+                        'assets/images/login_screen_shapes.png',
+                        fit: BoxFit.cover,
                       ),
-                      BlocBuilder<LoginCubit, LoginState>(
-                        builder: (context, state) {
-                          final isLoading = state is LoginLoading;
-
-                          return ValueListenableBuilder<bool>(
+                    ),
+                    SafeArea(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                              padding: const EdgeInsets.only(
+                                  left: 16, right: 16, top: 24),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const AppLogo(),
+                                  const SizedBox(height: 24),
+                                  Text(
+                                    "Welcome Back",
+                                    style: AppTypography()
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(
+                                      color: AppColors.light.title,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    "Please enter your phone number and password to access your booking",
+                                    textAlign: TextAlign.center,
+                                    style: AppTypography()
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                      color: AppColors.light.body,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 32),
+                                  PhoneInputField(
+                                    controller: phoneController,
+                                    onChanged: (value) {
+                                      fullPhoneNumber = value;
+                                    },
+                                    onValidationChanged: (error) {
+                                      hasPhoneError = error;
+                                      _validateForm();
+                                    },
+                                  ),
+                                  const SizedBox(height: 16),
+                                  PasswordInputField(
+                                    controller: passwordController,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          ValueListenableBuilder<bool>(
                             valueListenable: isFormValid,
                             builder: (context, valid, _) {
                               return Container(
@@ -137,29 +158,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   alpha: 0.9,
                                 ),
                                 padding: const EdgeInsets.only(
-                                  left: 16,
-                                  right: 16,
-                                  bottom: 12,
-                                ),
+                                    left: 16, right: 16, bottom: 12),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     LoginButton(
-                                      isEnabled: valid && !isLoading,
-                                      onPressed: isLoading
-                                          ? null
-                                          : () => _handleLogin(context),
+                                      isEnabled: valid,
+                                      onPressed: () => _handleLogin(context),
                                     ),
-                                    if (isLoading) ...[
-                                      const SizedBox(height: 8),
-                                      const SizedBox(
-                                        height: 20,
-                                        width: 20,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                        ),
-                                      ),
-                                    ],
                                     const SizedBox(height: 12),
                                     RegisterText(
                                       onTap: () {
@@ -173,13 +179,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               );
                             },
-                          );
-                        },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),

@@ -10,8 +10,8 @@ class AppTextField extends StatefulWidget {
   final bool isPassword;
   final int maxLines;
   final bool isBioField;
-  final String? errorText; // ✅ إضافة errorText
-  final Function(String)? onChanged; // ✅ إضافة onChanged callback
+  final String? errorText;
+  final Function(String)? onChanged;
 
   const AppTextField({
     super.key,
