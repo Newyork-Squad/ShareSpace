@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/screen/booking/widgets/confirm_booking_bottom_sheet.dart';
+import 'package:share_space/presentation/screen/booking/widgets/promo_code_bottom_sheet.dart';
 
 import '../../design_system/theme/app_theme.dart';
 
@@ -21,12 +22,7 @@ class BookingScreen extends StatelessWidget {
               ),
               backgroundColor: theme.colors.surfaceLow,
               isScrollControlled: true,
-              builder: (_) => ConfirmBookingBottomSheet(
-                roomName: 'Modern study room',
-                price: '12,000 IQD',
-                date: '27 Jun 2025',
-                time: '03:00 PM',
-              ),
+              builder: (_) => PromoCodeBottomSheet(),
             );
           },
           style: ElevatedButton.styleFrom(
