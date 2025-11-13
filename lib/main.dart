@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'presentation/design_system/theme/app_theme_provider.dart';
 import 'presentation/routes/app_router.dart';
 import 'presentation/routes/routes.dart';
+import 'resources/app_strings.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +38,7 @@ class ShareSpaceApp extends StatelessWidget {
         }
         return AppThemeProvider(
           child: MaterialApp(
-            title: 'ShareSpace',
+            title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               useMaterial3: true,
