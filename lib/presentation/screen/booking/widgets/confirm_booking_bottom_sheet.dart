@@ -160,7 +160,7 @@ class ConfirmBookingBottomSheet extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Confirm Button
-      SizedBox(
+          SizedBox(
         width: 328,
         height: 52,
         child: DecoratedBox(
@@ -208,7 +208,10 @@ class ConfirmBookingBottomSheet extends StatelessWidget {
             ),
           ),
         ),
-      )       ],
+      )   ,
+          const SizedBox(height: 24),
+
+        ],
       ),
     );
   }
