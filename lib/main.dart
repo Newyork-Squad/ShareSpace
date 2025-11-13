@@ -23,7 +23,7 @@ class ShareSpaceApp extends StatelessWidget {
       prefs.setBool('isFirstOpen', false);
       return Routes.onboardingScreen;
     } else {
-      return Routes.loginScreen;
+      return Routes.bookingScreen;
     }
   }
 
