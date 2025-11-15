@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../design_system/theme/app_theme.dart';
-
+import '../../../routes/routes.dart';
 
 class RoomBookingBar extends StatelessWidget {
   final String price;
+
   const RoomBookingBar({super.key, required this.price});
 
   @override
@@ -47,7 +47,9 @@ class RoomBookingBar extends StatelessWidget {
           ),
 
           GestureDetector(
-            onTap: (){},
+            onTap: () {
+              Navigator.pushNamed(context, Routes.bookRoomScreen);
+            },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 150),
               width: 160,
@@ -57,10 +59,7 @@ class RoomBookingBar extends StatelessWidget {
                 gradient: const LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFF50B5E7),
-                    Color(0xFF19C6F9),
-                  ],
+                  colors: [Color(0xFF50B5E7), Color(0xFF19C6F9)],
                 ),
                 borderRadius: BorderRadius.circular(50),
                 boxShadow: [
