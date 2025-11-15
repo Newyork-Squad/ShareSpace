@@ -61,7 +61,7 @@ class _CustomChipState extends State<CustomChip> {
         });
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: BoxDecoration(
           color: isSelected ? theme.colors.blueVariant : theme.colors.surface,
           border: Border.all(
