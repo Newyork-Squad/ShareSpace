@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/screen/my_account/my_account_screen.dart';
 
+import '../screen/ section/section_screen.dart';
+import '../screen/ section/state/section_type_model.dart';
 import '../screen/booking/booking_screen.dart';
 import '../screen/bookingHistory/booking_history_screen.dart';
 import '../screen/chat/chat_screen.dart';
@@ -25,10 +27,20 @@ class AppRouter {
     Routes.bookingScreen: (_) => BookingScreen(),
     Routes.bookingHistoryScreen: (_) => BookingHistoryScreen(),
     Routes.chatScreen: (_) => ChatScreen(),
-    Routes.myAccountScreen: (_) => MyAccountScreen()
+    Routes.myAccountScreen: (_) => MyAccountScreen(),
+    Routes.sectionScreen:(_)=> SectionScreen()
   };
 
   Route generateRoute(RouteSettings settings) {
+
+    if (settings.name == Routes.sectionScreen) {
+      final type = settings.arguments as SectionType;
+      return MaterialPageRoute(
+        builder: (_) => SectionScreen(type: type),
+        settings: settings,
+      );
+    }
+
     final builder = _routes[settings.name];
     if (builder != null) {
       return MaterialPageRoute(builder: builder, settings: settings);
