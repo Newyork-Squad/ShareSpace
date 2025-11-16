@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:share_space/presentation/design_system/widget/workspace_card_details.dart';
+import 'package:share_space/presentation/design_system/widget/workspace_details_card.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_state.dart';
 import 'package:share_space/presentation/screen/home/widget/booking_card.dart';
@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      WorkspaceCardDetails(
+                                      WorkspaceDetailsCard(
                                         title: f.name,
                                         imageUrl: f.imageUrls.isNotEmpty
                                             ? f.imageUrls[0]
