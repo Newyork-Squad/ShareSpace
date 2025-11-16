@@ -57,7 +57,7 @@ class _LoadingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    const int count = 12;
+    const int count = 9;
     final double radius = size.width / 2;
     final Offset center = Offset(radius, radius);
     final Paint paint = Paint()..strokeCap = StrokeCap.round;
