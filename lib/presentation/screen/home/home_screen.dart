@@ -4,7 +4,7 @@ import 'package:share_space/presentation/design_system/widget/workspace_details_
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_state.dart';
 import 'package:share_space/presentation/screen/home/widget/booking_card.dart';
-import 'package:share_space/presentation/screen/home/widget/category_chip.dart';
+import 'package:share_space/presentation/design_system/widget/category_chip.dart';
 import 'package:share_space/presentation/screen/home/widget/home_app_bar.dart';
 import 'package:share_space/presentation/screen/home/widget/workspaces_grid.dart';
 import 'package:share_space/presentation/util/service_mapper.dart';
