@@ -4,6 +4,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../../design_system/colors/app_color.dart';
 import '../../../design_system/typography/app_typography.dart';
+import '../constant_folder/months.dart';
 
 class CalendarWidget extends StatefulWidget {
   final Set<DateTime> unavailableDates;
@@ -38,26 +39,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
   bool _isUnavailable(DateTime day) {
     return fakeUnavailableDates.any(
-      (d) => d.year == day.year && d.month == day.month && d.day == day.day,
+          (d) => d.year == day.year && d.month == day.month && d.day == day.day,
     );
   }
 
   String _monthName(int m) {
-    const names = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    return names[m - 1];
+    return months[m - 1];
   }
 
   @override
@@ -184,21 +171,21 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           children: ['S', 'S', 'M', 'T', 'W', 'T', 'F']
               .map(
                 (d) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: SizedBox(
-                    width: 43.43,
-                    height: 40,
-                    child: Center(
-                      child: Text(
-                        d,
-                        style: AppTypography().textTheme.titleSmall?.copyWith(
-                          color: AppColors.light.title,
-                        ),
-                      ),
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: SizedBox(
+                width: 43.43,
+                height: 40,
+                child: Center(
+                  child: Text(
+                    d,
+                    style: AppTypography().textTheme.titleSmall?.copyWith(
+                      color: AppColors.light.title,
                     ),
                   ),
                 ),
-              )
+              ),
+            ),
+          )
               .toList(),
         ),
 
@@ -210,7 +197,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           daysOfWeekVisible: false,
           headerVisible: false,
           selectedDayPredicate: (day) =>
-              _selectedDay != null &&
+          _selectedDay != null &&
               day.year == _selectedDay!.year &&
               day.month == _selectedDay!.month &&
               day.day == _selectedDay!.day,
@@ -222,16 +209,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             });
           },
           enabledDayPredicate: (day) => !_isUnavailable(day),
-          daysOfWeekStyle: DaysOfWeekStyle(
-            weekdayStyle: TextStyle(
-              color: Colors.grey.shade600,
-              fontWeight: FontWeight.w600,
-            ),
-            weekendStyle: TextStyle(
-              color: Colors.grey.shade600,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
           calendarStyle: const CalendarStyle(
             outsideDaysVisible: false,
             markersMaxCount: 0,
@@ -266,7 +243,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               return _DayCell(
                 day: day.day,
                 isSelected:
-                    _selectedDay != null &&
+                _selectedDay != null &&
                     _selectedDay!.day == day.day &&
                     _selectedDay!.month == day.month &&
                     _selectedDay!.year == day.year,
@@ -296,7 +273,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 style: AppTypography().textTheme.labelSmall?.copyWith(
                   color: AppColors.light.green,
                 ),
-              )            ],
+              ),
+            ],
           ),
       ],
     );
@@ -321,22 +299,22 @@ class _DayCell extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = isSelected
         ? AppTypography().textTheme.titleSmall?.copyWith(
-            color: AppColors.light.primary,
-          )
+      color: AppColors.light.primary,
+    )
         : isUnavailable
         ? TextStyle(
-            color: AppColors.light.red,
-            fontSize: 13,
-            fontFamily: 'Inter',
-            decoration: TextDecoration.lineThrough,
-            decorationColor: AppColors.light.red,
-            decorationThickness: 1,
-          )
+      color: AppColors.light.red,
+      fontSize: 13,
+      fontFamily: 'Inter',
+      decoration: TextDecoration.lineThrough,
+      decorationColor: AppColors.light.red,
+      decorationThickness: 1,
+    )
         : TextStyle(
-            color: AppColors.light.title,
-            fontSize: 16,
-            fontFamily: 'Inter',
-          );
+      color: AppColors.light.title,
+      fontSize: 16,
+      fontFamily: 'Inter',
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -352,7 +330,7 @@ class _DayCell extends StatelessWidget {
                 height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
-                  color: Color(0xFFFFEEEF),
+                  color: const Color(0xFFFFEEEF),
                 ),
               ),
             if (isSelected)
@@ -373,7 +351,6 @@ class _DayCell extends StatelessWidget {
                   ],
                 ),
               ),
-
             Text('$day', style: textStyle),
           ],
         ),
