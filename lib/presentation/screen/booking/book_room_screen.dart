@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
 import 'package:share_space/presentation/screen/booking/widgets/calendar_widget.dart';
-import 'package:share_space/presentation/screen/booking/widgets/confirm_button.dart';
 import 'package:share_space/presentation/screen/booking/widgets/duration_widget.dart';
 import 'package:share_space/presentation/screen/booking/widgets/payment_widget.dart';
 import 'package:share_space/presentation/screen/booking/widgets/time_slot_widget.dart';
+import '../../design_system/widget/share_space_app_button.dart';
 
 class BookRoomScreen extends StatelessWidget {
   const BookRoomScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    bool isButtonEnabled = true;
+
     return Scaffold(
       backgroundColor: AppColors.light.surfaceLow,
       appBar: AppBar(
@@ -18,21 +20,25 @@ class BookRoomScreen extends StatelessWidget {
         backgroundColor: AppColors.light.surfaceLow,
         elevation: 0,
       ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CalendarWidget(),
-            SizedBox(height: 16),
-            TimeSlotWidget(),
-            SizedBox(height: 16),
-            DurationWidget(),
-            SizedBox(height: 16),
-            PaymentWidget(),
-            SizedBox(height: 24),
-            ConfirmButton(),
-            SizedBox(height: 12),
+            const CalendarWidget(),
+            const SizedBox(height: 16),
+            const TimeSlotWidget(),
+            const SizedBox(height: 16),
+            const DurationWidget(),
+            const SizedBox(height: 16),
+            const PaymentWidget(),
+            const SizedBox(height: 24),
+            ShareSpaceAppButton(
+              isEnabled: isButtonEnabled,
+              text: 'Confirm booking',
+              onPressed: () {},
+            ),
+            const SizedBox(height: 12),
           ],
         ),
       ),
