@@ -123,6 +123,7 @@ class OtpInputFieldsState extends State<OtpInputFields> {
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
               maxLength: 1,
+              cursorColor: theme.colors.primary,
               style: theme.typography.textTheme.headlineSmall?.copyWith(
                 color: theme.colors.primary,
                 fontWeight: FontWeight.w600,
