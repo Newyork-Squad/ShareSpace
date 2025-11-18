@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../design_system/theme/app_theme.dart';
+import '../../../design_system/widget/share_space_app_button.dart';
 import '../../../routes/routes.dart';
 
 class RoomBookingBar extends StatelessWidget {
@@ -46,38 +47,14 @@ class RoomBookingBar extends StatelessWidget {
             ],
           ),
 
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, Routes.bookRoomScreen);
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              width: 160,
-              height: 52,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xFF50B5E7), Color(0xFF19C6F9)],
-                ),
-                borderRadius: BorderRadius.circular(50),
-                boxShadow: [
-                  const BoxShadow(
-                    color: Color(0x8036CEFB),
-                    blurRadius: 12,
-                    offset: Offset(0, 4),
-                    spreadRadius: -4,
-                  ),
-                ],
-              ),
-              child: Text(
-                'Book now',
-                style: theme.typography.textTheme.labelMedium?.copyWith(
-                  color: theme.colors.onPrimary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+          SizedBox(
+            width: 160,
+            child: ShareSpaceAppButton(
+              isEnabled: true,
+              text: 'Book now',
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.bookRoomScreen);
+              },
             ),
           ),
         ],
