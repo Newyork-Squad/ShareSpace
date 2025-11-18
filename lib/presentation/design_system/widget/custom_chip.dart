@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
+import '../colors/app_color.dart';
 import '../typography/app_typography.dart';
+
+enum ChipSize {
+  body,
+  title,
+}
 
 class CustomChip extends StatefulWidget {
   final String label;
@@ -9,29 +15,47 @@ class CustomChip extends StatefulWidget {
   final String icon;
   bool isSelected;
   final VoidCallback? onSelect;
-  final int width;
-  final int height;
+  final ChipSize size;
   final TextStyle? labelStyle;
-  final Color? fontColor;
 
   CustomChip({
     super.key,
     required this.label,
-    this.labelColor = const Color(0x991F1F1F),
+    Color? labelColor,
     this.icon = '',
     this.isSelected = false,
     this.onSelect,
-    this.width = 37,
-    this.height = 22,
+    this.size = ChipSize.body,
     this.labelStyle,
-    this.fontColor,
-  });
+  }) : labelColor = labelColor ?? AppColors.light.title;
 
   @override
   State<CustomChip> createState() => _CustomChipState();
 }
 
 class _CustomChipState extends State<CustomChip> {
+  TextStyle _resolveTextStyle() {
+    if (widget.labelStyle != null) return widget.labelStyle!;
+
+    switch (widget.size) {
+      case ChipSize.title:
+        return AppTypography.labelXSmall.copyWith(fontWeight: FontWeight.w600);
+      case ChipSize.body:
+      default:
+        return AppTypography.labelXSmall;
+    }
+  }
+
+  EdgeInsets _resolvePadding() {
+    switch (widget.size) {
+      case ChipSize.title:
+        return const EdgeInsets.symmetric(horizontal: 10, vertical: 6);
+      case ChipSize.body:
+      default:
+        return const EdgeInsets.symmetric(horizontal: 8, vertical: 5);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
@@ -41,7 +65,7 @@ class _CustomChipState extends State<CustomChip> {
         widget.onSelect?.call();
       }),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+        padding: _resolvePadding(),
         decoration: BoxDecoration(
           color: widget.isSelected
               ? theme.colors.blueVariant
@@ -70,10 +94,10 @@ class _CustomChipState extends State<CustomChip> {
             ],
             Text(
               widget.label,
-              style: (widget.labelStyle ?? AppTypography.labelXSmall).copyWith(
+              style: _resolveTextStyle().copyWith(
                 color: widget.isSelected
                     ? theme.colors.primary
-                    : (widget.fontColor ?? widget.labelColor),
+                    : widget.labelColor,
               ),
             ),
           ],

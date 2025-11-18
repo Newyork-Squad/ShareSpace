@@ -17,8 +17,7 @@ class _TimeSlotWidgetState extends State<DurationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> slots =
-        widget.timeSlots ?? ['30m', '1h', '2h', '3h'];
+    final List<String> slots = widget.timeSlots ?? ['30m', '1h', '2h', '3h'];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,13 +34,14 @@ class _TimeSlotWidgetState extends State<DurationWidget> {
           spacing: 8,
           children: slots.map((time) {
             final bool isSelected = selectedTime == time;
+
             return Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: CustomChip(
                 label: time,
                 isSelected: isSelected,
+                size: ChipSize.title,
                 labelStyle: AppTypography().textTheme.labelMedium,
-                fontColor: AppColors.light.title,
                 onSelect: () {
                   setState(() {
                     selectedTime = time;
