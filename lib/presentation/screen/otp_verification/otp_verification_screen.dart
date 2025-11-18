@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../design_system/theme/app_theme.dart';
+import '../create_account/create_account_screen.dart' show showCustomTopSnackBar;
 import 'cubit/otp_verification_cubit.dart';
 import 'cubit/otp_verification_state.dart';
 import 'widgets/otp_header.dart';
@@ -67,25 +68,25 @@ class _OtpVerificationViewState extends State<_OtpVerificationView> {
               child: BlocConsumer<OtpVerificationCubit, OtpVerificationState>(
                 listener: (context, state) {
                   if (state is OtpVerificationSuccess) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text('Account verified successfully!'),
-                        backgroundColor: theme.colors.green,
-                      ),
+                    showCustomTopSnackBar(
+                      context,
+                      title: 'Success',
+                      message: 'Account verified successfully!',
+                      isError: false,
                     );
                   } else if (state is OtpVerificationError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(state.message),
-                        backgroundColor: theme.colors.red,
-                      ),
+                    showCustomTopSnackBar(
+                      context,
+                      title: 'Error',
+                      message: state.message,
+                      isError: true,
                     );
                   } else if (state is OtpResendSuccess) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text('A new code has been sent.'),
-                        backgroundColor: theme.colors.primary,
-                      ),
+                    showCustomTopSnackBar(
+                      context,
+                      title: 'Success',
+                      message: 'A new code has been sent.',
+                      isError: false,
                     );
                     _otpFieldsKey.currentState?.clear();
                   }
