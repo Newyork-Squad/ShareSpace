@@ -10,7 +10,7 @@ import '../../design_system/theme/app_theme.dart';
 import 'login_widget/app_logo.dart';
 import 'login_widget/login_button.dart';
 import 'login_widget/password_input_field.dart';
-import 'login_widget/phone_input_field.dart';
+import '../../design_system/widget/phone_input_field.dart';
 import 'login_widget/register_text.dart';
 
 class LoginScreen extends StatefulWidget {
