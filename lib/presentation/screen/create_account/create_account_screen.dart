@@ -7,7 +7,7 @@ import '../../../domain/usecase/authentication/create_account_usecase.dart';
 import '../../design_system/colors/app_color.dart';
 import '../../design_system/typography/app_typography.dart';
 import '../../design_system/widget/phone_input_field.dart';
-import 'create_account_widgets/app_text_field.dart';
+import '../../design_system/widget/app_text_field.dart';
 import 'create_account_widgets/create_account_button.dart';
 import 'create_account_widgets/gender_selector.dart';
 import 'create_account_widgets/profile_image_picker.dart';
