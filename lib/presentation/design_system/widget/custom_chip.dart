@@ -5,10 +5,9 @@ import '../typography/app_typography.dart';
 
 class CustomChip extends StatefulWidget {
   final String label;
-  final Color labelColor;
+  Color labelColor;
   final String icon;
   bool isSelected;
-  final bool isDefaultSelected;
   final VoidCallback? onSelect;
   final int width;
   final int height;
@@ -21,7 +20,6 @@ class CustomChip extends StatefulWidget {
     this.labelColor = const Color(0x991F1F1F),
     this.icon = '',
     this.isSelected = false,
-    this.isDefaultSelected = true,
     this.onSelect,
     this.width = 37,
     this.height = 22,
@@ -38,38 +36,23 @@ class _CustomChipState extends State<CustomChip> {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
 
-    final bool isSelected = widget.isSelected;
-    final bool isDefault = widget.isDefaultSelected;
-
-    final double borderWidth = (isSelected && !isDefault) ? 1 : 0.5;
-
-    final List<BoxShadow>? shadow = (isSelected && !isDefault)
-        ? [
-            BoxShadow(
-              color: const Color(0x3D84E2FE),
-              offset: const Offset(0, 4),
-              blurRadius: 8,
-              spreadRadius: 0,
-            ),
-          ]
-        : null;
-
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          widget.onSelect?.call();
-        });
-      },
+      onTap: () => setState(() {
+        widget.onSelect?.call();
+      }),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: BoxDecoration(
-          color: isSelected ? theme.colors.blueVariant : theme.colors.surface,
+          color: widget.isSelected
+              ? theme.colors.blueVariant
+              : theme.colors.surface,
           border: Border.all(
-            color: isSelected ? theme.colors.primary : theme.colors.stroke,
-            width: borderWidth,
+            color: widget.isSelected
+                ? theme.colors.primary
+                : theme.colors.stroke,
+            width: 0.5,
           ),
           borderRadius: BorderRadius.circular(100),
-          boxShadow: shadow,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -77,7 +60,7 @@ class _CustomChipState extends State<CustomChip> {
             if (widget.icon.isNotEmpty) ...[
               SvgPicture.asset(
                 widget.icon,
-                colorFilter: isSelected
+                colorFilter: widget.isSelected
                     ? ColorFilter.mode(theme.colors.primary, BlendMode.srcIn)
                     : null,
                 width: 12,
@@ -88,7 +71,7 @@ class _CustomChipState extends State<CustomChip> {
             Text(
               widget.label,
               style: (widget.labelStyle ?? AppTypography.labelXSmall).copyWith(
-                color: isSelected
+                color: widget.isSelected
                     ? theme.colors.primary
                     : (widget.fontColor ?? widget.labelColor),
               ),

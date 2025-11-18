@@ -38,7 +38,6 @@ class _TimeSlotWidgetState extends State<DurationWidget> {
             return Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: CustomChip(
-                isDefaultSelected: false,
                 label: time,
                 isSelected: isSelected,
                 labelStyle: AppTypography().textTheme.labelMedium,
