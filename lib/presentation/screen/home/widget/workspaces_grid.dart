@@ -3,7 +3,7 @@ import 'package:share_space/presentation/screen/home/state/category.dart';
 
 import '../../../design_system/theme/app_theme.dart';
 import '../../../util/service_mapper.dart';
-import 'listing_card.dart';
+import '../../../design_system/widget/workspace_card.dart';
 
 class WorkspacesGrid extends StatelessWidget {
   const WorkspacesGrid({
@@ -31,7 +31,7 @@ class WorkspacesGrid extends StatelessWidget {
         ),
         itemBuilder: (context, index) => GestureDetector(
           onTap: () => onClick(category.workspaces[index].id.toString()),
-          child: ListingCard(
+          child: WorkspaceCard(
             imageUrl: category.workspaces[index].imageUrls[0],
             rating: category.workspaces[index].rate,
             title: category.workspaces[index].name,

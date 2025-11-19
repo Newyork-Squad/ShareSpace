@@ -4,17 +4,18 @@ import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 import 'package:share_space/presentation/design_system/typography/app_typography.dart';
 import 'package:share_space/presentation/design_system/widget/custom_chip.dart';
 
-import '../../../util/get_service_icon_path.dart';
+import '../../util/get_service_icon_path.dart';
 
-class ListingCard extends StatelessWidget {
+class WorkspaceCard extends StatelessWidget {
   final String imageUrl;
   final double rating;
   final String title;
   final String price;
   final String location;
   final List<String> amenities;
+  final VoidCallback? onClick;
 
-  const ListingCard({
+  const WorkspaceCard({
     super.key,
     required this.imageUrl,
     required this.rating,
@@ -22,26 +23,31 @@ class ListingCard extends StatelessWidget {
     required this.price,
     required this.location,
     required this.amenities,
+    this.onClick
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            imageWithRating(theme),
-            const SizedBox(width: 8),
-            details(theme),
-          ],
-        ),
-        const SizedBox(height: 4),
-        amenitiesRow(theme),
-      ],
+    return InkWell(
+      onTap: onClick,
+      borderRadius: BorderRadius.circular(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              imageWithRating(theme),
+              const SizedBox(width: 8),
+              details(theme),
+            ],
+          ),
+          const SizedBox(height: 4),
+          amenitiesRow(theme),
+        ],
+      ),
     );
   }
 
