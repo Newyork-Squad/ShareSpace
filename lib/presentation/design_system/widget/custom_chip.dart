@@ -8,12 +8,14 @@ class CustomChip extends StatelessWidget {
   final String label;
   final String icon;
   final Color? labelColor;
+  final bool isSelected;
 
   const CustomChip({
     super.key,
     required this.label,
     this.icon = '',
     this.labelColor,
+    this.isSelected = false,
   });
 
   @override
@@ -22,7 +24,9 @@ class CustomChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
-        color: theme.colors.surface,
+        color: isSelected
+            ? theme.colors.blueVariant
+            : theme.colors.surface,
         border: Border.all(color: theme.colors.stroke, width: 0.5),
         borderRadius: BorderRadius.circular(100),
       ),
