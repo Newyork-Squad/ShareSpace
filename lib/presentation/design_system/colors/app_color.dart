@@ -26,6 +26,7 @@ class AppColors {
     errorVariant: Color(0xFFFFEEEF),
     green: Color(0xFF51AC46),
     greenVariant: Color(0xFFF1F9F1),
+    redVariant: Color(0xFFFFEEEF),
   );
 }
 
@@ -52,6 +53,7 @@ class AppColorScheme {
   final Color errorVariant;
   final Color green;
   final Color greenVariant;
+  final Color redVariant;
 
   const AppColorScheme({
     required this.primary,
@@ -76,5 +78,6 @@ class AppColorScheme {
     required this.errorVariant,
     required this.green,
     required this.greenVariant,
+    required this.redVariant,
   });
 }
