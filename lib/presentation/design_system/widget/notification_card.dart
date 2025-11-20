@@ -25,7 +25,7 @@ class NotificationCard extends StatelessWidget {
       height: 74,
       decoration: BoxDecoration(
         border:
-            showBottomBorder // <- نستخدم المتغير هنا
+            showBottomBorder
             ? Border(
                 bottom: BorderSide(color: AppColors.light.stroke, width: 0.5),
               )
