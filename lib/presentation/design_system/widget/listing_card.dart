@@ -4,7 +4,7 @@ import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 import 'package:share_space/presentation/design_system/typography/app_typography.dart';
 import 'package:share_space/presentation/design_system/widget/custom_chip.dart';
 
-import '../../../util/get_service_icon_path.dart';
+import '../../util/get_service_icon_path.dart';
 
 class ListingCard extends StatelessWidget {
   final String imageUrl;
