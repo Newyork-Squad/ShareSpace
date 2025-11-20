@@ -10,7 +10,7 @@ import '../screen/login/login_screen.dart';
 import '../screen/onboarding/onboarding_screen.dart';
 import '../screen/room_details/room_details_screen.dart';
 import '../screen/search/search_screen.dart';
-import '../widgets/app_navigation_bar.dart';
+import '../design_system/widget/app_navigation_bar.dart';
 import 'routes.dart';
 
 class AppRouter {
