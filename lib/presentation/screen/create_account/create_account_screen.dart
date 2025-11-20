@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../di/injection.dart';
 import '../../../domain/usecase/authentication/create_account_usecase.dart';
 import '../../design_system/colors/app_color.dart';
 import '../../design_system/typography/app_typography.dart';
 import '../../design_system/widget/phone_input_field.dart';
 import '../../design_system/widget/app_text_field.dart';
+import '../../design_system/widget/custom_top_snackbar.dart';
 import 'create_account_widgets/create_account_button.dart';
 import 'create_account_widgets/gender_selector.dart';
 import 'create_account_widgets/profile_image_picker.dart';
@@ -84,8 +83,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
     if (passwordController.text != confirmPasswordController.text) {
       setState(() {
-        confirmPasswordError =
-        "Confirm password does not match the password.";
+        confirmPasswordError = "Confirm password does not match the password.";
       });
       return;
     } else {
@@ -101,103 +99,14 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     Navigator.pop(context);
   }
 
-  void showCustomTopSnackBar({
-    required String title,
-    required String message,
-    bool isError = true,
-  }) {
-    showTopSnackBar(
-      Overlay.of(context)!,
-      SafeArea(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                isError
-                    ? 'assets/images/toast_massage_background_error.png'
-                    : 'assets/images/toast_massage_background_success.png',
-              ),
-              fit: BoxFit.fill,
-            ),
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: isError
-                    ? const Color(0x29AF3333)
-                    : const Color(0x2933AF80),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                top: 0,
-                right: 0,
-                child: GestureDetector(
-                  onTap: () => '',
-                  child: SvgPicture.asset('assets/icons/close_icon.svg'),
-                ),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: SvgPicture.asset(
-                      isError
-                          ? 'assets/icons/error_icon.svg'
-                          : 'assets/icons/success_icon.svg',
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: AppTypography()
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(
-                            color: AppColors.light.title,
-                            decoration: TextDecoration.none,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          message,
-                          style: AppTypography()
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                            color: AppColors.light.body,
-                            decoration: TextDecoration.none,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      snackBarPosition: SnackBarPosition.top,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<CreateAccountCubit, CreateAccountState>(
         listener: (context, state) {
           if (state is CreateAccountSuccess) {
-            showCustomTopSnackBar(
+            CustomTopSnackBar.show(
+              context,
               title: 'Success',
               message: 'Account created successfully!',
               isError: false,
@@ -207,7 +116,9 @@ class _CreateAccountViewState extends State<CreateAccountView> {
             final errorMessage = state.message.trim().isEmpty
                 ? 'Unexpected error occurred.'
                 : state.message;
-            showCustomTopSnackBar(
+
+            CustomTopSnackBar.show(
+              context,
               title: 'Error',
               message: errorMessage,
               isError: true,
@@ -236,10 +147,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       const SizedBox(height: 9),
                       Text(
                         'Create account',
-                        style: AppTypography()
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(
+                        style: AppTypography().textTheme.titleMedium?.copyWith(
                           color: AppColors.light.title,
                         ),
                       ),
@@ -247,10 +155,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       Text(
                         'Please enter your information to create account.',
                         textAlign: TextAlign.center,
-                        style: AppTypography()
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(
+                        style: AppTypography().textTheme.bodyMedium?.copyWith(
                           color: AppColors.light.body,
                         ),
                       ),
@@ -335,18 +240,14 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                               style: AppTypography()
                                   .textTheme
                                   .labelMedium
-                                  ?.copyWith(
-                                color: AppColors.light.body,
-                              ),
+                                  ?.copyWith(color: AppColors.light.body),
                             ),
                             Text(
                               'Login',
                               style: AppTypography()
                                   .textTheme
                                   .labelMedium
-                                  ?.copyWith(
-                                color: AppColors.light.primary,
-                              ),
+                                  ?.copyWith(color: AppColors.light.primary),
                             ),
                           ],
                         ),
@@ -355,11 +256,11 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                   ),
                 ),
               ),
+
               if (isLoading)
                 Container(
                   color: Colors.black26,
-                  child:
-                  const Center(child: CircularProgressIndicator()),
+                  child: const Center(child: CircularProgressIndicator()),
                 ),
             ],
           );
