@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
-import '../theme/app_theme.dart';
+import '../typography/app_typography.dart';
 
 class SeeAllBar extends StatelessWidget {
   final String title;
   final VoidCallback? onAllTap;
 
-  const SeeAllBar({
-    Key? key,
-    required this.title,
-    required this.onAllTap,
-  }) : super(key: key);
+  const SeeAllBar({Key? key, required this.title, required this.onAllTap})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
     final textColor = AppColors.light.title;
 
     return Row(
@@ -23,7 +19,7 @@ class SeeAllBar extends StatelessWidget {
       children: [
         Text(
           title,
-          style: theme.typography.textTheme.titleSmall?.copyWith(
+          style: AppTypography().textTheme.titleSmall?.copyWith(
             color: textColor,
           ),
         ),
@@ -38,7 +34,7 @@ class SeeAllBar extends StatelessWidget {
               Center(
                 child: Text(
                   "All",
-                  style: theme.typography.textTheme.labelSmall?.copyWith(
+                  style: AppTypography().textTheme.labelSmall?.copyWith(
                     color: textColor,
                   ),
                 ),
@@ -51,10 +47,7 @@ class SeeAllBar extends StatelessWidget {
                   'assets/icons/arrow_right.svg',
                   width: 5,
                   height: 9,
-                  colorFilter: ColorFilter.mode(
-                    textColor,
-                    BlendMode.srcIn,
-                  ),
+                  colorFilter: ColorFilter.mode(textColor, BlendMode.srcIn),
                 ),
               ),
             ],
