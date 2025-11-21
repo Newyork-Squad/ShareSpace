@@ -159,16 +159,16 @@ class BookingCard extends StatelessWidget {
         const SizedBox(width: 8),
         Text(
           date,
-          style: theme.typography.textTheme.bodyMedium?.copyWith(
+          style: theme.typography.textTheme.labelSmall?.copyWith(
             color: theme.colors.body,
           ),
         ),
         const SizedBox(width: 8),
-        Icon(Icons.circle, size: 4, color: theme.colors.body),
+        Icon(Icons.circle, size: 4, color: theme.colors.stroke),
         const SizedBox(width: 8),
         Text(
           time,
-          style: theme.typography.textTheme.bodyMedium?.copyWith(
+          style: theme.typography.textTheme.labelSmall?.copyWith(
             color: theme.colors.body,
           ),
         ),
@@ -186,17 +186,29 @@ class BookingCard extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.colors.errorVariant.withOpacity(0.1),
-                  foregroundColor: theme.colors.errorVariant,
+                  backgroundColor: theme.colors.errorVariant,
+                  foregroundColor: theme.colors.red,
+                  shadowColor: Colors.transparent,
                 ),
-                child: const Text("Cancel booking"),
+                child: Text(
+                  "Cancel booking",
+                  style: theme.typography.textTheme.labelSmall,
+                ),
               ),
             ),
             const SizedBox(width: 8),
             Expanded(
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text("Extend booking"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.colors.blueVariant,
+                  foregroundColor: theme.colors.primary,
+                  shadowColor: Colors.transparent,
+                ),
+                child: Text(
+                  "Extend booking",
+                  style: theme.typography.textTheme.labelSmall,
+                ),
               ),
             ),
           ],
@@ -207,7 +219,15 @@ class BookingCard extends StatelessWidget {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text("Book Again"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.colors.primary,
+                  foregroundColor: theme.colors.onPrimary,
+                  shadowColor: Colors.transparent,
+                ),
+                child: Text(
+                  "Book Again",
+                  style: theme.typography.textTheme.labelSmall,
+                ),
               ),
             ),
             const SizedBox(width: 8),
@@ -215,18 +235,36 @@ class BookingCard extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.colors.primary.withOpacity(0.1),
+                  backgroundColor: theme.colors.blueVariant,
                   foregroundColor: theme.colors.primary,
+                  shadowColor: Colors.transparent,
                 ),
-                child: const Text("Rate"),
+                child: Text(
+                  "Rate",
+                  style: theme.typography.textTheme.labelSmall,
+                ),
               ),
             ),
           ],
         );
       case BookingStatus.canceled:
-        return ElevatedButton(
-          onPressed: () {},
-          child: const Text("Book Again"),
+        return Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.colors.primary,
+                  foregroundColor: theme.colors.onPrimary,
+                  shadowColor: Colors.transparent,
+                ),
+                child: Text(
+                  "Book Again",
+                  style: theme.typography.textTheme.labelSmall,
+                ),
+              ),
+            ),
+          ],
         );
     }
   }
