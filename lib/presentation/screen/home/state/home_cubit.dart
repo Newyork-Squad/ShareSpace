@@ -43,7 +43,7 @@ class HomeCubit extends Cubit<HomeState> {
         nearToYou,
         featured,
         user,
-        // location,
+        location,
       ) = await (
         _getBestUseCase(),
         _getPopularUseCase(),
@@ -52,7 +52,7 @@ class HomeCubit extends Cubit<HomeState> {
         _getNearToYouUseCase(latitude: 0.0, longitude: 0.0),
         _getFeaturedUseCase(),
         _getUserDetailsUseCase(),
-        // _getCurrentLocationUseCase(),
+        _getCurrentLocationUseCase(),
       ).wait;
 
       emit(
@@ -65,7 +65,7 @@ class HomeCubit extends Cubit<HomeState> {
           featured,
           user.name,
           user.profileImageUrl,
-          "location",
+          location,
         ),
       );
     } catch (e) {
