@@ -1,5 +1,4 @@
 
-import 'dart:ffi';
 
 class Workspace {
   final String id;
@@ -31,12 +30,4 @@ class Workspace {
   });
 }
 
-
-enum Services {
-  wifi,
-  ac,
-  whiteboard,
-  powerBackup,
-  parking,
-  coffee,
-}
+enum Services { wifi, ac, whiteboard, powerBackup, parking, coffee }
