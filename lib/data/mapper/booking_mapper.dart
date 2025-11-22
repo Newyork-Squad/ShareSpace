@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:share_space/data/mapper/workspace_mapper.dart';
 import 'package:share_space/data/remote/dto/booking_response.dart';
 import 'package:share_space/domain/entity/booking.dart';
 
@@ -8,7 +9,7 @@ extension BookingResponseMapper on BookingResponse {
   Booking toEntity() {
     return Booking(
       id: id,
-      workspaceId: workspace.id,
+      workspace: workspace.mapToEntity(),
       userId: userId,
       startTime: startTime,
       endTime: endTime,

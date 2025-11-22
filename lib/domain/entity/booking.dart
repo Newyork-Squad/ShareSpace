@@ -2,7 +2,7 @@ import 'package:share_space/domain/entity/workspace.dart';
 
 class Booking {
   final String id;
-  final String workspaceId;
+  final Workspace workspace;
   final String userId;
   final DateTime startTime;
   final DateTime endTime;
@@ -15,7 +15,7 @@ class Booking {
 
   Booking({
     required this.id,
-    required this.workspaceId,
+    required this.workspace,
     required this.userId,
     required this.startTime,
     required this.endTime,
