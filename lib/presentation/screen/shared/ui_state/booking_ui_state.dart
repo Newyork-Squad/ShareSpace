@@ -1,13 +1,13 @@
 
 
-import 'package:share_space/presentation/screen/shared/workspace_ui_state.dart';
+import 'package:share_space/presentation/screen/shared/ui_state/workspace_ui_state.dart';
 import 'package:share_space/presentation/util/image_const.dart';
 
 class BookingUiState {
   final String date;
   final String startTime;
   final String endTime;
-  final BookingStatus status;
+  final BookingStatusUiState status;
   final WorkspaceUiState workspace;
 
   BookingUiState({
@@ -27,4 +27,4 @@ class BookingUiState {
   }
 }
 
-enum BookingStatus { upcoming, completed, canceled }
+enum BookingStatusUiState { upcoming, completed, canceled }

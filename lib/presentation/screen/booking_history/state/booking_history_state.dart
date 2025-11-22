@@ -1,4 +1,4 @@
-import 'package:share_space/presentation/screen/shared/booking_ui_state.dart';
+import 'package:share_space/presentation/screen/shared/ui_state/booking_ui_state.dart';
 
 abstract class BookingHistoryState {}
 
