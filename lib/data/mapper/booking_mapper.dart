@@ -1,0 +1,34 @@
+import 'dart:convert';
+
+import 'package:share_space/data/remote/dto/booking_response.dart';
+import 'package:share_space/domain/entity/booking.dart';
+
+
+extension BookingResponseMapper on BookingResponse {
+  Booking toEntity() {
+    return Booking(
+      id: id,
+      workspaceId: workspace.id,
+      userId: userId,
+      startTime: startTime,
+      endTime: endTime,
+      duration: duration,
+      paymentType: paymentType,
+      cost: cost,
+      status: status,
+      paymentStatus: paymentStatus,
+    );
+  }
+}
+
+List<BookingResponse> listFromJson(dynamic data) {
+  if (data is List) {
+    return data.map((e) => BookingResponse.fromJson(e)).toList();
+  } else if (data is String) {
+    return (jsonDecode(data) as List)
+        .map((e) => BookingResponse.fromJson(e))
+        .toList();
+  } else {
+    return [];
+  }
+}

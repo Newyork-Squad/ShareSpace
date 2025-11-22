@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:share_space/data/local/token_storage.dart';
 import 'package:share_space/data/local/token_storage_impl.dart';
 import 'package:share_space/data/remote/auth_api_service.dart';
+import 'package:share_space/data/remote/booking_api_service_impl.dart';
 import 'package:share_space/data/remote/location_service.dart';
 import 'package:share_space/data/remote/location_service_impl.dart';
 import 'package:share_space/data/remote/user_api_service.dart';
@@ -29,9 +30,12 @@ import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 
 import '../data/remote/auth_api_service_impl.dart';
+import '../data/remote/booking_api_service.dart';
 import '../data/remote/dio_client.dart';
 import '../data/remote/workspace_api_service.dart';
 import '../data/remote/workspace_api_service_impl.dart';
+import '../data/repository/booking_repository_impl.dart';
+import '../domain/repository/booking_repository.dart';
 import '../domain/usecase/authentication/create_account_usecase.dart';
 import '../domain/usecase/authentication/is_loggedIn_usecase.dart';
 import '../domain/usecase/authentication/logout_usecase.dart';
@@ -53,6 +57,14 @@ void setupDependencies() {
 
   getIt.registerLazySingleton<WorkspaceRepository>(
     () => WorkspaceRepositoryImpl(getIt()),
+  );
+
+  getIt.registerLazySingleton<BookingApiService>(
+        () => BookingApiServiceImpl(getIt()),
+  );
+
+  getIt.registerLazySingleton<BookingRepository>(
+        () => BookingRepositoryImpl(getIt()),
   );
 
   getIt.registerLazySingleton<UserRepository>(
