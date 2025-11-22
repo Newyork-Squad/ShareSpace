@@ -4,12 +4,12 @@ import 'package:share_space/presentation/screen/shared/ui_state/booking_ui_state
 import 'package:share_space/presentation/screen/shared/ui_state/mapper/workspace_ui_mapper.dart';
 
 BookingUiState mapBookingToUiState(Booking booking){
-  BookingUiState(
+  return BookingUiState(
     date: booking.startTime.toString(),
     startTime: booking.startTime.toString(),
     endTime: booking.endTime.toString(),
     status: mapBookingStatusToUiState(booking.status),
-    workspace: mapWorkToUiState(booking.w),
+    workspace: mapWorkToUiState(booking.workspace),
   );
 }
 
