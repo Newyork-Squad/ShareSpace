@@ -9,7 +9,7 @@ class Booking {
   final double duration;
   final String paymentType;
   final double cost;
-  final String status;
+  final BookingStatus status;
   final String paymentStatus;
 
 

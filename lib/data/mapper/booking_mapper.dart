@@ -16,10 +16,19 @@ extension BookingResponseMapper on BookingResponse {
       duration: duration,
       paymentType: paymentType,
       cost: cost,
-      status: status,
+      status: toBookingStatus(status),
       paymentStatus: paymentStatus,
     );
   }
+}
+
+BookingStatus toBookingStatus(String status) {
+  return switch (status) {
+    'upcoming' => BookingStatus.upcoming,
+    'completed' => BookingStatus.completed,
+    'canceled' => BookingStatus.canceled,
+    _ => throw Exception('Invalid booking status: $status'),
+  };
 }
 
 List<BookingResponse> listFromJson(dynamic data) {
