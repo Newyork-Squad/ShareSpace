@@ -13,6 +13,7 @@ import '../screen/onboarding/onboarding_screen.dart';
 import '../screen/room_details/room_details_screen.dart';
 import '../screen/search/search_screen.dart';
 import '../widgets/app_navigation_bar.dart';
+import 'package:share_space/resources/app_strings.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -48,7 +49,11 @@ class AppRouter {
 
     return MaterialPageRoute(
       builder: (_) => Scaffold(
-        body: Center(child: Text('No route defined for ${settings.name}')),
+        body: Center(
+          child: Text(
+            '${AppStrings.noRouteDefined} ${settings.name}',
+          ),
+        ),
       ),
       settings: settings,
     );

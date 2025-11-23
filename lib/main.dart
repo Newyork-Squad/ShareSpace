@@ -6,6 +6,7 @@ import 'presentation/routes/app_router.dart';
 import 'presentation/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'resources/app_strings.dart';
 
  void  main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,7 @@ class ShareSpaceApp extends StatelessWidget {
         }
         return AppThemeProvider(
           child: MaterialApp(
-            title: 'ShareSpace',
+            title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               useMaterial3: true,

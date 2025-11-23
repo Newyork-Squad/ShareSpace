@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../design_system/colors/app_color.dart';
 import '../../../design_system/typography/app_typography.dart';
+import 'package:share_space/resources/app_strings.dart';
 
 class PasswordInputField extends StatefulWidget {
   final TextEditingController controller;
@@ -58,7 +59,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
           minWidth: 40,
           minHeight: 40,
         ),
-        hintText: 'Password',
+        hintText: AppStrings.hintPassword,
         hintStyle: AppTypography().textTheme.labelMedium?.copyWith(
           color: AppColors.light.body,
         ),
