@@ -7,6 +7,7 @@ import 'package:share_space/presentation/routes/routes.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 import '../../design_system/theme/app_theme.dart';
 import '../../design_system/widget/share_space_app_button.dart';
+import 'package:share_space/resources/app_strings.dart';
 import 'login_widget/app_logo.dart';
 import 'login_widget/password_input_field.dart';
 import 'login_widget/phone_input_field.dart';
@@ -122,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    "Please enter your phone number and password to access your booking",
+                                    AppStrings.loginInstructions,
                                     textAlign: TextAlign.center,
                                     style: AppTypography().textTheme.bodyMedium
                                         ?.copyWith(color: AppColors.light.body),

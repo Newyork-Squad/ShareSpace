@@ -9,20 +9,21 @@ enum ChipSize {
   title,
 }
 
-class CustomChip extends StatefulWidget {
+class CustomChip extends StatelessWidget {
   final String label;
-  Color labelColor;
   final String icon;
-  bool isSelected;
+  final Color? labelColor;
+  final bool isSelected;
   final VoidCallback? onSelect;
   final ChipSize size;
   final TextStyle? labelStyle;
 
-  CustomChip({
+  const CustomChip({
     super.key,
     required this.label,
     Color? labelColor,
     this.icon = '',
+    this.labelColor,
     this.isSelected = false,
     this.onSelect,
     this.size = ChipSize.body,
@@ -60,48 +61,29 @@ class _CustomChipState extends State<CustomChip> {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
 
-    return GestureDetector(
-      onTap: () => setState(() {
-        widget.onSelect?.call();
-      }),
-      child: Container(
-        padding: _resolvePadding(),
-        decoration: BoxDecoration(
-          color: widget.isSelected
-              ? theme.colors.blueVariant
-              : theme.colors.surface,
-          border: Border.all(
-            color: widget.isSelected
-                ? theme.colors.primary
-                : theme.colors.stroke,
-            width: 0.5,
-          ),
-          borderRadius: BorderRadius.circular(100),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (widget.icon.isNotEmpty) ...[
-              SvgPicture.asset(
-                widget.icon,
-                colorFilter: widget.isSelected
-                    ? ColorFilter.mode(theme.colors.primary, BlendMode.srcIn)
-                    : null,
-                width: 12,
-                height: 12,
-              ),
-              const SizedBox(width: 2),
-            ],
-            Text(
-              widget.label,
-              style: _resolveTextStyle().copyWith(
-                color: widget.isSelected
-                    ? theme.colors.primary
-                    : widget.labelColor,
-              ),
-            ),
+    return Container(
+      padding: _resolvePadding(),
+      decoration: BoxDecoration(
+        color: isSelected
+            ? theme.colors.blueVariant
+            : theme.colors.surface,
+        border: Border.all(color: theme.colors.stroke, width: 0.5),
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon.isNotEmpty) ...[
+            SvgPicture.asset(icon, width: 12, height: 12),
+            const SizedBox(width: 2),
           ],
-        ),
+          Text(
+            label,
+            style: _resolveTextStyle().copyWith(
+              color: labelColor ?? theme.colors.body,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -10,12 +10,14 @@ import 'package:share_space/presentation/screen/room_details/room_details_screen
 import 'package:share_space/presentation/screen/search/search_screen.dart';
 import 'package:share_space/presentation/widgets/app_navigation_bar.dart';
 import '../screen/booking/book_room_screen.dart';
+import '../screen/ section/section_screen.dart';
 import '../screen/create_account/create_account_screen.dart';
 
 class Routes {
   static const String onboardingScreen = '/';
   static const String loginScreen = '/loginScreen';
   static const String createAccountScreen = '/createAccountScreen';
+  static const String otpVerificationScreen = '/otpVerificationScreen';
   static const String appNavigationBar = '/appNavigationBar';
   static const String homeScreen = '/homeScreen';
   static const String roomDetailsScreen = '/roomDetailsScreen';
@@ -25,6 +27,7 @@ class Routes {
   static const String myAccountScreen = '/myAccountScreen';
   static const String chatScreen = '/chatScreen';
   static const String bookRoomScreen = '/bookRoomScreen';
+  static const String sectionScreen='/sectionScreen';
 
   static Map<String, Widget Function(BuildContext)> routes = {
     onboardingScreen: (context) => OnboardingScreen(),
@@ -39,5 +42,6 @@ class Routes {
     myAccountScreen: (context) => MyAccountScreen(),
     chatScreen: (context) => ChatScreen(),
     bookRoomScreen: (context) => BookRoomScreen(),
+    sectionScreen: (context) => SectionScreen(),
   };
 }

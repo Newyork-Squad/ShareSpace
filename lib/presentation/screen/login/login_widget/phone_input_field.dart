@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../design_system/colors/app_color.dart';
 import '../../../design_system/typography/app_typography.dart';
+import 'package:share_space/resources/app_strings.dart';
 
 class PhoneInputField extends StatefulWidget {
   final TextEditingController controller;
@@ -70,23 +71,25 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
 
   String? validatePhoneNumber(String countryCode, String phoneNumber) {
     final requiredLength = requiredLengths[countryCode];
-    if (requiredLength == null) return 'Invalid country code';
+    if (requiredLength == null) {
+      return AppStrings.validationInvalidCountryCode;
+    }
 
     if (phoneNumber.length < requiredLength) {
-      return 'Phone number must be $requiredLength digits';
+      return AppStrings.validationPhoneLength(requiredLength);
     } else if (phoneNumber.length > requiredLength) {
-      return 'Phone number must be $requiredLength digits only';
+      return AppStrings.validationPhoneLengthOnlyDigits(requiredLength);
     }
 
     switch (countryCode) {
       case '+20':
         if (!RegExp(r'^(1[0-5])').hasMatch(phoneNumber)) {
-          return 'Egyptian numbers start with 10, 11, 12, or 15';
+          return AppStrings.validationEgyptPhonePrefix;
         }
         break;
       case '+966':
         if (!phoneNumber.startsWith('5')) {
-          return 'Saudi numbers start with 5';
+          return AppStrings.validationSaudiPhonePrefix;
         }
         break;
       default:
@@ -191,7 +194,7 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
                             .bodyMedium
                             ?.copyWith(color: AppColors.light.title),
                         decoration: InputDecoration(
-                          hintText: 'Phone number',
+                          hintText: AppStrings.hintPhoneNumber,
                           hintStyle: AppTypography()
                               .textTheme
                               .labelMedium
