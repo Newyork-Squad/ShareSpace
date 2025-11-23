@@ -42,6 +42,9 @@ class _TimeSlotWidgetState extends State<TimeSlotWidget> {
                 isSelected: isSelected,
                 size: ChipSize.title,
                 labelStyle: AppTypography().textTheme.labelMedium,
+                labelColor: isSelected
+                    ? AppColors.light.primary
+                    : AppColors.light.title,
                 onSelect: () {
                   setState(() {
                     selectedTime = time;
