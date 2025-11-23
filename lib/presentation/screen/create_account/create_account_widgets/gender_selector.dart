@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
 import 'package:share_space/presentation/design_system/typography/app_typography.dart';
+import 'package:share_space/resources/app_strings.dart';
 
 class GenderSelector extends StatelessWidget {
   final String? selectedGender;
@@ -19,7 +20,7 @@ class GenderSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Gender",
+          AppStrings.labelGender,
           style: AppTypography().textTheme.titleSmall?.copyWith(
             color: AppColors.light.body,
           ),
@@ -29,7 +30,7 @@ class GenderSelector extends StatelessWidget {
           children: [
             Expanded(
               child: _buildGenderButton(
-                gender: "Male",
+                gender: AppStrings.labelMale,
                 iconPath: "assets/icons/male_icon.svg",
                 selectedIconPath: "assets/icons/male_selected_icon.svg",
               ),
@@ -37,7 +38,7 @@ class GenderSelector extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: _buildGenderButton(
-                gender: "Female",
+                gender: AppStrings.labelFemale,
                 iconPath: "assets/icons/female_icon.svg",
                 selectedIconPath: "assets/icons/female_selected_icon.svg",
               ),
