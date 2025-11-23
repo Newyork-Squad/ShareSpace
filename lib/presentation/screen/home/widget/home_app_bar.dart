@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../design_system/theme/app_theme.dart';
 import '../../../routes/routes.dart';
+import 'package:share_space/resources/app_strings.dart';
 
 class HomeAppBar extends StatefulWidget {
   final String userName;
@@ -167,7 +168,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       },
                       readOnly: true,
                       decoration: InputDecoration(
-                        hintText: 'Search',
+                        hintText: AppStrings.homeSearchHint,
                         hintStyle: theme.typography.textTheme.labelMedium
                             ?.copyWith(color: theme.colors.onPrimaryBody),
                         border: InputBorder.none,

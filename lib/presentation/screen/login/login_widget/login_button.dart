@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../design_system/colors/app_color.dart';
 import '../../../design_system/typography/app_typography.dart';
+import 'package:share_space/resources/app_strings.dart';
 
 class LoginButton extends StatelessWidget {
   final bool isEnabled;
@@ -28,7 +29,7 @@ class LoginButton extends StatelessWidget {
           elevation: 0,
         ),
         child: Text(
-          'Login',
+          AppStrings.actionLogin,
           style: AppTypography().textTheme.labelLarge?.copyWith(
             color: Colors.white,
           ),
