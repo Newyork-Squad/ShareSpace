@@ -19,7 +19,7 @@ class RoomHeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    return Padding(padding: EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+    return Padding(padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,24 +30,33 @@ class RoomHeaderSection extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: theme.typography.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w500,
                     color:theme.colors.title,
                   ),
                 ),
               ),
+              const SizedBox(width: 8),
               SvgPicture.asset(
                 'assets/icons/location.svg',
                 width: 16,
                 height: 16,
                 color: theme.colors.secondary,
               ),
-              Text(
-                location,
-                style: theme.typography.textTheme.labelSmall?.copyWith(
-                  color: theme.colors.body,
-                  fontWeight: FontWeight.w400,
-                ) ,
+              const SizedBox(width: 4),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 100),
+                child: Text(
+                  location,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.typography.textTheme.labelSmall?.copyWith(
+                    color: theme.colors.body,
+                    fontWeight: FontWeight.w400,
+                  ) ,
+                ),
               ),
             ],
           ),
