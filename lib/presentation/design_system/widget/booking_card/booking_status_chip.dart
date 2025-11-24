@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 import 'package:share_space/presentation/design_system/typography/app_typography.dart';
 import 'package:share_space/presentation/design_system/widget/booking_card/booking_card.dart';
+import 'package:share_space/presentation/screen/shared/ui_state/booking_ui_state.dart' show BookingStatusUiState;
 
 class BookingStatusChip extends StatelessWidget {
-  final BookingStatus status;
+  final BookingStatusUiState status;
 
   const BookingStatusChip({super.key, required this.status});
 
@@ -28,33 +29,33 @@ class BookingStatusChip extends StatelessWidget {
 
   Color _getBackgroundColor(AppTheme theme) {
     switch (status) {
-      case BookingStatus.upcoming:
+      case BookingStatusUiState.upcoming:
         return theme.colors.yellowVariant;
-      case BookingStatus.completed:
+      case BookingStatusUiState.completed:
         return theme.colors.greenVariant;
-      case BookingStatus.canceled:
+      case BookingStatusUiState.canceled:
         return theme.colors.errorVariant;
     }
   }
 
   Color _getTextColor(AppTheme theme) {
     switch (status) {
-      case BookingStatus.upcoming:
+      case BookingStatusUiState.upcoming:
         return theme.colors.yellow;
-      case BookingStatus.completed:
+      case BookingStatusUiState.completed:
         return theme.colors.green;
-      case BookingStatus.canceled:
+      case BookingStatusUiState.canceled:
         return theme.colors.red;
     }
   }
 
   String _getStatusText() {
     switch (status) {
-      case BookingStatus.upcoming:
+      case BookingStatusUiState.upcoming:
         return "Upcoming";
-      case BookingStatus.completed:
+      case BookingStatusUiState.completed:
         return "Completed";
-      case BookingStatus.canceled:
+      case BookingStatusUiState.canceled:
         return "Cancelled";
     }
   }

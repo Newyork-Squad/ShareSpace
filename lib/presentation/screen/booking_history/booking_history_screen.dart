@@ -8,6 +8,7 @@ import 'package:share_space/presentation/design_system/widget/error_screen.dart'
 import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_cubit.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_state.dart';
+import 'package:share_space/presentation/screen/shared/ui_state/booking_ui_state.dart';
 
 class BookingHistoryScreen extends StatefulWidget {
   const BookingHistoryScreen({super.key});
@@ -27,7 +28,7 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
       price: "12,000 IQD/h",
       location: "Baghdad, Iraq",
       amenities: const ["WiFi", "A/C", "Whiteboard", "Power Backup"],
-      status: BookingStatus.upcoming,
+      status: BookingStatusUiState.upcoming,
       date: "27 Jun 2025",
       time: "03:00 PM -> 04:00 PM",
     ),
@@ -38,7 +39,7 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
       price: "15,000 IQD/h",
       location: "Erbil, Iraq",
       amenities: const ["WiFi", "A/C", "Projector"],
-      status: BookingStatus.completed,
+      status: BookingStatusUiState.completed,
       date: "15 May 2025",
       time: "10:00 AM -> 12:00 PM",
     ),
@@ -49,24 +50,20 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
       price: "10,000 IQD/h",
       location: "Baghdad, Iraq",
       amenities: const ["WiFi", "Power Backup"],
-      status: BookingStatus.canceled,
+      status: BookingStatusUiState.canceled,
       date: "20 Jun 2025",
       time: "01:00 PM -> 02:00 PM",
     ),
   ];
 
-  final List<String> _filterCategories = [
-    "All",
-    "Upcoming",
-    "Completed",
-    "Cancelled",
-  ];
+  final List<String> _filterCategories = ["All"] + BookingStatusUiState.values.map((e) => e.name).toList();
+
 
   List<BookingCard> get _filteredBookings {
     if (_selectedIndex == 0) {
       return _allBookings;
     }
-    final status = BookingStatus.values[_selectedIndex - 1];
+    final status = BookingStatusUiState.values[_selectedIndex - 1];
     return _allBookings.where((booking) => booking.status == status).toList();
   }
 
@@ -81,7 +78,10 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
             return LoadingScreen();
           } else if (state is BookingHistoryLoaded) {
             return Scaffold(
+              backgroundColor: theme.colors.surface,
               appBar: AppBar(
+                leading: SizedBox.shrink(),
+                leadingWidth: 0,
                 title: Text(
                   "Booking History",
                   style: theme.typography.textTheme.headlineSmall?.copyWith(

@@ -5,8 +5,7 @@ import 'package:share_space/presentation/design_system/typography/app_typography
 import 'package:share_space/presentation/design_system/widget/amenities_row.dart';
 import 'package:share_space/presentation/design_system/widget/booking_card/booking_status_chip.dart';
 import 'package:share_space/presentation/design_system/widget/custom_chip.dart';
-
-enum BookingStatus { upcoming, completed, canceled }
+import 'package:share_space/presentation/screen/shared/ui_state/booking_ui_state.dart';
 
 class BookingCard extends StatelessWidget {
   final String imageUrl;
@@ -15,7 +14,7 @@ class BookingCard extends StatelessWidget {
   final String price;
   final String location;
   final List<String> amenities;
-  final BookingStatus status;
+  final BookingStatusUiState status;
   final String date;
   final String time;
 
@@ -179,7 +178,7 @@ class BookingCard extends StatelessWidget {
   Widget _buildActionButtons(BuildContext context) {
     final theme = AppTheme.of(context);
     switch (status) {
-      case BookingStatus.upcoming:
+      case BookingStatusUiState.upcoming:
         return Row(
           children: [
             Expanded(
@@ -213,7 +212,7 @@ class BookingCard extends StatelessWidget {
             ),
           ],
         );
-      case BookingStatus.completed:
+      case BookingStatusUiState.completed:
         return Row(
           children: [
             Expanded(
@@ -247,7 +246,7 @@ class BookingCard extends StatelessWidget {
             ),
           ],
         );
-      case BookingStatus.canceled:
+      case BookingStatusUiState.canceled:
         return Row(
           children: [
             Expanded(
