@@ -4,6 +4,8 @@ import 'package:share_space/di/injection.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 import 'package:share_space/presentation/design_system/widget/booking_card/booking_card.dart';
 import 'package:share_space/presentation/design_system/widget/category_chip.dart';
+import 'package:share_space/presentation/design_system/widget/error_screen.dart';
+import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_cubit.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_state.dart';
 
@@ -76,11 +78,7 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
       child: BlocBuilder<BookingHistoryCubit, BookingHistoryState>(
         builder: (context, state) {
           if (state is BookingHistoryLoading) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: AppTheme.of(context).colors.primary,
-              ),
-            );
+            return LoadingScreen();
           } else if (state is BookingHistoryLoaded) {
             return Scaffold(
               appBar: AppBar(
@@ -136,10 +134,11 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
           } else if (state is BookingHistoryError) {
             return Center(
               child: Text(
-                "Please Check your internet connection", //state.message,
+                state.message,
                 style: theme.typography.textTheme.labelSmall,
               ),
             );
+            // return ErrorScreen(hasAppBar: false);
           }
           return const SizedBox.shrink();
         },
