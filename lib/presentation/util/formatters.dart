@@ -13,3 +13,21 @@ String formatRating(double? rating) {
   return rating.toStringAsFixed(1);
 }
 
+String formatDate(DateTime dt){
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  final day = dt.day.toString().padLeft(2, '0');
+  final month = months[dt.month - 1];
+  final year = dt.year;
+  return '$day $month $year';
+}
+
+String formatTime(DateTime dt){
+  final hour12 = dt.hour % 12 == 0 ? 12 : dt.hour % 12;
+  final hour = hour12.toString().padLeft(2, '0');
+  final minute = dt.minute.toString().padLeft(2, '0');
+  final period = dt.hour >= 12 ? 'PM' : 'AM';
+  return '$hour:$minute $period';
+}
