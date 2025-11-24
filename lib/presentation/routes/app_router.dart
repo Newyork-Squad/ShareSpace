@@ -13,7 +13,7 @@ import '../screen/onboarding/onboarding_screen.dart';
 import '../screen/otp_verification/otp_verification_screen.dart';
 import '../screen/room_details/room_details_screen.dart';
 import '../screen/search/search_screen.dart';
-import '../widgets/app_navigation_bar.dart';
+import '../design_system/widget/app_navigation_bar.dart';
 import 'package:share_space/resources/app_strings.dart';
 import 'routes.dart';
 
