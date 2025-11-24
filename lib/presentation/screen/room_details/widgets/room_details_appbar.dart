@@ -18,85 +18,96 @@ class RoomDetailsAppbar extends StatelessWidget {
     final theme = AppTheme.of(context);
 
     return Container(
-      height: 64,
-      padding: const EdgeInsets.only(top: 24,right: 8),
-      color: isScrolled?theme.colors.surfaceLow:Colors.transparent, // or any color you prefer
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/arrow_left.svg',
-              width: 24,
-              height: 24,
-              color: isScrolled?theme.colors.title:  theme.colors.onPrimary,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          Positioned(
-            top: 61,
-            left: 162,
-            right: 162,
-            child: Container(
-              width: 36,
-              height: 22,
-              decoration: BoxDecoration(
-                color: isScrolled ?theme.colors.yellowVariant : theme.colors.surfaceLow,
-                borderRadius: BorderRadius.circular(100),
-              ),
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/star.svg',
-                    color: theme.colors.yellow,
-                    width: 12,
-                    height: 12,
-                  ),
-
-                  Text(
-
-                    rate,
-                    style:AppTypography.labelXSmall.copyWith(
-                      color: theme.colors.yellow,
-                      fontWeight: FontWeight.w100,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          Row(
+      color: isScrolled ? theme.colors.surfaceLow : Colors.transparent,
+      // or any color you prefer
+      child: SafeArea(
+        child: Container(
+          height: 64,
+          padding: const EdgeInsets.only(top: 0, right: 8, left: 8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconButton(
-                icon: SvgPicture.asset(
-                  'assets/icons/information.svg',
-                  width: 24,
-                  height: 24,
-                  color: isScrolled?theme.colors.title :  theme.colors.onPrimary,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: SvgPicture.asset(
+                      'assets/icons/arrow_left.svg',
+                      width: 24,
+                      height: 24,
+                      color: isScrolled
+                          ? theme.colors.title
+                          : theme.colors.onPrimary,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ),
-                onPressed: () {},
               ),
-
-
-              IconButton(
-                icon: SvgPicture.asset(
-                  'assets/icons/bookmark.svg',
-                  width: 24,
-                  height: 24,
-                  color: isScrolled?theme.colors.title:  theme.colors.onPrimary,
+              Container(
+                width: 36,
+                height: 22,
+                decoration: BoxDecoration(
+                  color: isScrolled
+                      ? theme.colors.yellowVariant
+                      : theme.colors.surfaceLow,
+                  borderRadius: BorderRadius.circular(100),
                 ),
-                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/star.svg',
+                      color: theme.colors.yellow,
+                      width: 12,
+                      height: 12,
+                    ),
+                    Text(
+                      rate,
+                      style: AppTypography.labelXSmall.copyWith(
+                        color: theme.colors.yellow,
+                        fontWeight: FontWeight.w100,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: SvgPicture.asset(
+                          'assets/icons/information.svg',
+                          width: 24,
+                          height: 24,
+                          color: isScrolled
+                              ? theme.colors.title
+                              : theme.colors.onPrimary,
+                        ),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: SvgPicture.asset(
+                          'assets/icons/bookmark.svg',
+                          width: 24,
+                          height: 24,
+                          color: isScrolled
+                              ? theme.colors.title
+                              : theme.colors.onPrimary,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
-
-        ],
+        ),
       ),
     );
   }

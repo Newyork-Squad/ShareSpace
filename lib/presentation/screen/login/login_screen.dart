@@ -8,6 +8,7 @@ import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 
 import '../../design_system/theme/app_theme.dart';
 import '../../design_system/widget/app_text_field.dart';
+import 'package:share_space/resources/app_strings.dart';
 import 'login_widget/app_logo.dart';
 import 'login_widget/login_button.dart';
 import '../../design_system/widget/phone_input_field.dart';
@@ -112,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   const AppLogo(),
                                   const SizedBox(height: 24),
                                   Text(
-                                    "Welcome Back",
+                                    AppStrings.loginWelcomeBack,
                                     style: AppTypography()
                                         .textTheme
                                         .titleMedium
@@ -122,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    "Please enter your phone number and password to access your booking",
+                                    AppStrings.loginInstructions,
                                     textAlign: TextAlign.center,
                                     style: AppTypography()
                                         .textTheme

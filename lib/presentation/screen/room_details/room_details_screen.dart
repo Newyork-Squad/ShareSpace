@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_space/di/injection.dart';
 import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
+import 'package:share_space/presentation/design_system/widget/error_screen.dart';
+import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
 import 'package:share_space/presentation/screen/room_details/state/room_details/room_details_cubit.dart';
 import 'package:share_space/presentation/screen/room_details/state/room_details/room_details_state.dart';
 import 'package:share_space/presentation/screen/room_details/widgets/room_booking_bar.dart';
@@ -26,12 +28,7 @@ class RoomDetailsScreen extends StatelessWidget {
       child: BlocBuilder<RoomDetailsCubit, RoomDetailsState>(
         builder: (context, state) {
           if (state is RoomDetailsLoading) {
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: theme.colors.surfaceLow,
-                color: theme.colors.yellow,
-              ),
-            );
+            return LoadingScreen();
           }
 
           if (state is RoomDetailsLoaded) {
@@ -42,15 +39,7 @@ class RoomDetailsScreen extends StatelessWidget {
           }
 
           if (state is RoomDetailsError) {
-            return Scaffold(
-              body: Center(
-                child: Text(
-                  state.message,
-                  style: theme.typography.textTheme.bodyMedium
-                      ?.copyWith(color: theme.colors.title),
-                ),
-              ),
-            );
+            return ErrorScreen();
           }
 
           return const SizedBox.shrink();

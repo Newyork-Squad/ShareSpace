@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/remote/error_handler.dart';
 import '../../../../domain/usecase/authentication/create_account_usecase.dart';
+import 'package:share_space/resources/app_strings.dart';
 import 'create_account_state.dart';
 
 class CreateAccountCubit extends Cubit<CreateAccountState> {
@@ -42,13 +43,13 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
     String? confirmPasswordError;
 
     if (_password.isEmpty) {
-      passwordError = "Password cannot be empty.";
+      passwordError = AppStrings.validationPasswordEmpty;
     }
 
     if (_confirmPassword.isEmpty) {
-      confirmPasswordError = "Confirm password cannot be empty.";
+      confirmPasswordError = AppStrings.validationConfirmPasswordEmpty;
     } else if (_password != _confirmPassword) {
-      confirmPasswordError = "Confirm password does not match the password.";
+      confirmPasswordError = AppStrings.createAccountPasswordMismatch;
     }
 
     if (passwordError != null || confirmPasswordError != null) {
@@ -80,7 +81,7 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
 
       emit(CreateAccountSuccess());
     } catch (error) {
-      String errorMessage = 'An unknown error occurred. Please try again.';
+      String errorMessage = AppStrings.toastUnknownError;
 
       if (error is DioException) {
         final handledError = handleError(error);

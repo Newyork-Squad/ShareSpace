@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../design_system/theme/app_theme.dart';
+import '../../../routes/routes.dart';
+import 'package:share_space/resources/app_strings.dart';
 
 class HomeAppBar extends StatefulWidget {
   final String userName;
@@ -24,6 +26,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
     return SliverAppBar(
+      leading: const SizedBox.shrink(),
       collapsedHeight: 167,
       floating: true,
       backgroundColor: Colors.transparent,
@@ -38,12 +41,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
           ),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                16,
-                32,
-                16,
-                12,
-              ),
+              padding: const EdgeInsets.fromLTRB(16, 32, 16, 12),
               child: Column(
                 children: [
                   Row(
@@ -57,10 +55,16 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            widget.userName,
-                            style: theme.typography.textTheme.labelMedium
-                                ?.copyWith(color: theme.colors.onPrimary),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 200),
+                            child: Text(
+                              widget.userName,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: theme.typography.textTheme.labelMedium
+                                  ?.copyWith(color: theme.colors.onPrimary),
+                            ),
                           ),
                           const SizedBox(height: 4),
                           Row(
@@ -75,17 +79,24 @@ class _HomeAppBarState extends State<HomeAppBar> {
                                 height: 16,
                               ),
                               const SizedBox(width: 4),
-                              Text(
-                                widget.location,
-                                style: theme.typography.textTheme.bodyMedium
-                                    ?.copyWith(
-                                      color: theme.colors.onPrimaryBody,
-                                    ),
+                              ConstrainedBox(
+                                constraints: const BoxConstraints(maxWidth: 200),
+                                child: Text(
+                                  widget.location,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  style: theme.typography.textTheme.labelSmall
+                                      ?.copyWith(
+                                    color: theme.colors.onPrimaryBody,
+                                  ),
+                                ),
                               ),
                               const SizedBox(width: 4),
                               Icon(
                                 Icons.keyboard_arrow_down,
                                 color: theme.colors.onPrimaryBody,
+                                size: 16,
                               ),
                             ],
                           ),
@@ -113,12 +124,34 @@ class _HomeAppBarState extends State<HomeAppBar> {
                             width: 24,
                             height: 24,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: theme.colors.primary,
+                                content: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.check_circle_outline,
+                                      color: theme.colors.onPrimary,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'No new notifications. Enjoy your day.',
+                                      style: theme.typography.textTheme.labelMedium
+                                          ?.copyWith(
+                                              color: theme.colors.onPrimary),
+                                    ),
+                                  ],
+                                ),
+                                duration: const Duration(seconds: 4),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
@@ -130,8 +163,12 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       ),
                     ),
                     child: TextField(
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.searchScreen);
+                      },
+                      readOnly: true,
                       decoration: InputDecoration(
-                        hintText: 'Search',
+                        hintText: AppStrings.homeSearchHint,
                         hintStyle: theme.typography.textTheme.labelMedium
                             ?.copyWith(color: theme.colors.onPrimaryBody),
                         border: InputBorder.none,
@@ -146,7 +183,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                         ),
                       ),
                       style: theme.typography.textTheme.labelMedium?.copyWith(
-                        color: theme.colors.onPrimary,
+                        color: theme.colors.onPrimaryBody,
                       ),
                     ),
                   ),

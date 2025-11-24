@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_space/presentation/design_system/widget/error_screen.dart';
+import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
 import 'package:share_space/presentation/design_system/widget/workspace_card_details.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_state.dart';
@@ -26,16 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
     return Material(
+      color: theme.colors.surfaceLow,
       child: BlocProvider(
         create: (context) => getIt<HomeCubit>()..fetchHome(),
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             if (state is HomeLoading) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: AppTheme.of(context).colors.primary,
-                ),
-              );
+              return LoadingScreen();
             } else if (state is HomeLoaded) {
               return Container(
                 color: theme.colors.surfaceLow,
@@ -131,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         category: category,
                                       ),
-                                      const SizedBox(height: 20),
                                     ],
                                   )
                                   .toList(),
@@ -165,6 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                     ),
                     if (state.featured.isNotEmpty) ...[
+                      const SliverToBoxAdapter(child: SizedBox(height: 20)),
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -181,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: state.featured
                               .map(
-                                (f) => Padding(
+                                (room) => Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 16,
                                   ),
@@ -189,19 +188,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      WorkspaceCardDetails(
-                                        title: f.name,
-                                        imageUrl: f.imageUrls.isNotEmpty
-                                            ? f.imageUrls[0]
-                                            : '',
-                                        rating: f.rate,
-                                        price: f.pricePerHour
-                                            .toInt()
-                                            .toString(),
-                                        location: f.locationName,
-                                        amenities: f.services
-                                            .map((e) => serviceLabel(e))
-                                            .toList(),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            Routes.roomDetailsScreen,
+                                            arguments: room.id.toString(),
+                                          );
+                                        },
+                                        child: WorkspaceCardDetails(
+                                          title: room.name,
+                                          imageUrl: room.imageUrls.isNotEmpty
+                                              ? room.imageUrls[0]
+                                              : '',
+                                          rating: room.rate,
+                                          price:
+                                              "${room.pricePerHour.toInt().toString()}/h",
+                                          location: room.locationName,
+                                          amenities: room.services
+                                              .map((e) => serviceLabel(e))
+                                              .toList(),
+                                        ),
                                       ),
                                       const SizedBox(height: 12),
                                     ],
@@ -216,12 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             } else if (state is HomeError) {
-              return Center(
-                child: Text(
-                  "Please Check your internet connection", //state.message,
-                  style: theme.typography.textTheme.labelSmall,
-                ),
-              );
+              return ErrorScreen(hasAppBar: false);
             }
             return const SizedBox.shrink();
           },

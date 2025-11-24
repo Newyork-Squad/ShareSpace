@@ -33,7 +33,7 @@ class WorkspacesGrid extends StatelessWidget {
             imageUrl: category.workspaces[index].imageUrls[0],
             rating: category.workspaces[index].rate,
             title: category.workspaces[index].name,
-            price: category.workspaces[index].pricePerHour.toInt().toString(),
+            price: "${category.workspaces[index].pricePerHour.toInt().toString()}/h",
             location: category.workspaces[index].locationName,
             amenities: category.workspaces[index].services
                 .map((e) => serviceLabel(e))

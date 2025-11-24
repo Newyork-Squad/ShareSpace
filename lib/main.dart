@@ -4,9 +4,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'presentation/design_system/theme/app_theme_provider.dart';
 import 'presentation/routes/app_router.dart';
 import 'presentation/routes/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
+// import 'firebase_options.dart';
+import 'resources/app_strings.dart';
 
-void main() {
+ void  main()async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   setupDependencies();
   runApp(ShareSpaceApp(appRouter: AppRouter()));
 }
@@ -37,7 +43,7 @@ class ShareSpaceApp extends StatelessWidget {
         }
         return AppThemeProvider(
           child: MaterialApp(
-            title: 'ShareSpace',
+            title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               useMaterial3: true,
