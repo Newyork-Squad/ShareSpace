@@ -89,6 +89,7 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                   ),
                 ),
                 backgroundColor: theme.colors.surface,
+                surfaceTintColor: theme.colors.surface,
                 elevation: 0,
               ),
               body: Padding(
