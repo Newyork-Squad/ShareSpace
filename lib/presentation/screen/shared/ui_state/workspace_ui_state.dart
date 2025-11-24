@@ -36,5 +36,23 @@ enum ServicesUiState {
   whiteboard,
   powerBackup,
   parking,
-  coffee,
+  coffee;
+
+  @override
+  String toString() {
+    switch (this) {
+      case ServicesUiState.wifi:
+        return 'WiFi';
+      case ServicesUiState.ac:
+        return 'A/C';
+      case ServicesUiState.whiteboard:
+        return 'Whiteboard';
+      case ServicesUiState.powerBackup:
+        return 'Power Backup';
+      case ServicesUiState.parking:
+        return 'Parking';
+      case ServicesUiState.coffee:
+        return 'Coffee';
+    }
+  }
 }
