@@ -27,6 +27,7 @@ import 'package:share_space/domain/usecase/workspace/get_featured.dart';
 import 'package:share_space/domain/usecase/workspace/get_near_to_you.dart';
 import 'package:share_space/domain/usecase/workspace/get_popular.dart';
 import 'package:share_space/domain/usecase/workspace/get_top_rated.dart';
+import 'package:share_space/presentation/screen/booking_history/state/booking_history_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 
@@ -123,6 +124,8 @@ void setupDependencies() {
   );
 
   getIt.registerFactory(() => LoginCubit(getIt()));
+
+  getIt.registerFactory(() => BookingHistoryCubit(getIt()));
 
   getIt.registerFactory<CreateAccountUseCase>(
     () => CreateAccountUseCase(getIt()),
