@@ -18,7 +18,7 @@ class BookingApiServiceImpl extends BookingApiService {
   }) async {
     try {
       final response = await _dio.get(
-        '/booking/history',
+        '/bookings/history',
         queryParameters: {'page': page, 'size': size, 'status': status},
       );
       if (response.data['success'] == true) {
