@@ -5,7 +5,7 @@ import 'package:share_space/presentation/screen/home/home_screen.dart';
 import 'package:share_space/presentation/screen/my_account/my_account_screen.dart';
 import 'package:share_space/presentation/screen/search/search_screen.dart';
 
-import '../screen/booking_history/booking_history_screen.dart';
+import '../../screen/booking_history/booking_history_screen.dart';
 import '../theme/app_theme.dart';
 
 class AppNavigationBar extends StatefulWidget {
