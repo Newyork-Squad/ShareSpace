@@ -46,6 +46,10 @@ class AboutRoomScreen extends StatelessWidget {
               backgroundColor: theme.colors.surfaceLow,
               appBar: AppBar(
                 backgroundColor: theme.colors.surfaceLow,
+                elevation: 2,
+                shadowColor: Colors.black.withOpacity(0.05),
+                surfaceTintColor: Colors.transparent,
+                scrolledUnderElevation: 0,
                 titleSpacing: 0,
                 leading: IconButton(
                   onPressed: () {
