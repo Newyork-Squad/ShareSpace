@@ -4,6 +4,7 @@ import 'package:share_space/presentation/screen/booking/widgets/calendar_widget.
 import 'package:share_space/presentation/screen/booking/widgets/duration_widget.dart';
 import 'package:share_space/presentation/screen/booking/widgets/payment_widget.dart';
 import 'package:share_space/presentation/screen/booking/widgets/time_slot_widget.dart';
+import 'package:share_space/resources/app_strings.dart';
 import '../../design_system/widget/share_space_app_button.dart';
 
 class BookRoomScreen extends StatelessWidget {
@@ -35,7 +36,7 @@ class BookRoomScreen extends StatelessWidget {
             const SizedBox(height: 24),
             ShareSpaceAppButton(
               isEnabled: isButtonEnabled,
-              text: 'Confirm booking',
+              text: AppStrings.bookingConfirmBookingButton,
               onPressed: () {},
             ),
             const SizedBox(height: 12),

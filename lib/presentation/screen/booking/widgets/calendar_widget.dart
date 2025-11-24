@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../../resources/app_strings.dart';
 import '../../../design_system/colors/app_color.dart';
 import '../../../design_system/typography/app_typography.dart';
 import '../constant_folder/months.dart';
@@ -56,7 +57,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Select a Date',
+              AppStrings.bookingSelectADateTitle,
               style: AppTypography().textTheme.titleSmall?.copyWith(
                 color: AppColors.light.title,
               ),
@@ -269,7 +270,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               ),
               const SizedBox(width: 8),
               Text(
-                'This day is available',
+                AppStrings.bookingThisDayIsAvailableNote,
                 style: AppTypography().textTheme.labelSmall?.copyWith(
                   color: AppColors.light.green,
                 ),
