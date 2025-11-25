@@ -5,12 +5,11 @@ import 'package:share_space/presentation/design_system/colors/app_color.dart';
 import 'package:share_space/presentation/design_system/typography/app_typography.dart';
 import 'package:share_space/presentation/routes/routes.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
-
 import '../../design_system/theme/app_theme.dart';
+import '../../design_system/widget/share_space_app_button.dart';
 import '../../design_system/widget/app_text_field.dart';
 import 'package:share_space/resources/app_strings.dart';
 import 'login_widget/app_logo.dart';
-import 'login_widget/login_button.dart';
 import '../../design_system/widget/phone_input_field.dart';
 import 'login_widget/register_text.dart';
 
@@ -166,8 +165,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    LoginButton(
+                                    ShareSpaceAppButton(
                                       isEnabled: valid,
+                                      text: "Login",
                                       onPressed: () => _handleLogin(context),
                                     ),
                                     const SizedBox(height: 12),

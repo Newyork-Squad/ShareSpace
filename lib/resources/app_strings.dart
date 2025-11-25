@@ -92,5 +92,21 @@ class AppStrings {
   static const roomViewAll = 'All';
   static const roomBookingButton = 'Book now';
   static const roomOwnerTitle = 'Owner';
+
+  static const bookingSelectADateTitle = 'Select a Date';
+  static const bookingThisDayIsAvailableNote = 'This day is available';
+  static const bookingJanuaryMonth = "January";
+  static const bookingFebruaryMonth = "February";
+  static const bookingMarchMonth = "March";
+  static const bookingAprilMonth = "April";
+  static const bookingMayMonth = "May";
+  static const bookingJuneMonth = "June";
+  static const bookingJulyMonth = "July";
+  static const bookingAugustMonth = "August";
+  static const bookingSeptemberMonth = "September";
+  static const bookingOctoberMonth = "October";
+  static const bookingNovemberMonth = "November";
+  static const bookingDecemberMonth = "December";
+  static const bookingConfirmBookingButton = "Confirm booking";
 }
 
