@@ -7,10 +7,10 @@ import 'package:share_space/presentation/routes/routes.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 import '../../design_system/theme/app_theme.dart';
 import '../../design_system/widget/share_space_app_button.dart';
+import '../../design_system/widget/app_text_field.dart';
 import 'package:share_space/resources/app_strings.dart';
 import 'login_widget/app_logo.dart';
-import 'login_widget/password_input_field.dart';
-import 'login_widget/phone_input_field.dart';
+import '../../design_system/widget/phone_input_field.dart';
 import 'login_widget/register_text.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -30,8 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void _validateForm() {
     final valid =
         phoneController.text.trim().isNotEmpty &&
-        passwordController.text.trim().isNotEmpty &&
-        !hasPhoneError;
+            passwordController.text.trim().isNotEmpty &&
+            !hasPhoneError;
     if (isFormValid.value != valid) {
       isFormValid.value = valid;
     }
@@ -105,28 +105,31 @@ class _LoginScreenState extends State<LoginScreen> {
                           Expanded(
                             child: SingleChildScrollView(
                               padding: const EdgeInsets.only(
-                                left: 16,
-                                right: 16,
-                                top: 24,
-                              ),
+                                  left: 16, right: 16, top: 24),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   const AppLogo(),
                                   const SizedBox(height: 24),
                                   Text(
-                                    "Welcome Back",
-                                    style: AppTypography().textTheme.titleMedium
+                                    AppStrings.loginWelcomeBack,
+                                    style: AppTypography()
+                                        .textTheme
+                                        .titleMedium
                                         ?.copyWith(
-                                          color: AppColors.light.title,
-                                        ),
+                                      color: AppColors.light.title,
+                                    ),
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
                                     AppStrings.loginInstructions,
                                     textAlign: TextAlign.center,
-                                    style: AppTypography().textTheme.bodyMedium
-                                        ?.copyWith(color: AppColors.light.body),
+                                    style: AppTypography()
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                      color: AppColors.light.body,
+                                    ),
                                   ),
                                   const SizedBox(height: 32),
                                   PhoneInputField(
@@ -140,8 +143,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     },
                                   ),
                                   const SizedBox(height: 16),
-                                  PasswordInputField(
+                                  AppTextField(
                                     controller: passwordController,
+                                    hintText: 'Password',
+                                    icon: 'assets/icons/user_name_icon.svg',
+                                    isPassword: true,
                                   ),
                                 ],
                               ),
@@ -155,10 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   alpha: 0.9,
                                 ),
                                 padding: const EdgeInsets.only(
-                                  left: 16,
-                                  right: 16,
-                                  bottom: 12,
-                                ),
+                                    left: 16, right: 16, bottom: 12),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [

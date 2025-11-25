@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../design_system/colors/app_color.dart';
-import '../../../design_system/typography/app_typography.dart';
+import '../colors/app_color.dart';
+import '../typography/app_typography.dart';
 import 'package:share_space/resources/app_strings.dart';
 
 class PhoneInputField extends StatefulWidget {

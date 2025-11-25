@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
-import '../../../design_system/typography/app_typography.dart';
+import '../typography/app_typography.dart';
 
 class AppTextField extends StatefulWidget {
   final TextEditingController controller;

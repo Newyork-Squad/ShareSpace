@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../design_system/theme/app_theme.dart';
+import '../../design_system/widget/custom_top_snackbar.dart';
 import '../create_account/create_account_screen.dart' show showCustomTopSnackBar;
 import 'cubit/otp_verification_cubit.dart';
 import 'cubit/otp_verification_state.dart';
@@ -68,21 +69,21 @@ class _OtpVerificationViewState extends State<_OtpVerificationView> {
               child: BlocConsumer<OtpVerificationCubit, OtpVerificationState>(
                 listener: (context, state) {
                   if (state is OtpVerificationSuccess) {
-                    showCustomTopSnackBar(
+                    CustomTopSnackBar.show(
                       context,
                       title: 'Success',
                       message: 'Account verified successfully!',
                       isError: false,
                     );
                   } else if (state is OtpVerificationError) {
-                    showCustomTopSnackBar(
+                    CustomTopSnackBar.show(
                       context,
                       title: 'Error',
                       message: state.message,
                       isError: true,
                     );
                   } else if (state is OtpResendSuccess) {
-                    showCustomTopSnackBar(
+                    CustomTopSnackBar.show(
                       context,
                       title: 'Success',
                       message: 'A new code has been sent.',

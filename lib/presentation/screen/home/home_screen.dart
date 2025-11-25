@@ -13,6 +13,7 @@ import 'package:share_space/presentation/util/service_mapper.dart';
 
 import '../../../di/injection.dart';
 import '../../design_system/theme/app_theme.dart';
+import '../../design_system/widget/see_all_bar.dart';
 import '../../routes/routes.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -113,15 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 16,
                                         ),
-                                        child: Text(
-                                          category.name,
-                                          style: theme
-                                              .typography
-                                              .textTheme
-                                              .titleSmall
-                                              ?.copyWith(
-                                                color: theme.colors.title,
-                                              ),
+                                        child: SeeAllBar(
+                                          title: category.name,
+                                          onAllTap: () {},
                                         ),
                                       ),
                                       const SizedBox(height: 12),

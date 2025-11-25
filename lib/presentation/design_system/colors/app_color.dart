@@ -33,6 +33,7 @@ class AppColors {
       end: Alignment.bottomCenter,
       colors: [Color(0xFF50B5E7), Color(0xFF19C6F9)],
     ),
+    redVariant: Color(0xFFFFEEEF),
   );
 }
 
@@ -62,6 +63,7 @@ class AppColorScheme {
   final Color innerShadow;
   final Color dropShadow;
   final LinearGradient linear;
+  final Color redVariant;
 
   const AppColorScheme({
     required this.primary,
@@ -89,5 +91,6 @@ class AppColorScheme {
     required this.innerShadow,
     required this.dropShadow,
     required this.linear,
+    required this.redVariant,
   });
 }
