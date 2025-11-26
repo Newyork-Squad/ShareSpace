@@ -5,14 +5,14 @@ import 'presentation/design_system/theme/app_theme_provider.dart';
 import 'presentation/routes/app_router.dart';
 import 'presentation/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
+import 'firebase_options.dart';
 import 'resources/app_strings.dart';
 
  void  main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setupDependencies();
   runApp(ShareSpaceApp(appRouter: AppRouter()));
 }
