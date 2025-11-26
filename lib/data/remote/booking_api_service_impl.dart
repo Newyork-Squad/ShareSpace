@@ -44,6 +44,11 @@ class BookingApiServiceImpl extends BookingApiService {
       final response = await _dio.get(
         '/bookings/history',
         queryParameters: {'page': page, 'size': size, 'status': status},
+        options: Options(
+          extra: {
+            'forceRefresh': true,
+          },
+        ),
       );
       if (response.data['success'] == true) {
         return listFromJson(response.data['data']['content']);
