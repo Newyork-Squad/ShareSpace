@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/remote/error_handler.dart';
@@ -18,6 +20,7 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
   String? _gender;
   String _password = '';
   String _confirmPassword = '';
+  File? _profileImage;
 
   String? get gender => _gender;
 
@@ -37,6 +40,10 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
   void updatePassword(String value) => _password = value;
 
   void updateConfirmPassword(String value) => _confirmPassword = value;
+
+  void updateProfileImage(File? file) {
+    _profileImage = file;
+  }
 
   bool _validateInputs() {
     String? passwordError;
@@ -63,7 +70,7 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
     return true;
   }
 
-  Future<void> createAccount({String? imageUrl}) async {
+  Future<void> createAccount() async {
     if (!_validateInputs()) return;
 
     emit(CreateAccountLoading());
@@ -75,7 +82,7 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
         name: _fullName.trim(),
         phoneNumber: _phoneNumber.trim(),
         gender: _gender ?? '',
-        imageUrl: imageUrl,
+        imageFile: _profileImage,
         bio: _bio.trim().isEmpty ? null : _bio.trim(),
       );
 
