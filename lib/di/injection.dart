@@ -42,6 +42,7 @@ import '../domain/repository/booking_repository.dart';
 import '../domain/usecase/authentication/create_account_usecase.dart';
 import '../domain/usecase/authentication/is_loggedIn_usecase.dart';
 import '../domain/usecase/authentication/logout_usecase.dart';
+import '../presentation/screen/booking/state/booking_cubit.dart';
 import '../presentation/screen/my_account/cubit/my_account_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -128,6 +129,8 @@ void setupDependencies() {
   getIt.registerFactory(() => LoginCubit(getIt()));
 
   getIt.registerFactory(() => BookingHistoryCubit(getIt()));
+
+  getIt.registerFactory(() => BookingCubit(getIt()));
 
   getIt.registerFactory<CreateAccountUseCase>(
     () => CreateAccountUseCase(getIt()),
