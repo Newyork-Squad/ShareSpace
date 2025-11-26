@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_space/di/injection.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
+import 'package:share_space/presentation/screen/booking/state/booking_cubit.dart';
+import 'package:share_space/presentation/screen/booking/state/booking_state.dart';
 import 'package:share_space/presentation/screen/booking/widgets/calendar_widget.dart';
 import 'package:share_space/presentation/screen/booking/widgets/duration_widget.dart';
 import 'package:share_space/presentation/screen/booking/widgets/payment_widget.dart';
@@ -10,46 +14,71 @@ import '../../design_system/widget/share_space_app_button.dart';
 class BookRoomScreen extends StatelessWidget {
   const BookRoomScreen({super.key, this.roomId});
 
-
   final String? roomId;
 
   @override
   Widget build(BuildContext context) {
-    bool isButtonEnabled = true;
+    final resolvedRoomId =
+        roomId ?? (ModalRoute.of(context)?.settings.arguments as String?) ?? '';
 
-    final resolvedRoomId = roomId ??
-        (ModalRoute.of(context)?.settings.arguments as String?) ??
-        '';
-
-    return Scaffold(
-      backgroundColor: AppColors.light.surfaceLow,
-      appBar: AppBar(
-        title: const Text('Book Room'),
+    return BlocProvider(
+      create: (context) => getIt<BookingCubit>(),
+      child: Scaffold(
         backgroundColor: AppColors.light.surfaceLow,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CalendarWidget(),
-            const SizedBox(height: 16),
-            const TimeSlotWidget(),
-            const SizedBox(height: 16),
-            const DurationWidget(),
-            const SizedBox(height: 16),
-            const PaymentWidget(),
-            const SizedBox(height: 24),
-            ShareSpaceAppButton(
-              isEnabled: isButtonEnabled,
-              text: AppStrings.bookingConfirmBookingButton,
-              onPressed: () {
+        appBar: AppBar(
+          title: const Text('Book Room'),
+          backgroundColor: AppColors.light.surfaceLow,
+          elevation: 0,
+        ),
+        body: BlocBuilder<BookingCubit, BookingState>(
+          builder: (context, state) {
 
-              },
-            ),
-            const SizedBox(height: 12),
-          ],
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CalendarWidget(
+                    onDateSelected: (date) =>
+                        context.read<BookingCubit>().onDateChanged(date),
+                  ),
+                  const SizedBox(height: 16),
+                  TimeSlotWidget(
+                    onStartTimeSelected: (startTime) => context
+                        .read<BookingCubit>()
+                        .onStartTimeChanged(startTime),
+                    onEndTimeSelected: (endTime) =>
+                        context.read<BookingCubit>().onEndTimeChanged(endTime),
+                  ),
+                  const SizedBox(height: 16),
+                  DurationWidget(
+                    onDurationSelected: (duration) => context
+                        .read<BookingCubit>()
+                        .onDurationChanged(duration),
+                  ),
+                  const SizedBox(height: 16),
+                  PaymentWidget(
+                    onPaymentTypeSelected: (paymentType) => context
+                        .read<BookingCubit>()
+                        .onPaymentTypeChanged(paymentType),
+                  ),
+                  const SizedBox(height: 24),
+                  ShareSpaceAppButton(
+                    isEnabled: context.read<BookingCubit>().isButtonEnabled,
+                    text: AppStrings.bookingConfirmBookingButton,
+                    onPressed: () {
+                      if (context.read<BookingCubit>().isButtonEnabled) {
+                        context.read<BookingCubit>().bookRoom(
+                          workspaceId: resolvedRoomId,
+                        );
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

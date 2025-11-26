@@ -9,8 +9,13 @@ import '../constant_folder/months.dart';
 
 class CalendarWidget extends StatefulWidget {
   final Set<DateTime> unavailableDates;
+  final Function(DateTime) onDateSelected;
 
-  const CalendarWidget({super.key, this.unavailableDates = const {}});
+  const CalendarWidget({
+    super.key,
+    this.unavailableDates = const {},
+    required this.onDateSelected,
+  });
 
   @override
   State<CalendarWidget> createState() => _CalendarWidgetState();
@@ -208,6 +213,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               _selectedDay = selectedDay;
               _focusedDay = focusedDay;
             });
+            widget.onDateSelected(selectedDay);
           },
           enabledDayPredicate: (day) => !_isUnavailable(day),
           calendarStyle: const CalendarStyle(
