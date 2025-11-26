@@ -19,6 +19,7 @@ import 'package:share_space/domain/repository/workspace_repository.dart';
 import 'package:share_space/domain/usecase/User/getUserDetailsUseCase.dart';
 import 'package:share_space/domain/usecase/User/getUserLocationUseCase.dart';
 import 'package:share_space/domain/usecase/authentication/login_usecase.dart';
+import 'package:share_space/domain/usecase/booking/book_room.dart';
 import 'package:share_space/domain/usecase/booking/get_booking_history.dart';
 import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
 import 'package:share_space/domain/usecase/workspace/get_best.dart';
@@ -85,6 +86,7 @@ void setupDependencies() {
   getIt.registerLazySingleton(() => GetCurrentLocationUseCase(getIt()));
 
   getIt.registerLazySingleton(() => GetBookingHistoryUseCase(getIt()));
+  getIt.registerLazySingleton(() => BookRoomUseCase(getIt()));
 
 
   getIt.registerFactory(
