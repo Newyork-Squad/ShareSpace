@@ -17,6 +17,7 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
       final fullHistory = await _getBookingHistoryUseCase();
       emit(
         BookingHistoryLoaded(
+          fullHistory.map((booking) => mapBookingToUiState(booking)).toList(),
           fullHistory
               .map((booking) => mapBookingToUiState(booking))
               .where(
