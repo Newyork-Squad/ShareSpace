@@ -11,6 +11,30 @@ class BookingApiServiceImpl extends BookingApiService {
   BookingApiServiceImpl(this._dio);
 
   @override
+  void bookRoom({
+    required String workspaceId,
+    required String date,
+    required String startTime,
+    required double durationHours,
+    required String paymentType,
+  }) {
+    try {
+      _dio.post(
+        '/bookings/book',
+        data: {
+          'workspaceId': workspaceId,
+          'date': date,
+          'startTime': startTime,
+          'durationHours': durationHours,
+          'paymentType': paymentType,
+        },
+      );
+    } on DioException catch (e) {
+      throw handleError(e);
+    }
+  }
+
+  @override
   Future<List<BookingResponse>> getHistory({
     int page = 0,
     int size = 10,
