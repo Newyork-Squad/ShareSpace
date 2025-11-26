@@ -34,7 +34,7 @@ class RoomDetailsScreen extends StatelessWidget {
           if (state is RoomDetailsLoaded) {
             return Scaffold(
               body: RoomDetailsBody(state: state),
-              bottomNavigationBar: RoomBookingBar(price: state.price),
+              bottomNavigationBar: RoomBookingBar(price: state.price, roomId: roomId),
             );
           }
 

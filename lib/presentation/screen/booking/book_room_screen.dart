@@ -8,11 +8,18 @@ import 'package:share_space/resources/app_strings.dart';
 import '../../design_system/widget/share_space_app_button.dart';
 
 class BookRoomScreen extends StatelessWidget {
-  const BookRoomScreen({super.key});
+  const BookRoomScreen({super.key, this.roomId});
+
+
+  final String? roomId;
 
   @override
   Widget build(BuildContext context) {
     bool isButtonEnabled = true;
+
+    final resolvedRoomId = roomId ??
+        (ModalRoute.of(context)?.settings.arguments as String?) ??
+        '';
 
     return Scaffold(
       backgroundColor: AppColors.light.surfaceLow,
@@ -37,7 +44,9 @@ class BookRoomScreen extends StatelessWidget {
             ShareSpaceAppButton(
               isEnabled: isButtonEnabled,
               text: AppStrings.bookingConfirmBookingButton,
-              onPressed: () {},
+              onPressed: () {
+
+              },
             ),
             const SizedBox(height: 12),
           ],

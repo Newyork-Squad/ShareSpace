@@ -6,8 +6,9 @@ import '../../../routes/routes.dart';
 
 class RoomBookingBar extends StatelessWidget {
   final String price;
+  final String? roomId;
 
-  const RoomBookingBar({super.key, required this.price});
+  const RoomBookingBar({super.key, required this.price, required this.roomId});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,7 @@ class RoomBookingBar extends StatelessWidget {
               isEnabled: true,
               text: 'Book now',
               onPressed: () {
-                Navigator.pushNamed(context, Routes.bookRoomScreen);
+                Navigator.pushNamed(context, Routes.bookRoomScreen, arguments: roomId);
               },
             ),
           ),
