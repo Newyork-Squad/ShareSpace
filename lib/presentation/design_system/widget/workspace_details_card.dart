@@ -5,7 +5,8 @@ import 'package:share_space/presentation/design_system/typography/app_typography
 import 'package:share_space/presentation/design_system/widget/custom_chip.dart';
 import 'package:share_space/presentation/util/get_service_icon_path.dart';
 
-class WorkspaceCardDetails extends StatelessWidget {
+import 'amenities_row.dart';
+class WorkspaceDetailsCard extends StatelessWidget {
   final String imageUrl;
   final double rating;
   final String title;
@@ -13,7 +14,7 @@ class WorkspaceCardDetails extends StatelessWidget {
   final String location;
   final List<String> amenities;
 
-  const WorkspaceCardDetails({
+  const WorkspaceDetailsCard({
     super.key,
     required this.imageUrl,
     required this.rating,
@@ -45,7 +46,7 @@ class WorkspaceCardDetails extends StatelessWidget {
           const SizedBox(width: 4),
           details(theme),
           const SizedBox(height: 4),
-          amenitiesRow(theme),
+          AmenitiesRow(amenities: amenities),
         ],
       )),
     );
@@ -125,15 +126,4 @@ class WorkspaceCardDetails extends StatelessWidget {
     );
   }
 
-  Widget amenitiesRow(AppTheme theme) {
-    return Wrap(
-      alignment: WrapAlignment.start,
-      runAlignment: WrapAlignment.start,
-      spacing: 4.0,
-      runSpacing: 4.0,
-      children: amenities.map((amenity) {
-        return CustomChip(label: amenity, icon: getServiceIconPath(amenity));
-      }).toList(),
-    );
-  }
 }

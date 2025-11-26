@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/screen/booking/booking_screen.dart';
-import 'package:share_space/presentation/screen/bookingHistory/booking_history_screen.dart';
 import 'package:share_space/presentation/screen/chat/chat_screen.dart';
 import 'package:share_space/presentation/screen/home/home_screen.dart';
 import 'package:share_space/presentation/screen/login/login_screen.dart';
@@ -8,6 +7,7 @@ import 'package:share_space/presentation/screen/my_account/my_account_screen.dar
 import 'package:share_space/presentation/screen/onboarding/onboarding_screen.dart';
 import 'package:share_space/presentation/screen/room_details/room_details_screen.dart';
 import 'package:share_space/presentation/screen/search/search_screen.dart';
+import '../screen/booking_history/booking_history_screen.dart';
 import 'package:share_space/presentation/design_system/widget/app_navigation_bar.dart';
 import '../screen/booking/book_room_screen.dart';
 import '../screen/ section/section_screen.dart';

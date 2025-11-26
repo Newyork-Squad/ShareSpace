@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:share_space/presentation/screen/bookingHistory/booking_history_screen.dart';
 import 'package:share_space/presentation/screen/chat/chat_screen.dart';
 import 'package:share_space/presentation/screen/home/home_screen.dart';
 import 'package:share_space/presentation/screen/my_account/my_account_screen.dart';
 import 'package:share_space/presentation/screen/search/search_screen.dart';
 
+import '../../screen/booking_history/booking_history_screen.dart';
 import '../theme/app_theme.dart';
 
 class AppNavigationBar extends StatefulWidget {

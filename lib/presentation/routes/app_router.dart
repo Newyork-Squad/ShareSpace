@@ -5,7 +5,7 @@ import '../screen/booking/book_room_screen.dart';
 import '../screen/ section/section_screen.dart';
 import '../screen/ section/state/section_type_model.dart';
 import '../screen/booking/booking_screen.dart';
-import '../screen/bookingHistory/booking_history_screen.dart';
+import '../screen/booking_history/booking_history_screen.dart';
 import '../screen/chat/chat_screen.dart';
 import '../screen/create_account/create_account_screen.dart';
 import '../screen/home/home_screen.dart';

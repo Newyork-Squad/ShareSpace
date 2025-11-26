@@ -1,0 +1,1 @@
+const FALLBACK_IMAGE = "assets/images/room_image.png";
