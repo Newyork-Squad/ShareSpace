@@ -39,8 +39,10 @@ class BookRoomScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CalendarWidget(
-                    onDateSelected: (date) =>
-                        context.read<BookingCubit>().onDateChanged(date),
+                    onDateSelected: (date)
+                    {
+                      context.read<BookingCubit>().onDateChanged(date);
+                    }
                   ),
                   const SizedBox(height: 16),
                   TimeSlotWidget(
