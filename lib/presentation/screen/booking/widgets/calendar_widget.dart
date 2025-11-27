@@ -5,6 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../../../resources/app_strings.dart';
 import '../../../design_system/colors/app_color.dart';
 import '../../../design_system/typography/app_typography.dart';
+import '../../../design_system/widget/custom_top_snackbar.dart';
 import '../constant_folder/months.dart';
 
 class CalendarWidget extends StatefulWidget {
@@ -209,6 +210,17 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               day.day == _selectedDay!.day,
           onDaySelected: (selectedDay, focusedDay) {
             if (_isUnavailable(selectedDay)) return;
+            final now = DateTime.now();
+            final today = DateTime(now.year, now.month, now.day);
+            if (selectedDay.isBefore(today)) {
+              CustomTopSnackBar.show(
+                context,
+                title: "Not available date",
+                message: "Please select a future date",
+                isError: true,
+              );
+              return;
+            }
             setState(() {
               _selectedDay = selectedDay;
               _focusedDay = focusedDay;
