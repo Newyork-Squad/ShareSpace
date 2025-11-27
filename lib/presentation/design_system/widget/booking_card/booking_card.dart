@@ -17,6 +17,10 @@ class BookingCard extends StatelessWidget {
   final BookingStatusUiState status;
   final String date;
   final String time;
+  final VoidCallback onCancel;
+  final VoidCallback onBookAgain;
+  final VoidCallback onExtend;
+  final VoidCallback onRate;
 
   const BookingCard({
     super.key,
@@ -29,6 +33,10 @@ class BookingCard extends StatelessWidget {
     required this.status,
     required this.date,
     required this.time,
+    required this.onCancel,
+    required this.onBookAgain,
+    required this.onExtend,
+    required this.onRate,
   });
 
   @override
@@ -63,7 +71,7 @@ class BookingCard extends StatelessWidget {
             const SizedBox(height: 12),
             _buildStatusAndTime(theme),
             const SizedBox(height: 12),
-            _buildActionButtons(context),
+            _buildActionButtons(context, onCancel, onBookAgain, onExtend, onRate),
           ],
         ),
       ),
@@ -175,7 +183,13 @@ class BookingCard extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(BuildContext context) {
+  Widget _buildActionButtons(
+    BuildContext context,
+    VoidCallback onCancel,
+    VoidCallback onBookAgain,
+    VoidCallback onExtend,
+    VoidCallback onRate,
+  ) {
     final theme = AppTheme.of(context);
     switch (status) {
       case BookingStatusUiState.upcoming:
@@ -183,7 +197,7 @@ class BookingCard extends StatelessWidget {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: onCancel,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.colors.errorVariant,
                   foregroundColor: theme.colors.red,
@@ -198,7 +212,7 @@ class BookingCard extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: onExtend,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.colors.blueVariant,
                   foregroundColor: theme.colors.primary,
@@ -217,7 +231,7 @@ class BookingCard extends StatelessWidget {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: onBookAgain,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.colors.primary,
                   foregroundColor: theme.colors.onPrimary,
@@ -232,7 +246,7 @@ class BookingCard extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: onRate,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.colors.blueVariant,
                   foregroundColor: theme.colors.primary,

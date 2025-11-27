@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider;
+import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider, ReadContext;
 import 'package:share_space/di/injection.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 import 'package:share_space/presentation/design_system/widget/booking_card/booking_card.dart';
@@ -9,6 +9,9 @@ import 'package:share_space/presentation/screen/booking_history/state/booking_hi
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_state.dart';
 import 'package:share_space/presentation/screen/shared/ui_state/booking_ui_state.dart';
 import 'package:share_space/presentation/screen/shared/ui_state/workspace_ui_state.dart';
+
+import '../../../resources/app_strings.dart';
+import '../../design_system/widget/custom_top_snackbar.dart';
 
 class BookingHistoryScreen extends StatefulWidget {
   const BookingHistoryScreen({super.key});
@@ -101,6 +104,29 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                             status: booking.status,
                             date: booking.date,
                             time: "${booking.startTime} -> ${booking.endTime}",
+                            onCancel: (){
+                              try{
+                                context
+                                    .read<BookingHistoryCubit>()
+                                    .cancelBooking(booking.bookingId);
+                              }catch(e) {
+                                CustomTopSnackBar.show(
+                                    context,
+                                    title: AppStrings.oops,
+                                    message: AppStrings.failedBooking,
+                                    isError: true
+                                );
+                              }
+                            },
+                            onExtend: (){
+                              context.read<BookingHistoryCubit>().extendBooking();
+                            },
+                            onRate: (){
+                              context.read<BookingHistoryCubit>().rateBooking();
+                            },
+                            onBookAgain: () {
+                              context.read<BookingHistoryCubit>().onBookAgain();
+                            },
                           );
                         },
                         separatorBuilder: (context, index) =>
