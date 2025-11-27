@@ -6,6 +6,7 @@ import 'package:share_space/presentation/util/formatters.dart';
 
 BookingUiState mapBookingToUiState(Booking booking){
   return BookingUiState(
+    bookingId: booking.id,
     date: formatDate(booking.startTime),
     startTime: formatTime(booking.startTime),
     endTime: formatTime(booking.endTime),
