@@ -31,6 +31,9 @@ import 'package:share_space/presentation/screen/booking_history/state/booking_hi
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 
+import 'package:share_space/domain/usecase/workspace/save_workspace.dart';
+import 'package:share_space/domain/usecase/workspace/remove_saved_workspace.dart';
+
 import '../data/remote/auth_api_service_impl.dart';
 import '../data/remote/booking_api_service.dart';
 import '../data/remote/dio_client.dart';
@@ -60,6 +63,9 @@ void setupDependencies() {
   getIt.registerLazySingleton<WorkspaceRepository>(
     () => WorkspaceRepositoryImpl(getIt()),
   );
+
+  getIt.registerLazySingleton(() => SaveWorkspaceUseCase(getIt()));
+  getIt.registerLazySingleton(() => RemoveSavedWorkspaceUseCase(getIt()));
 
   getIt.registerLazySingleton<BookingApiService>(
         () => BookingApiServiceImpl(getIt()),
