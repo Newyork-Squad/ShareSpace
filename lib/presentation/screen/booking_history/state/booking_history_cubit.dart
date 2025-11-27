@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_space/domain/usecase/booking/cancel_booking.dart';
 import 'package:share_space/domain/usecase/booking/get_booking_history.dart';
 
 import '../../shared/ui_state/booking_ui_state.dart';
@@ -7,8 +8,10 @@ import 'booking_history_state.dart';
 
 class BookingHistoryCubit extends Cubit<BookingHistoryState> {
   final GetBookingHistoryUseCase _getBookingHistoryUseCase;
+  final CancelBookingUseCase _cancelBookingUseCase;
 
-  BookingHistoryCubit(this._getBookingHistoryUseCase)
+
+  BookingHistoryCubit(this._getBookingHistoryUseCase, this._cancelBookingUseCase)
     : super(BookingHistoryInitial());
 
   Future<void> fetchBookingHistory() async {
@@ -42,4 +45,16 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
       emit(BookingHistoryError(e.toString()));
     }
   }
+
+  Future<void> cancelBooking(String bookingId) async {
+    _cancelBookingUseCase(bookingId);
+      await fetchBookingHistory();
+  }
+
+  Future<void> extendBooking() async {}
+
+  Future<void> rateBooking() async {}
+
+  Future<void> onBookAgain() async {}
+
 }

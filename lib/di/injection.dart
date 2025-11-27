@@ -42,6 +42,7 @@ import '../domain/repository/booking_repository.dart';
 import '../domain/usecase/authentication/create_account_usecase.dart';
 import '../domain/usecase/authentication/is_loggedIn_usecase.dart';
 import '../domain/usecase/authentication/logout_usecase.dart';
+import '../domain/usecase/booking/cancel_booking.dart';
 import '../presentation/screen/booking/state/booking_cubit.dart';
 import '../presentation/screen/my_account/cubit/my_account_cubit.dart';
 
@@ -88,6 +89,7 @@ void setupDependencies() {
 
   getIt.registerLazySingleton(() => GetBookingHistoryUseCase(getIt()));
   getIt.registerLazySingleton(() => BookRoomUseCase(getIt()));
+  getIt.registerLazySingleton(() => CancelBookingUseCase(getIt()));
 
 
   getIt.registerFactory(
@@ -128,7 +130,7 @@ void setupDependencies() {
 
   getIt.registerFactory(() => LoginCubit(getIt()));
 
-  getIt.registerFactory(() => BookingHistoryCubit(getIt()));
+  getIt.registerFactory(() => BookingHistoryCubit(getIt(), getIt()));
 
   getIt.registerFactory(() => BookingCubit(getIt()));
 

@@ -15,4 +15,6 @@ abstract class BookingApiService {
     int size = 10,
     String status,
   });
+
+  Future<void> cancelBooking({required String bookingId});
 }

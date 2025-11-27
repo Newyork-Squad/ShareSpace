@@ -9,4 +9,5 @@ abstract class BookingRepository {
     required String paymentType,
   });
   Future<List<Booking>> getBookingHistory();
+  Future<void> cancelBooking({required String bookingId});
 }

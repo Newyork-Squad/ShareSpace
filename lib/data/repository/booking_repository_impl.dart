@@ -40,4 +40,13 @@ class BookingRepositoryImpl implements BookingRepository {
       throw Exception('Failed to fetch Booking History: $e');
     }
   }
+
+  @override
+  Future<void> cancelBooking({required String bookingId}) async {
+    try {
+      _apiService.cancelBooking(bookingId: bookingId);
+    } catch (e) {
+      throw Exception('Failed to cancel booking: $e');
+    }
+  }
 }
