@@ -82,11 +82,8 @@ class BookRoomScreen extends StatelessWidget {
                                   context.read<BookingCubit>().bookRoom(
                                     workspaceId: resolvedRoomId,
                                   );
-                                  Navigator.pushNamed(
-                                    context,
-                                    Routes.roomDetailsScreen,
-                                    arguments: resolvedRoomId,
-                                  );
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text('Booking confirmed'),
