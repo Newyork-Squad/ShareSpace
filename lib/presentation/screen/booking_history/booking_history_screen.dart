@@ -164,9 +164,9 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
       case 1:
         return upcoming;
         case 2:
-        return cancelled;
-      case 3:
         return completed;
+      case 3:
+        return  cancelled;
       default:
         return allBookings;
     }
