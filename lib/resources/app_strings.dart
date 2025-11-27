@@ -28,6 +28,9 @@ class AppStrings {
   static const oops = 'Oops';
   static const failedBooking = 'Something went wrong. Please try again.';
 
+  static const noBookingsTitle = 'There is no booking here!';
+  static const noBookingsDescription = 'All your booking will view here with it’s details after you booking.';
+
   static const loginWelcomeBack = 'Welcome Back';
   static const loginInstructions =
       'Please enter your phone number and password to access your booking';

@@ -7,6 +7,7 @@ import 'package:share_space/presentation/design_system/widget/category_chip.dart
 import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_cubit.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_state.dart';
+import 'package:share_space/presentation/screen/booking_history/widget/empty_screen.dart';
 import 'package:share_space/presentation/screen/shared/ui_state/booking_ui_state.dart';
 import 'package:share_space/presentation/screen/shared/ui_state/workspace_ui_state.dart';
 
@@ -34,6 +35,13 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
           if (state is BookingHistoryLoading) {
             return const LoadingScreen();
           } else if (state is BookingHistoryLoaded) {
+            final filteredBookings = _getFilteredBookings(
+              state.selectedIndex,
+              state.all,
+              state.upcoming,
+              state.cancelled,
+              state.completed,
+            );
             return Scaffold(
               backgroundColor: theme.colors.surface,
               appBar: AppBar(
@@ -76,62 +84,58 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                     ),
                     const SizedBox(height: 16),
                     Expanded(
-                      child: ListView.separated(
-                        itemCount: _getFilteredBookings(
-                          state.selectedIndex,
-                          state.all,
-                          state.upcoming,
-                          state.cancelled,
-                          state.completed,
-                        ).length,
-                        itemBuilder: (context, index) {
-                          final booking = _getFilteredBookings(
-                            state.selectedIndex,
-                            state.all,
-                            state.upcoming,
-                            state.cancelled,
-                            state.completed,
-                          )[index];
-                          return BookingCard(
-                            imageUrl: booking.getImage(),
-                            rating: booking.workspace.rate,
-                            title: booking.workspace.name,
-                            price: "${booking.workspace.pricePerHour}/h",
-                            location: booking.workspace.locationName,
-                            amenities: booking.workspace.services
-                                .map((service) => service.toString())
-                                .toList(),
-                            status: booking.status,
-                            date: booking.date,
-                            time: "${booking.startTime} -> ${booking.endTime}",
-                            onCancel: (){
-                              try{
-                                context
-                                    .read<BookingHistoryCubit>()
-                                    .cancelBooking(booking.bookingId);
-                              }catch(e) {
-                                CustomTopSnackBar.show(
-                                    context,
-                                    title: AppStrings.oops,
-                                    message: AppStrings.failedBooking,
-                                    isError: true
+                      child: filteredBookings.isEmpty
+                          ? const EmptyScreen(hasAppBar: false)
+                          : ListView.separated(
+                              itemCount: filteredBookings.length,
+                              itemBuilder: (context, index) {
+                                final booking = filteredBookings[index];
+                                return BookingCard(
+                                  imageUrl: booking.getImage(),
+                                  rating: booking.workspace.rate,
+                                  title: booking.workspace.name,
+                                  price:
+                                      "${booking.workspace.pricePerHour}/h",
+                                  location: booking.workspace.locationName,
+                                  amenities: booking.workspace.services
+                                      .map((service) => service.toString())
+                                      .toList(),
+                                  status: booking.status,
+                                  date: booking.date,
+                                  time:
+                                      "${booking.startTime} -> ${booking.endTime}",
+                                  onCancel: () {
+                                    try {
+                                      context
+                                          .read<BookingHistoryCubit>()
+                                          .cancelBooking(booking.bookingId);
+                                    } catch (e) {
+                                      CustomTopSnackBar.show(context,
+                                          title: AppStrings.oops,
+                                          message: AppStrings.failedBooking,
+                                          isError: true);
+                                    }
+                                  },
+                                  onExtend: () {
+                                    context
+                                        .read<BookingHistoryCubit>()
+                                        .extendBooking();
+                                  },
+                                  onRate: () {
+                                    context
+                                        .read<BookingHistoryCubit>()
+                                        .rateBooking();
+                                  },
+                                  onBookAgain: () {
+                                    context
+                                        .read<BookingHistoryCubit>()
+                                        .onBookAgain();
+                                  },
                                 );
-                              }
-                            },
-                            onExtend: (){
-                              context.read<BookingHistoryCubit>().extendBooking();
-                            },
-                            onRate: (){
-                              context.read<BookingHistoryCubit>().rateBooking();
-                            },
-                            onBookAgain: () {
-                              context.read<BookingHistoryCubit>().onBookAgain();
-                            },
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12),
-                      ),
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 12),
+                            ),
                     ),
                   ],
                 ),
@@ -163,10 +167,10 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
         return allBookings;
       case 1:
         return upcoming;
-        case 2:
+      case 2:
         return completed;
       case 3:
-        return  cancelled;
+        return cancelled;
       default:
         return allBookings;
     }
