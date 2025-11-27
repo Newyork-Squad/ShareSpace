@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_space/presentation/design_system/widget/error_screen.dart';
 import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
-import 'package:share_space/presentation/design_system/widget/workspace_card_details.dart';
+import 'package:share_space/presentation/design_system/widget/workspace_details_card.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_state.dart';
 import 'package:share_space/presentation/screen/home/widget/booking_card.dart';
-import 'package:share_space/presentation/screen/home/widget/category_chip.dart';
+import 'package:share_space/presentation/design_system/widget/category_chip.dart';
 import 'package:share_space/presentation/screen/home/widget/home_app_bar.dart';
 import 'package:share_space/presentation/screen/home/widget/workspaces_grid.dart';
 import 'package:share_space/presentation/util/service_mapper.dart';
@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             arguments: room.id.toString(),
                                           );
                                         },
-                                        child: WorkspaceCardDetails(
+                                        child: WorkspaceDetailsCard(
                                           title: room.name,
                                           imageUrl: room.imageUrls.isNotEmpty
                                               ? room.imageUrls[0]

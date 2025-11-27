@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../design_system/theme/app_theme.dart';
+import '../theme/app_theme.dart';
 
 class CategoryChip extends StatelessWidget {
   final String label;
