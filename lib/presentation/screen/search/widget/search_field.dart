@@ -4,7 +4,10 @@ import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 import 'package:share_space/presentation/screen/search/widget/filter_button.dart';
 
 class SearchField extends StatefulWidget {
-  const SearchField({super.key});
+  final List<String> suggestions;
+  final List<String> history;
+
+  const SearchField({super.key, required this.suggestions, required this.history});
 
   @override
   State<SearchField> createState() => _SearchFieldState();
@@ -55,7 +58,7 @@ class _SearchFieldState extends State<SearchField> {
                       controller.openView();
                     },
                     leading: SvgPicture.asset(
-                      'assets/icons/search.svg',
+                      'assets/icons/search_filled.svg',
                       width: 24,
                       height: 24,
                       colorFilter: ColorFilter.mode(theme.colors.body, BlendMode.srcIn),
