@@ -5,11 +5,13 @@ import 'package:share_space/presentation/design_system/colors/app_color.dart';
 import 'package:share_space/presentation/screen/booking/state/booking_cubit.dart';
 import 'package:share_space/presentation/screen/booking/state/booking_state.dart';
 import 'package:share_space/presentation/screen/booking/widgets/calendar_widget.dart';
+import 'package:share_space/presentation/screen/booking/widgets/confirm_booking_bottom_sheet.dart';
 import 'package:share_space/presentation/screen/booking/widgets/duration_widget.dart';
 import 'package:share_space/presentation/screen/booking/widgets/payment_widget.dart';
 import 'package:share_space/presentation/screen/booking/widgets/time_slot_widget.dart';
 import 'package:share_space/resources/app_strings.dart';
 import '../../design_system/widget/share_space_app_button.dart';
+import '../../routes/routes.dart';
 
 class BookRoomScreen extends StatelessWidget {
   const BookRoomScreen({super.key, this.roomId});
@@ -28,21 +30,20 @@ class BookRoomScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Book Room'),
           backgroundColor: AppColors.light.surfaceLow,
+          surfaceTintColor: AppColors.light.surfaceLow,
           elevation: 0,
         ),
         body: BlocBuilder<BookingCubit, BookingState>(
           builder: (context, state) {
-
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CalendarWidget(
-                    onDateSelected: (date)
-                    {
+                    onDateSelected: (date) {
                       context.read<BookingCubit>().onDateChanged(date);
-                    }
+                    },
                   ),
                   const SizedBox(height: 16),
                   TimeSlotWidget(
@@ -70,8 +71,43 @@ class BookRoomScreen extends StatelessWidget {
                     text: AppStrings.bookingConfirmBookingButton,
                     onPressed: () {
                       if (context.read<BookingCubit>().isButtonEnabled) {
-                        context.read<BookingCubit>().bookRoom(
-                          workspaceId: resolvedRoomId,
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (_) => BlocProvider.value(
+                            value: context.read<BookingCubit>(),
+                            child: ConfirmBookingBottomSheet(
+                              onConfirm: () {
+                                try {
+                                  context.read<BookingCubit>().bookRoom(
+                                    workspaceId: resolvedRoomId,
+                                  );
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.roomDetailsScreen,
+                                    arguments: resolvedRoomId,
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Booking confirmed'),
+                                    ),
+                                  );
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        'Booking failed. Please try again.',
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              roomName: "",
+                              price: '',
+                              date: '',
+                              time: '',
+                            ),
+                          ),
                         );
                       }
                     },
