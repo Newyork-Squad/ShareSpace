@@ -29,4 +29,4 @@ class BookingUiState {
   }
 }
 
-enum BookingStatusUiState { upcoming, completed, canceled }
+enum BookingStatusUiState { upcoming, completed, cancelled }

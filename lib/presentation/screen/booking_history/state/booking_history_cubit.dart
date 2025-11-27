@@ -30,7 +30,7 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
           fullHistory
               .map((booking) => mapBookingToUiState(booking))
               .where(
-                (element) => element.status == BookingStatusUiState.canceled,
+                (element) => element.status == BookingStatusUiState.cancelled,
               )
               .toList(),
           fullHistory

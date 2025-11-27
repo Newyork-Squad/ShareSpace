@@ -25,7 +25,7 @@ BookingStatusUiState mapBookingStatusToUiState(BookingStatus status){
           BookingStatusUiState.completed;
     case BookingStatus.canceled:
       return
-          BookingStatusUiState.canceled;
+          BookingStatusUiState.cancelled;
   }
 }
 

@@ -260,7 +260,7 @@ class BookingCard extends StatelessWidget {
             ),
           ],
         );
-      case BookingStatusUiState.canceled:
+      case BookingStatusUiState.cancelled:
         return Row(
           children: [
             Expanded(
