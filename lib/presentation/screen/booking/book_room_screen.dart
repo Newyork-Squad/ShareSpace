@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_space/di/injection.dart';
 import 'package:share_space/presentation/design_system/colors/app_color.dart';
+import 'package:share_space/presentation/design_system/widget/custom_top_snackbar.dart';
 import 'package:share_space/presentation/screen/booking/state/booking_cubit.dart';
 import 'package:share_space/presentation/screen/booking/state/booking_state.dart';
 import 'package:share_space/presentation/screen/booking/widgets/calendar_widget.dart';
@@ -84,18 +85,18 @@ class BookRoomScreen extends StatelessWidget {
                                   );
                                   Navigator.pop(context);
                                   Navigator.pop(context);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Booking confirmed'),
-                                    ),
+                                  CustomTopSnackBar.show(
+                                    context,
+                                    title: AppStrings.success,
+                                    message: AppStrings.successBooking,
+                                    isError: false
                                   );
                                 } catch (e) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                        'Booking failed. Please try again.',
-                                      ),
-                                    ),
+                                  CustomTopSnackBar.show(
+                                    context,
+                                    title: AppStrings.oops,
+                                    message: AppStrings.failedBooking,
+                                    isError: true
                                   );
                                 }
                               },

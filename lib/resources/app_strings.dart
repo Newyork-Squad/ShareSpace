@@ -23,6 +23,11 @@ class AppStrings {
   static const otpVerificationFailure =
       'Verification failed. Please try again.';
 
+  static const success = 'Success';
+  static const successBooking = 'Booking room successfully.';
+  static const oops = 'Oops';
+  static const failedBooking = 'Something went wrong. Please try again.';
+
   static const loginWelcomeBack = 'Welcome Back';
   static const loginInstructions =
       'Please enter your phone number and password to access your booking';
