@@ -15,7 +15,7 @@ class AppColors {
     title: Color(0xDE1F1F1F),
     body: Color(0x991F1F1F),
     hint: Color(0x611F1F1F),
-    stroke: Color(0x1F1F1F1F),
+    stroke: Color(0x141F1F1F),
     onPrimary: Color(0xFFFFFFFF),
     onPrimaryBody: Color(0xA8FFFFFF),
     onPrimaryStroke: Color(0x29E8EBED),
@@ -26,6 +26,14 @@ class AppColors {
     errorVariant: Color(0xFFFFEEEF),
     green: Color(0xFF51AC46),
     greenVariant: Color(0xFFF1F9F1),
+    innerShadow: Color(0x8036CEFB),
+    dropShadow: Color(0x3D84E2FE),
+    linear: LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [Color(0xFF50B5E7), Color(0xFF19C6F9)],
+    ),
+    redVariant: Color(0xFFFFEEEF),
   );
 }
 
@@ -52,6 +60,10 @@ class AppColorScheme {
   final Color errorVariant;
   final Color green;
   final Color greenVariant;
+  final Color innerShadow;
+  final Color dropShadow;
+  final LinearGradient linear;
+  final Color redVariant;
 
   const AppColorScheme({
     required this.primary,
@@ -76,5 +88,9 @@ class AppColorScheme {
     required this.errorVariant,
     required this.green,
     required this.greenVariant,
+    required this.innerShadow,
+    required this.dropShadow,
+    required this.linear,
+    required this.redVariant,
   });
 }
