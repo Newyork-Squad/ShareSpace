@@ -8,8 +8,8 @@ import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 import 'package:share_space/resources/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../design_system/theme/app_theme.dart';
 import '../../design_system/widget/app_text_field.dart';
+import '../../design_system/widget/loading_screen.dart';
 import '../../design_system/widget/phone_input_field.dart';
 import '../../design_system/widget/share_space_app_button.dart';
 import 'login_widget/app_logo.dart';
