@@ -8,7 +8,7 @@ import '../../design_system/widget/phone_input_field.dart';
 import '../../design_system/widget/app_text_field.dart';
 import '../../design_system/widget/custom_top_snackbar.dart';
 import 'package:share_space/resources/app_strings.dart';
-import 'create_account_widgets/create_account_button.dart';
+import '../../design_system/widget/share_space_app_button.dart';
 import 'create_account_widgets/gender_selector.dart';
 import 'create_account_widgets/profile_image_picker.dart';
 import 'cubit/create_account_cubit.dart';
@@ -231,9 +231,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         errorText: confirmPasswordError,
                       ),
                       const SizedBox(height: 29),
-                      CreateAccountButton(
-                        text: isLoading
-                            ? AppStrings.createAccountLoading
+                      ShareSpaceAppButton(
+                        text: isLoading ? AppStrings.createAccountLoading
                             : AppStrings.createAccountButton,
                         isEnabled: !isLoading && isFormValid,
                         onPressed:

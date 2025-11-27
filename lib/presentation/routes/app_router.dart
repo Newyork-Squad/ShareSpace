@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:share_space/presentation/screen/my_account/my_account_screen.dart';
 
+import '../screen/booking/book_room_screen.dart';
 import '../screen/ section/section_screen.dart';
 import '../screen/ section/state/section_type_model.dart';
 import '../screen/booking/booking_screen.dart';
@@ -37,6 +38,7 @@ class AppRouter {
     Routes.bookingHistoryScreen: (_) => BookingHistoryScreen(),
     Routes.chatScreen: (_) => ChatScreen(),
     Routes.myAccountScreen: (_) => MyAccountScreen(),
+    Routes.bookRoomScreen: (_) => BookRoomScreen(),
     Routes.sectionScreen:(_)=> SectionScreen()
   };
 
