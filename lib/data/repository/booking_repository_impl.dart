@@ -10,12 +10,43 @@ class BookingRepositoryImpl implements BookingRepository {
   BookingRepositoryImpl(this._apiService);
 
   @override
+  void bookRoom({
+    required String workspaceId,
+    required String date,
+    required String startTime,
+    required double durationHours,
+    required String paymentType,
+  }){
+    try {
+      _apiService.bookRoom(
+        workspaceId: workspaceId,
+        date: date,
+        startTime: startTime,
+        durationHours: durationHours,
+        paymentType: paymentType,
+      );
+    } catch (e) {
+      throw Exception('Failed to book the room: $e');
+    }
+  }
+
+
+  @override
   Future<List<Booking>> getBookingHistory() async {
     try {
       final response = await _apiService.getHistory(page: 0, size: 10);
       return response.map((dto) => dto.toEntity()).toList();
     } catch (e) {
       throw Exception('Failed to fetch Booking History: $e');
+    }
+  }
+
+  @override
+  Future<void> cancelBooking({required String bookingId}) async {
+    try {
+      _apiService.cancelBooking(bookingId: bookingId);
+    } catch (e) {
+      throw Exception('Failed to cancel booking: $e');
     }
   }
 }

@@ -33,7 +33,7 @@ class BookingStatusChip extends StatelessWidget {
         return theme.colors.yellowVariant;
       case BookingStatusUiState.completed:
         return theme.colors.greenVariant;
-      case BookingStatusUiState.canceled:
+      case BookingStatusUiState.cancelled:
         return theme.colors.errorVariant;
     }
   }
@@ -44,7 +44,7 @@ class BookingStatusChip extends StatelessWidget {
         return theme.colors.yellow;
       case BookingStatusUiState.completed:
         return theme.colors.green;
-      case BookingStatusUiState.canceled:
+      case BookingStatusUiState.cancelled:
         return theme.colors.red;
     }
   }
@@ -55,7 +55,7 @@ class BookingStatusChip extends StatelessWidget {
         return "Upcoming";
       case BookingStatusUiState.completed:
         return "Completed";
-      case BookingStatusUiState.canceled:
+      case BookingStatusUiState.cancelled:
         return "Cancelled";
     }
   }

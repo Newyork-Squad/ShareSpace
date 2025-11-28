@@ -5,15 +5,23 @@ import '../../../design_system/widget/custom_chip.dart';
 
 class TimeSlotWidget extends StatefulWidget {
   final List<String>? timeSlots;
+  final Function(String) onStartTimeSelected;
+  final Function(String) onEndTimeSelected;
 
-  const TimeSlotWidget({super.key, this.timeSlots});
+  const TimeSlotWidget({
+    super.key,
+    this.timeSlots,
+    required this.onStartTimeSelected,
+    required this.onEndTimeSelected,
+  });
 
   @override
   State<TimeSlotWidget> createState() => _TimeSlotWidgetState();
 }
 
 class _TimeSlotWidgetState extends State<TimeSlotWidget> {
-  String? selectedTime;
+  String? selectedStartTime;
+  String? selectedEndTime;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +38,10 @@ class _TimeSlotWidgetState extends State<TimeSlotWidget> {
           ),
         ),
         const SizedBox(height: 12),
-
         Wrap(
           spacing: 8,
           children: slots.map((time) {
-            final bool isSelected = selectedTime == time;
+            final bool isSelected = selectedStartTime == time || selectedEndTime == time;
             return Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: CustomChip(
@@ -47,7 +54,17 @@ class _TimeSlotWidgetState extends State<TimeSlotWidget> {
                     : AppColors.light.title,
                 onSelect: () {
                   setState(() {
-                    selectedTime = time;
+                    if (selectedStartTime == null) {
+                      selectedStartTime = time;
+                      widget.onStartTimeSelected(time);
+                    } else if (selectedEndTime == null) {
+                      selectedEndTime = time;
+                      widget.onEndTimeSelected(time);
+                    } else {
+                      selectedStartTime = time;
+                      selectedEndTime = null;
+                      widget.onStartTimeSelected(time);
+                    }
                   });
                 },
               ),

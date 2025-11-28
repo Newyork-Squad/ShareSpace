@@ -19,6 +19,7 @@ import 'package:share_space/domain/repository/workspace_repository.dart';
 import 'package:share_space/domain/usecase/User/getUserDetailsUseCase.dart';
 import 'package:share_space/domain/usecase/User/getUserLocationUseCase.dart';
 import 'package:share_space/domain/usecase/authentication/login_usecase.dart';
+import 'package:share_space/domain/usecase/booking/book_room.dart';
 import 'package:share_space/domain/usecase/booking/get_booking_history.dart';
 import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
 import 'package:share_space/domain/usecase/workspace/get_best.dart';
@@ -41,6 +42,8 @@ import '../domain/repository/booking_repository.dart';
 import '../domain/usecase/authentication/create_account_usecase.dart';
 import '../domain/usecase/authentication/is_loggedIn_usecase.dart';
 import '../domain/usecase/authentication/logout_usecase.dart';
+import '../domain/usecase/booking/cancel_booking.dart';
+import '../presentation/screen/booking/state/booking_cubit.dart';
 import '../presentation/screen/my_account/cubit/my_account_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -85,6 +88,8 @@ void setupDependencies() {
   getIt.registerLazySingleton(() => GetCurrentLocationUseCase(getIt()));
 
   getIt.registerLazySingleton(() => GetBookingHistoryUseCase(getIt()));
+  getIt.registerLazySingleton(() => BookRoomUseCase(getIt()));
+  getIt.registerLazySingleton(() => CancelBookingUseCase(getIt()));
 
 
   getIt.registerFactory(
@@ -125,7 +130,9 @@ void setupDependencies() {
 
   getIt.registerFactory(() => LoginCubit(getIt()));
 
-  getIt.registerFactory(() => BookingHistoryCubit(getIt()));
+  getIt.registerFactory(() => BookingHistoryCubit(getIt(), getIt()));
+
+  getIt.registerFactory(() => BookingCubit(getIt()));
 
   getIt.registerFactory<CreateAccountUseCase>(
     () => CreateAccountUseCase(getIt()),
