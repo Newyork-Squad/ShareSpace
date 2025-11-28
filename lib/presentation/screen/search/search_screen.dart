@@ -11,7 +11,6 @@ import '../../design_system/widget/error_screen.dart';
 import '../../design_system/widget/loading_screen.dart';
 import '../../design_system/widget/workspace_details_card.dart';
 import '../../routes/routes.dart';
-import '../../util/service_mapper.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -51,11 +50,15 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
                     child: Text(
-                      AppStrings.mostSearched ,
-                      style: theme.typography.textTheme.titleSmall
-                          ?.copyWith(color: theme.colors.title),
+                      AppStrings.mostSearched,
+                      style: theme.typography.textTheme.titleSmall?.copyWith(
+                        color: theme.colors.title,
+                      ),
                     ),
                   ),
                 ),
