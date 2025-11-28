@@ -92,6 +92,7 @@ class AppStrings {
 
   static const searchScreenTitle = 'Search';
   static const mostSearched = 'Most Searched';
+  static String resultsFound(int count) => 'Results found ($count)';
   static const bookingScreenTitle = 'Booking Screen';
   static const bookingHistoryScreenTitle = 'Booking History Screen';
   static const chatScreenTitle = 'Chat Screen';

@@ -30,6 +30,10 @@ class _SearchScreenState extends State<SearchScreen> {
           if (state is SearchLoading) {
             return LoadingScreen();
           } else if (state is SearchLoaded) {
+            final rooms = (state.searchResults.isEmpty)
+                ? state.lastViewed
+                : state.searchResults;
+
             return CustomScrollView(
               slivers: [
                 SliverAppBar(
@@ -55,7 +59,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       vertical: 12,
                     ),
                     child: Text(
-                      AppStrings.mostSearched,
+                      (state.searchResults.isEmpty)
+                          ? AppStrings.mostSearched
+                          : AppStrings.resultsFound(state.searchResults.length),
                       style: theme.typography.textTheme.titleSmall?.copyWith(
                         color: theme.colors.title,
                       ),
@@ -65,7 +71,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 SliverToBoxAdapter(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: state.lastViewed
+                    children: rooms
                         .map(
                           (room) => Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -105,7 +111,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ],
             );
           } else if (state is SearchError) {
-            return ErrorScreen(hasAppBar: false);
+            return const ErrorScreen(hasAppBar: false);
           }
           return const SizedBox.shrink();
         },
