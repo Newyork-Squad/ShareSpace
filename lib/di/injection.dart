@@ -34,6 +34,7 @@ import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 
 import 'package:share_space/domain/usecase/workspace/save_workspace.dart';
 import 'package:share_space/domain/usecase/workspace/remove_saved_workspace.dart';
+import 'package:share_space/presentation/screen/search/state/search_cubit.dart';
 
 import '../data/remote/auth_api_service_impl.dart';
 import '../data/remote/booking_api_service.dart';
@@ -139,6 +140,8 @@ void setupDependencies() {
   getIt.registerFactory(() => BookingHistoryCubit(getIt(), getIt()));
 
   getIt.registerFactory(() => BookingCubit(getIt()));
+
+  getIt.registerFactory(() => SearchCubit(getIt()));
 
   getIt.registerFactory<CreateAccountUseCase>(
     () => CreateAccountUseCase(getIt()),
