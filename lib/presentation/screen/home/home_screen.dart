@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_space/presentation/design_system/widget/category_chip.dart';
 import 'package:share_space/presentation/design_system/widget/error_screen.dart';
 import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
 import 'package:share_space/presentation/design_system/widget/workspace_details_card.dart';
+import 'package:share_space/presentation/screen/%20section/state/section_type_model.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_state.dart';
 import 'package:share_space/presentation/screen/home/widget/booking_card.dart';
-import 'package:share_space/presentation/design_system/widget/category_chip.dart';
 import 'package:share_space/presentation/screen/home/widget/home_app_bar.dart';
 import 'package:share_space/presentation/screen/home/widget/workspaces_grid.dart';
 import 'package:share_space/presentation/util/service_mapper.dart';
@@ -63,6 +64,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               label: state.categories[index].name,
                               description: state.categories[index].description,
                               imageUrl: state.categories[index].getImage(),
+                              onClick: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.sectionScreen,
+                                  arguments: state.categories[index].name
+                                      .toSectionType(),
+                                );
+                              },
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
@@ -116,7 +125,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         child: SeeAllBar(
                                           title: category.name,
-                                          onAllTap: () {},
+                                          onAllTap: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              Routes.sectionScreen,
+                                              arguments: category.name
+                                                  .toSectionType(),
+                                            );
+                                          },
                                         ),
                                       ),
                                       const SizedBox(height: 12),
