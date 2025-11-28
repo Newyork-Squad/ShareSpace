@@ -75,7 +75,7 @@ class RoomDetailsScreen extends StatelessWidget {
                   state: state,
                   roomId: resolvedRoomId,
                 ),
-              bottomNavigationBar: RoomBookingBar(price: state.price),
+              bottomNavigationBar: RoomBookingBar(price: state.price,roomId: resolvedRoomId),
             );
           }
 
