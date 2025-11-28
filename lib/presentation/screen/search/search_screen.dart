@@ -76,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         "${room.pricePerHour.toInt().toString()}/h",
                                     location: room.locationName,
                                     amenities: room.services
-                                        .map((e) => e.name)
+                                        .map((e) => e.toString())
                                         .toList(),
                                   ),
                                 ),
