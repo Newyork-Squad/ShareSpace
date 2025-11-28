@@ -10,8 +10,12 @@ class SearchLoaded extends SearchState {
   final String query;
   final bool isSearching;
   final int selectedRate;
+  final int priceStartRange;
+  final int priceEndRange;
   final int priceStart;
   final int priceEnd;
+  final List<int> selectedRateIndices;
+  final List<int> selectedServicesIndices;
   final List<ServicesUiState> services;
   final List<WorkspaceUiState> lastViewed;
   final List<WorkspaceUiState> searchResults;
@@ -20,8 +24,12 @@ class SearchLoaded extends SearchState {
     this.query,
     this.isSearching,
     this.selectedRate,
+    this.priceStartRange,
+    this.priceEndRange,
     this.priceStart,
     this.priceEnd,
+    this.selectedRateIndices,
+    this.selectedServicesIndices,
     this.services,
     this.lastViewed,
     this.searchResults,

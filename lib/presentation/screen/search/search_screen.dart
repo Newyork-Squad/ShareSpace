@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_space/presentation/screen/search/state/search_cubit.dart';
@@ -52,7 +54,19 @@ class _SearchScreenState extends State<SearchScreen> {
                     elevation: 0,
                   ),
                   SliverToBoxAdapter(
-                    child: SearchField(suggestions: [], history: []),
+                    child: SearchField(
+                      onQueryChanged: (query) {
+                        context.read<SearchCubit>().updateQuery(query);
+                      },
+                      suggestions: [],
+                      history: [],
+                      initialRange: RangeValues(state.priceStartRange.toDouble() , state.priceEndRange.toDouble()),
+                      currentRange: RangeValues(state.priceStart.toDouble() , state.priceEnd.toDouble()),
+                      rateOptions: const ["All", "1", "2", "3", "4", "5"],
+                      rateSelectedIndex: state.selectedRate,
+                      selectedRateIndices: [0],
+                      selectedServicesIndices: [0],
+                    ),
                   ),
                   SliverToBoxAdapter(
                     child: Padding(

@@ -15,14 +15,7 @@ class SearchCubit extends Cubit<SearchState> {
     : super(SearchInitial());
 
   Future<void> fetchSearch(
-    String? keyword,
-    double? minPrice,
-    double? maxPrice,
-    double? rating,
-    List<String>? services,
-    double? latitude,
-    double? longitude,
-    String? location,
+    String keyword,
   ) async {
     final currentState = state;
     if (currentState is SearchLoaded) {
@@ -31,13 +24,13 @@ class SearchCubit extends Cubit<SearchState> {
         final searchResults = await _searchWorkspacesUseCase.execute(
           SearchRequest(
             keyword: keyword,
-            minPrice: minPrice,
-            maxPrice: maxPrice,
-            rating: rating,
-            services: services,
-            latitude: latitude,
-            longitude: longitude,
-            location: location,
+            minPrice: currentState.priceStart.toDouble(),
+            maxPrice: currentState.priceEnd.toDouble(),
+            rating: currentState.selectedRate.toDouble(),
+            services: currentState.selectedServicesIndices.map((e) => ServicesUiState.values[e].toString()).toList(),
+            // latitude: latitude,
+            // longitude: longitude,
+            // location: location,
           ),
         );
         emit(
@@ -47,6 +40,10 @@ class SearchCubit extends Cubit<SearchState> {
             currentState.selectedRate,
             currentState.priceStart,
             currentState.priceEnd,
+            currentState.priceStart,
+            currentState.priceEnd,
+            currentState.selectedRateIndices,
+            currentState.selectedServicesIndices,
             currentState.services,
             currentState.lastViewed,
             searchResults.map((e) => mapWorkToUiState(e)).toList(),
@@ -63,19 +60,27 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchLoading());
     try {
       final lastViewed = await _getBestUseCase();
-      double priceEnd = 300;
+      double priceStart = 20;
+      double priceEnd = 30;
       if (lastViewed.isNotEmpty) {
-        priceEnd = lastViewed
+        final prices = lastViewed
             .map((e) => (e.pricePerHour).toDouble())
-            .reduce((a, b) => a > b ? a : b);
+            .toList();
+        priceStart = prices.reduce((a, b) => a < b ? a : b);
+        priceEnd = prices.reduce((a, b) => a > b ? a : b);
       }
+
       emit(
         SearchLoaded(
           '',
           false,
           0,
-          0,
+          (priceStart * 0.5).toInt(),
+          (priceEnd * 1.5).toInt(),
+          priceStart.toInt(),
           priceEnd.toInt(),
+          [],
+          [],
           [],
           lastViewed.map((e) => mapWorkToUiState(e)).toList(),
           [],
@@ -83,6 +88,183 @@ class SearchCubit extends Cubit<SearchState> {
       );
     } catch (e) {
       emit(SearchError(e.toString()));
+    }
+  }
+
+  void updateQuery(String query) {
+    final currentState = state;
+    if (currentState is SearchLoaded) {
+      emit(
+        SearchLoaded(
+          query,
+          currentState.isSearching,
+          currentState.selectedRate,
+          currentState.priceStartRange,
+          currentState.priceEndRange,
+          currentState.priceStart,
+          currentState.priceEnd,
+          currentState.selectedRateIndices,
+          currentState.selectedServicesIndices,
+          currentState.services,
+          currentState.lastViewed,
+          currentState.searchResults,
+        ),
+      );
+    }
+    fetchSearch(query);
+  }
+
+  void updateIsSearching(bool isSearching) {
+    final currentState = state;
+    if (currentState is SearchLoaded) {
+      emit(
+        SearchLoaded(
+          currentState.query,
+          isSearching,
+          currentState.selectedRate,
+          currentState.priceStartRange,
+          currentState.priceEndRange,
+          currentState.priceStart,
+          currentState.priceEnd,
+          currentState.selectedRateIndices,
+          currentState.selectedServicesIndices,
+          currentState.services,
+          currentState.lastViewed,
+          currentState.searchResults,
+        ),
+      );
+    }
+  }
+
+  void updateSelectedRate(double selectedRate) {
+    final currentState = state;
+    if (currentState is SearchLoaded) {
+      emit(
+        SearchLoaded(
+          currentState.query,
+          currentState.isSearching,
+          selectedRate.toInt(),
+          currentState.priceStartRange,
+          currentState.priceEndRange,
+          currentState.priceStart,
+          currentState.priceEnd,
+          currentState.selectedRateIndices,
+          currentState.selectedServicesIndices,
+          currentState.services,
+          currentState.lastViewed,
+          currentState.searchResults,
+        ),
+      );
+    }
+  }
+
+  void updatePriceStart(int priceStart) {
+    final currentState = state;
+    if (currentState is SearchLoaded) {
+      emit(
+        SearchLoaded(
+          currentState.query,
+          currentState.isSearching,
+          currentState.selectedRate,
+          currentState.priceStartRange,
+          currentState.priceEndRange,
+          priceStart,
+          currentState.priceEnd,
+          currentState.selectedRateIndices,
+          currentState.selectedServicesIndices,
+          currentState.services,
+          currentState.lastViewed,
+          currentState.searchResults,
+        ),
+      );
+    }
+  }
+
+  void updatePriceEnd(int priceEnd) {
+    final currentState = state;
+    if (currentState is SearchLoaded) {
+      emit(
+        SearchLoaded(
+          currentState.query,
+          currentState.isSearching,
+          currentState.selectedRate,
+          currentState.priceStartRange,
+          currentState.priceEndRange,
+          currentState.priceStart,
+          priceEnd,
+          currentState.selectedRateIndices,
+          currentState.selectedServicesIndices,
+          currentState.services,
+          currentState.lastViewed,
+          currentState.searchResults,
+        ),
+      );
+    }
+  }
+
+  void updateServices(List<ServicesUiState> services) {
+    final currentState = state;
+    if (currentState is SearchLoaded) {
+      emit(
+        SearchLoaded(
+          currentState.query,
+          currentState.isSearching,
+          currentState.selectedRate,
+          currentState.priceStartRange,
+          currentState.priceEndRange,
+          currentState.priceStart,
+          currentState.priceEnd,
+          currentState.selectedRateIndices,
+          currentState.selectedServicesIndices,
+          services,
+          currentState.lastViewed,
+          currentState.searchResults,
+        ),
+      );
+    }
+  }
+
+  void updateSelectedServices(List<int> services) {
+    final currentState = state;
+    if (currentState is SearchLoaded) {
+      emit(
+        SearchLoaded(
+          currentState.query,
+          currentState.isSearching,
+          currentState.selectedRate,
+          currentState.priceStartRange,
+          currentState.priceEndRange,
+          currentState.priceStart,
+          currentState.priceEnd,
+          currentState.selectedRateIndices,
+          services,
+          currentState.services,
+          currentState.lastViewed,
+          currentState.searchResults,
+        ),
+      );
+    }
+  }
+
+  void updateSelectedRates(List<int> rates) {
+    final currentState = state;
+    if (currentState is SearchLoaded) {
+      emit(
+        SearchLoaded(
+          currentState.query,
+          currentState.isSearching,
+          currentState.selectedRate,
+          currentState.priceStartRange,
+          currentState.priceEndRange,
+          currentState.priceStart,
+          currentState.priceEnd,
+          rates,
+          currentState.selectedServicesIndices,
+          currentState.services,
+          currentState.lastViewed,
+          currentState.searchResults,
+        ),
+      );
     }
   }
 }

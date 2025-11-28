@@ -4,29 +4,36 @@ import 'package:share_space/presentation/screen/search/widget/range_chip.dart';
 import 'package:share_space/presentation/screen/search/widget/range_slider.dart';
 import 'package:share_space/presentation/screen/search/widget/rating_filter.dart';
 import 'package:share_space/presentation/screen/search/widget/services_filter.dart';
+import 'package:share_space/presentation/screen/shared/ui_state/workspace_ui_state.dart';
 
 import '../../design_system/widget/primary_button.dart';
 import '../../design_system/widget/secondary_button.dart';
 
 class FilterBottomSheet extends StatefulWidget {
-  const FilterBottomSheet({super.key});
+  final RangeValues initialRange;
+  RangeValues currentRange;
+  final List<String> rateOptions;
+  final int rateSelectedIndex;
+  List<int> selectedRateIndices;
+  final List<ServicesUiState> servicesOptions;
+  List<int> selectedServicesIndices;
+
+  FilterBottomSheet({
+    super.key,
+    this.initialRange = const RangeValues(10, 500),
+    required this.currentRange,
+    required this.rateSelectedIndex,
+    this.rateOptions = const ["All", "1", "2", "3", "4", "5"],
+    required this.selectedRateIndices,
+    this.servicesOptions = ServicesUiState.values,
+    required this.selectedServicesIndices,
+  });
 
   @override
   State<FilterBottomSheet> createState() => _FilterBottomSheetState();
 }
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
-  RangeValues _currentRange = const RangeValues(100, 500);
-  List<String> rateOptions = ["All", "1", "2", "3", "4", "5"];
-  List<int> selectedRateIndices = [0];
-  List<String> servicesOptions = [
-    "All",
-    "Wifi",
-    "A/C",
-    "Whiteboard",
-    "Power Backup",
-  ];
-  List<int> selectedServicesIndices = [0];
 
   @override
   Widget build(BuildContext context) {
@@ -46,24 +53,24 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
               SizedBox(height: 12),
               RatingFilter(
-                options: rateOptions,
-                selectedIndices: selectedRateIndices,
+                options: widget.rateOptions,
+                selectedIndices: widget.selectedRateIndices,
                 onSelect: (index) {
                   setState(() {
-                    if (selectedRateIndices.contains(index)) {
-                      selectedRateIndices.remove(index);
-                      if (selectedRateIndices.isEmpty) {
-                        selectedRateIndices.add(0);
+                    if (widget.selectedRateIndices.contains(index)) {
+                      widget.selectedRateIndices.remove(index);
+                      if (widget.selectedRateIndices.isEmpty) {
+                        widget.selectedRateIndices.add(0);
                       }
                     } else {
                       if (index == 0) {
-                        selectedRateIndices.clear();
+                        widget.selectedRateIndices.clear();
                       }
-                      if (selectedRateIndices.length == 1 &&
-                          selectedRateIndices.first == 0) {
-                        selectedRateIndices.clear();
+                      if (widget.selectedRateIndices.length == 1 &&
+                          widget.selectedRateIndices.first == 0) {
+                        widget.selectedRateIndices.clear();
                       }
-                      selectedRateIndices.add(index);
+                      widget.selectedRateIndices.add(index);
                     }
                   });
                 },
@@ -80,14 +87,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
               SizedBox(height: 12),
               RangeSliderWidget(
-                maxRange: const RangeValues(0, 1000),
-                currentRange: _currentRange,
+                maxRange: widget.initialRange,
+                currentRange: widget.currentRange,
                 onChange: (newRange) {
                   setState(() {
-                    _currentRange = newRange;
+                    widget.currentRange = newRange;
                   });
                 },
-                currency: "IQD",
+                currency: "/hr",
               ),
               SizedBox(height: 20),
               Row(
@@ -95,7 +102,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   Expanded(
                     child: RangeChip(
                       label: "Min",
-                      value: _currentRange.start.toInt(),
+                      value: widget.currentRange.start.toInt(),
                       image: "assets/icons/arrow_down.svg",
                       unit: "IQD",
                     ),
@@ -104,7 +111,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   Expanded(
                     child: RangeChip(
                       label: "Max",
-                      value: _currentRange.end.toInt(),
+                      value: widget.currentRange.end.toInt(),
                       image: "assets/icons/arrow_up.svg",
                       unit: "IQD",
                     ),
@@ -123,38 +130,38 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
               SizedBox(height: 12),
               ServicesFilter(
-                options: servicesOptions,
-                selectedIndices: selectedServicesIndices,
+                options: widget.servicesOptions.map((e) => e.toString()).toList(),
+                selectedIndices: widget.selectedServicesIndices,
                 onSelect: (index) {
                   setState(() {
-                    if (selectedServicesIndices.contains(index)) {
-                      selectedServicesIndices.remove(index);
-                      if (selectedServicesIndices.isEmpty) {
-                        selectedServicesIndices.add(0);
+                    if (widget.selectedServicesIndices.contains(index)) {
+                      widget.selectedServicesIndices.remove(index);
+                      if (widget.selectedServicesIndices.isEmpty) {
+                        widget.selectedServicesIndices.add(0);
                       }
                     } else {
                       if (index == 0) {
-                        selectedServicesIndices.clear();
+                        widget.selectedServicesIndices.clear();
                       }
-                      if (selectedServicesIndices.length == 1 &&
-                          selectedServicesIndices.first == 0) {
-                        selectedServicesIndices.clear();
+                      if (widget.selectedServicesIndices.length == 1 &&
+                          widget.selectedServicesIndices.first == 0) {
+                        widget.selectedServicesIndices.clear();
                       }
-                      selectedServicesIndices.add(index);
+                      widget.selectedServicesIndices.add(index);
                     }
                   });
                 },
               ),
-              SizedBox(height: 16),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Location",
-                  style: theme.typography.textTheme.titleSmall?.copyWith(
-                    color: theme.colors.title,
-                  ),
-                ),
-              ),
+              // SizedBox(height: 16),
+              // Align(
+              //   alignment: Alignment.topLeft,
+              //   child: Text(
+              //     "Location",
+              //     style: theme.typography.textTheme.titleSmall?.copyWith(
+              //       color: theme.colors.title,
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 12),
               // TODO: Add Location Filter Widget here
               SizedBox(height: 24),

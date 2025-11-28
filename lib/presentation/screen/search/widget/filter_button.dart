@@ -3,10 +3,27 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 
 import '../../../design_system/widget/base_bottom_sheet.dart';
+import '../../shared/ui_state/workspace_ui_state.dart';
 import '../filter_bottomsheet.dart';
 
 class FilterButton extends StatelessWidget {
-  const FilterButton({super.key});
+  final RangeValues initialRange;
+  RangeValues currentRange;
+  final List<String> rateOptions;
+  final int rateSelectedIndex;
+  List<int> selectedRateIndices;
+  final List<ServicesUiState> servicesOptions;
+  List<int> selectedServicesIndices;
+
+  FilterButton({super.key,
+    this.initialRange = const RangeValues(10, 500),
+    required this.currentRange,
+    required this.rateSelectedIndex,
+    this.rateOptions = const ["All", "1", "2", "3", "4", "5"],
+    required this.selectedRateIndices,
+    this.servicesOptions = ServicesUiState.values,
+    required this.selectedServicesIndices,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +40,15 @@ class FilterButton extends StatelessWidget {
       onPressed: () {
         showBaseBottomSheet(
           context: context,
-          child: FilterBottomSheet(),
+          child: FilterBottomSheet(
+            initialRange: initialRange,
+            currentRange: currentRange,
+            rateSelectedIndex: rateSelectedIndex,
+            rateOptions: rateOptions,
+            selectedRateIndices: selectedRateIndices,
+            servicesOptions: servicesOptions,
+            selectedServicesIndices: selectedServicesIndices,
+          ),
           label: "Filter",
           onClose: () {},
           height: 0.65,
