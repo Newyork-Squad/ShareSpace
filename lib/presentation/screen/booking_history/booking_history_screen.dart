@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider;
+import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider, ReadContext;
 import 'package:share_space/di/injection.dart';
 import 'package:share_space/presentation/design_system/theme/app_theme.dart';
 import 'package:share_space/presentation/design_system/widget/booking_card/booking_card.dart';
@@ -7,8 +7,12 @@ import 'package:share_space/presentation/design_system/widget/category_chip.dart
 import 'package:share_space/presentation/design_system/widget/loading_screen.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_cubit.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_state.dart';
+import 'package:share_space/presentation/screen/booking_history/widget/empty_screen.dart';
 import 'package:share_space/presentation/screen/shared/ui_state/booking_ui_state.dart';
 import 'package:share_space/presentation/screen/shared/ui_state/workspace_ui_state.dart';
+
+import '../../../resources/app_strings.dart';
+import '../../design_system/widget/custom_top_snackbar.dart';
 
 class BookingHistoryScreen extends StatefulWidget {
   const BookingHistoryScreen({super.key});
@@ -18,12 +22,8 @@ class BookingHistoryScreen extends StatefulWidget {
 }
 
 class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
-  int _selectedIndex = 0;
-
-  final List<String> _filterCategories = [
-        "All"
-      ] +
-      BookingStatusUiState.values.map((e) => e.name).toList();
+  final List<String> _filterCategories =
+      ["All"] + BookingStatusUiState.values.map((e) => e.name).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +35,13 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
           if (state is BookingHistoryLoading) {
             return const LoadingScreen();
           } else if (state is BookingHistoryLoaded) {
-            final allBookings =
-                state.upcoming + state.completed + state.cancelled;
-            final filteredBookings = _getFilteredBookings(allBookings);
-
+            final filteredBookings = _getFilteredBookings(
+              state.selectedIndex,
+              state.all,
+              state.upcoming,
+              state.cancelled,
+              state.completed,
+            );
             return Scaffold(
               backgroundColor: theme.colors.surface,
               appBar: AppBar(
@@ -67,10 +70,10 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                         itemBuilder: (context, index) {
                           return CategoryChip(
                             label: _filterCategories[index],
-                            isSelected: _selectedIndex == index,
+                            isSelected: state.selectedIndex == index,
                             onTap: () {
                               setState(() {
-                                _selectedIndex = index;
+                                state.selectedIndex = index;
                               });
                             },
                           );
@@ -81,27 +84,58 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
                     ),
                     const SizedBox(height: 16),
                     Expanded(
-                      child: ListView.separated(
-                        itemCount: filteredBookings.length,
-                        itemBuilder: (context, index) {
-                          final booking = filteredBookings[index];
-                          return BookingCard(
-                            imageUrl: booking.getImage(),
-                            rating: booking.workspace.rate,
-                            title: booking.workspace.name,
-                            price: "${booking.workspace.pricePerHour}/h",
-                            location: booking.workspace.locationName,
-                            amenities: booking.workspace.services
-                                .map((service) => service.toString())
-                                .toList(),
-                            status: booking.status,
-                            date: booking.date,
-                            time: "${booking.startTime} -> ${booking.endTime}",
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 12),
-                      ),
+                      child: filteredBookings.isEmpty
+                          ? const EmptyScreen(hasAppBar: false)
+                          : ListView.separated(
+                              itemCount: filteredBookings.length,
+                              itemBuilder: (context, index) {
+                                final booking = filteredBookings[index];
+                                return BookingCard(
+                                  imageUrl: booking.getImage(),
+                                  rating: booking.workspace.rate,
+                                  title: booking.workspace.name,
+                                  price:
+                                      "${booking.workspace.pricePerHour}/h",
+                                  location: booking.workspace.locationName,
+                                  amenities: booking.workspace.services
+                                      .map((service) => service.toString())
+                                      .toList(),
+                                  status: booking.status,
+                                  date: booking.date,
+                                  time:
+                                      "${booking.startTime} -> ${booking.endTime}",
+                                  onCancel: () {
+                                    try {
+                                      context
+                                          .read<BookingHistoryCubit>()
+                                          .cancelBooking(booking.bookingId);
+                                    } catch (e) {
+                                      CustomTopSnackBar.show(context,
+                                          title: AppStrings.oops,
+                                          message: AppStrings.failedBooking,
+                                          isError: true);
+                                    }
+                                  },
+                                  onExtend: () {
+                                    context
+                                        .read<BookingHistoryCubit>()
+                                        .extendBooking();
+                                  },
+                                  onRate: () {
+                                    context
+                                        .read<BookingHistoryCubit>()
+                                        .rateBooking();
+                                  },
+                                  onBookAgain: () {
+                                    context
+                                        .read<BookingHistoryCubit>()
+                                        .onBookAgain();
+                                  },
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 12),
+                            ),
                     ),
                   ],
                 ),
@@ -121,11 +155,24 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
     );
   }
 
-  List<BookingUiState> _getFilteredBookings(List<BookingUiState> allBookings) {
-    if (_selectedIndex == 0) {
-      return allBookings;
+  List<BookingUiState> _getFilteredBookings(
+    int selectedIndex,
+    List<BookingUiState> allBookings,
+    List<BookingUiState> upcoming,
+    List<BookingUiState> cancelled,
+    List<BookingUiState> completed,
+  ) {
+    switch (selectedIndex) {
+      case 0:
+        return allBookings;
+      case 1:
+        return upcoming;
+      case 2:
+        return completed;
+      case 3:
+        return cancelled;
+      default:
+        return allBookings;
     }
-    final status = BookingStatusUiState.values[_selectedIndex - 1];
-    return allBookings.where((booking) => booking.status == status).toList();
   }
 }

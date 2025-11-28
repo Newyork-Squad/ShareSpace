@@ -1,12 +1,12 @@
 import 'package:share_space/domain/entity/booking.dart';
 import 'package:share_space/domain/repository/booking_repository.dart';
 
-class GetBookingHistoryUseCase {
+class CancelBookingUseCase {
   final BookingRepository _repository;
 
-  GetBookingHistoryUseCase(this._repository);
+  CancelBookingUseCase(this._repository);
 
-  Future<List<Booking>> call() {
-    return _repository.getBookingHistory();
+  Future<void> call(String bookingId) async {
+    _repository.cancelBooking(bookingId: bookingId);
   }
 }

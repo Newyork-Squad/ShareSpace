@@ -7,6 +7,7 @@ class ConfirmBookingBottomSheet extends StatelessWidget {
   final String price;
   final String date;
   final String time;
+  final VoidCallback onConfirm;
 
   const ConfirmBookingBottomSheet({
     super.key,
@@ -14,6 +15,7 @@ class ConfirmBookingBottomSheet extends StatelessWidget {
     required this.price,
     required this.date,
     required this.time,
+    required this.onConfirm
   });
 
   @override
@@ -77,7 +79,7 @@ class ConfirmBookingBottomSheet extends StatelessWidget {
             height: 30,
           ),),
 
-          const SizedBox(height: 12),
+      const SizedBox(height: 12),
 
           // Room title
           Text(
@@ -156,11 +158,11 @@ class ConfirmBookingBottomSheet extends StatelessWidget {
               fontWeight: FontWeight.w400,
           ),
 
-           ),
-          const SizedBox(height: 24),
+      ),
+      const SizedBox(height: 24),
 
-          // Confirm Button
-          SizedBox(
+      // Confirm Button
+      SizedBox(
         width: 328,
         height: 52,
         child: DecoratedBox(
@@ -189,27 +191,29 @@ class ConfirmBookingBottomSheet extends StatelessWidget {
             ],
           ),
           child: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              shadowColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            onPressed: () {
+              onConfirm();
+            },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(100),
             ),
-            child: const Text(
-              'Confirm',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          ),
+          child: const Text(
+            'Confirm',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
             ),
           ),
         ),
-      )   ,
-          const SizedBox(height: 24),
+      ),
+    ) ,
+    const SizedBox(height: 24),
 
         ],
       ),
