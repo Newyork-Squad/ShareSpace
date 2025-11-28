@@ -60,24 +60,29 @@ class SearchCubit extends Cubit<SearchState> {
 
   Future<void> fetchLastViewed() async {
     final currentState = state;
-    if (currentState is SearchLoaded) {
-      try {
-        final lastViewed = await _getBestUseCase();
-        emit(
-          SearchLoaded(
-            currentState.query,
-            currentState.isSearching,
-            currentState.selectedRate,
-            currentState.priceStart,
-            currentState.priceEnd,
-            currentState.services,
-            lastViewed.map((e) => mapWorkToUiState(e)).toList(),
-            currentState.searchResults,
-          ),
-        );
-      } catch (e) {
-        emit(SearchError(e.toString()));
+    emit(SearchLoading());
+    try {
+      final lastViewed = await _getBestUseCase();
+      double priceEnd = 300;
+      if (lastViewed.isNotEmpty) {
+        priceEnd = lastViewed
+            .map((e) => (e.pricePerHour).toDouble())
+            .reduce((a, b) => a > b ? a : b);
       }
+      emit(
+        SearchLoaded(
+          '',
+          false,
+          0,
+          0,
+          priceEnd.toInt(),
+          [],
+          lastViewed.map((e) => mapWorkToUiState(e)).toList(),
+          [],
+        ),
+      );
+    } catch (e) {
+      emit(SearchError(e.toString()));
     }
   }
 }
