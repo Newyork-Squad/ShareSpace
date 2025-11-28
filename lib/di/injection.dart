@@ -28,24 +28,29 @@ import 'package:share_space/domain/usecase/workspace/get_featured.dart';
 import 'package:share_space/domain/usecase/workspace/get_near_to_you.dart';
 import 'package:share_space/domain/usecase/workspace/get_popular.dart';
 import 'package:share_space/domain/usecase/workspace/get_top_rated.dart';
+import 'package:share_space/domain/usecase/workspace/remove_saved_workspace.dart';
+import 'package:share_space/domain/usecase/workspace/save_workspace.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 
-import 'package:share_space/domain/usecase/workspace/save_workspace.dart';
-import 'package:share_space/domain/usecase/workspace/remove_saved_workspace.dart';
-
 import '../data/remote/auth_api_service_impl.dart';
 import '../data/remote/booking_api_service.dart';
 import '../data/remote/dio_client.dart';
+import '../data/remote/search_api_service.dart';
+import '../data/remote/search_api_service_impl.dart';
 import '../data/remote/workspace_api_service.dart';
 import '../data/remote/workspace_api_service_impl.dart';
 import '../data/repository/booking_repository_impl.dart';
+import '../data/repository/search_repository_impl.dart';
 import '../domain/repository/booking_repository.dart';
+import '../domain/repository/search_repository.dart';
 import '../domain/usecase/authentication/create_account_usecase.dart';
 import '../domain/usecase/authentication/is_loggedIn_usecase.dart';
 import '../domain/usecase/authentication/logout_usecase.dart';
 import '../domain/usecase/booking/cancel_booking.dart';
+import '../domain/usecase/search/get_suggestions.dart';
+import '../domain/usecase/search/search_workspaces.dart';
 import '../presentation/screen/booking/state/booking_cubit.dart';
 import '../presentation/screen/my_account/cubit/my_account_cubit.dart';
 
@@ -71,18 +76,16 @@ void setupDependencies() {
   getIt.registerLazySingleton(() => RemoveSavedWorkspaceUseCase(getIt()));
 
   getIt.registerLazySingleton<BookingApiService>(
-        () => BookingApiServiceImpl(getIt()),
+    () => BookingApiServiceImpl(getIt()),
   );
 
   getIt.registerLazySingleton<BookingRepository>(
-        () => BookingRepositoryImpl(getIt()),
+    () => BookingRepositoryImpl(getIt()),
   );
 
   getIt.registerLazySingleton<UserRepository>(
-        () => UserRepositoryImpl(getIt(),getIt()),
+    () => UserRepositoryImpl(getIt(), getIt()),
   );
-
-
 
   getIt.registerLazySingleton(() => GetBestUseCase(getIt()));
   getIt.registerLazySingleton(() => GetBestPriceUseCase(getIt()));
@@ -96,7 +99,6 @@ void setupDependencies() {
   getIt.registerLazySingleton(() => GetBookingHistoryUseCase(getIt()));
   getIt.registerLazySingleton(() => BookRoomUseCase(getIt()));
   getIt.registerLazySingleton(() => CancelBookingUseCase(getIt()));
-
 
   getIt.registerFactory(
     () => HomeCubit(
@@ -120,11 +122,9 @@ void setupDependencies() {
   getIt.registerLazySingleton<AuthApiService>(
     () => AuthApiServiceImpl(getIt(), getIt()),
   );
-  getIt.registerLazySingleton<LocationService>(
-        () => LocationServiceImpl(),
-  );
+  getIt.registerLazySingleton<LocationService>(() => LocationServiceImpl());
   getIt.registerLazySingleton<UserApiService>(
-        () => UserApiServiceImpl(getIt()),
+    () => UserApiServiceImpl(getIt()),
   );
 
   getIt.registerLazySingleton(() => LoginUseCase(getIt()));
@@ -145,13 +145,26 @@ void setupDependencies() {
   );
 
   getIt.registerLazySingleton<LogoutUseCase>(
-        () => LogoutUseCase(getIt<AuthenticationRepository>()),
+    () => LogoutUseCase(getIt<AuthenticationRepository>()),
   );
 
   getIt.registerFactory<MyAccountCubit>(
-        () => MyAccountCubit(
-      getIt<GetUserDetailsUseCase>(),
-      getIt<LogoutUseCase>(),
-    ),
+    () =>
+        MyAccountCubit(getIt<GetUserDetailsUseCase>(), getIt<LogoutUseCase>()),
+  );
+
+  getIt.registerLazySingleton<SearchApiService>(
+    () => SearchApiServiceImpl(getIt<Dio>()),
+  );
+
+  getIt.registerLazySingleton<SearchRepository>(
+    () => SearchRepositoryImpl(getIt<SearchApiService>()),
+  );
+
+  getIt.registerLazySingleton(
+    () => SearchWorkspacesUseCase(getIt<SearchRepository>()),
+  );
+  getIt.registerLazySingleton(
+    () => GetSuggestionsUseCase(getIt<SearchRepository>()),
   );
 }
