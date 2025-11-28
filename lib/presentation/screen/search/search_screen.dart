@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_space/presentation/screen/search/state/search_cubit.dart';
 import 'package:share_space/presentation/screen/search/state/search_state.dart';
 import 'package:share_space/presentation/screen/search/widget/search_field.dart';
+import 'package:share_space/resources/app_strings.dart';
 
 import '../../../di/injection.dart';
 import '../../design_system/theme/app_theme.dart';
@@ -36,7 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   leading: const SizedBox.shrink(),
                   leadingWidth: 0,
                   title: Text(
-                    "Search",
+                    AppStrings.searchScreenTitle,
                     style: theme.typography.textTheme.titleMedium?.copyWith(
                       color: theme.colors.title,
                     ),
@@ -47,6 +48,16 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 SliverToBoxAdapter(
                   child: SearchField(suggestions: [], history: []),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    child: Text(
+                      AppStrings.mostSearched ,
+                      style: theme.typography.textTheme.titleSmall
+                          ?.copyWith(color: theme.colors.title),
+                    ),
+                  ),
                 ),
                 SliverToBoxAdapter(
                   child: Column(

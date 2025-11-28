@@ -90,7 +90,8 @@ class AppStrings {
   static const homeCategoriesTitle = 'Categories';
   static const homePopularTitle = 'Popular workspaces';
 
-  static const searchScreenTitle = 'Search Screen';
+  static const searchScreenTitle = 'Search';
+  static const mostSearched = 'Most Searched';
   static const bookingScreenTitle = 'Booking Screen';
   static const bookingHistoryScreenTitle = 'Booking History Screen';
   static const chatScreenTitle = 'Chat Screen';
