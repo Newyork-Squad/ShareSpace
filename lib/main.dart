@@ -1,47 +1,45 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:share_space/di/injection.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'domain/usecase/User/is_first_open_use_case.dart';
+import 'domain/usecase/User/set_first_open_completed_use_case.dart';
+import 'domain/usecase/authentication/is_loggedIn_usecase.dart';
+import 'firebase_options.dart';
 import 'presentation/design_system/theme/app_theme_provider.dart';
 import 'presentation/routes/app_router.dart';
 import 'presentation/routes/routes.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'resources/app_strings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  setupDependencies();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await setupDependencies();
   runApp(ShareSpaceApp(appRouter: AppRouter()));
 }
 
 class ShareSpaceApp extends StatelessWidget {
   final AppRouter appRouter;
+
   const ShareSpaceApp({super.key, required this.appRouter});
 
-  Future<String> getInitialRoute() async {
-    final prefs = await SharedPreferences.getInstance();
-    bool isFirstOpen = prefs.getBool('isFirstOpen') ?? true;
-    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  Future<String> _getInitialRoute() async {
+    final isFirstOpen = await getIt<IsFirstOpenUseCase>()();
 
     if (isFirstOpen) {
-      await prefs.setBool('isFirstOpen', false);
+      await getIt<SetFirstOpenCompletedUseCase>()();
       return Routes.onboardingScreen;
     }
 
-    if (isLoggedIn) {
-      return Routes.appNavigationBar;
-    }
+    final isLoggedIn = await getIt<IsLoggedInUseCase>()();
 
-    return Routes.loginScreen;
+    return isLoggedIn ? Routes.appNavigationBar : Routes.loginScreen;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
-      future: getInitialRoute(),
+      future: _getInitialRoute(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Container(color: Colors.white);

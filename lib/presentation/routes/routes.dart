@@ -12,6 +12,7 @@ import 'package:share_space/presentation/design_system/widget/app_navigation_bar
 import '../screen/booking/book_room_screen.dart';
 import '../screen/ section/section_screen.dart';
 import '../screen/create_account/create_account_screen.dart';
+import '../screen/saved_workspaces/saved_workspaces_screen.dart';
 
 class Routes {
   static const String onboardingScreen = '/';
@@ -28,6 +29,7 @@ class Routes {
   static const String chatScreen = '/chatScreen';
   static const String bookRoomScreen = '/bookRoomScreen';
   static const String sectionScreen='/sectionScreen';
+  static const String savedWorkspaces = '/saved-workspaces';
 
   static Map<String, Widget Function(BuildContext)> routes = {
     onboardingScreen: (context) => OnboardingScreen(),
@@ -43,5 +45,6 @@ class Routes {
     chatScreen: (context) => ChatScreen(),
     bookRoomScreen: (context) => BookRoomScreen(),
     sectionScreen: (context) => SectionScreen(),
+    savedWorkspaces: (_) => const SavedWorkspacesScreen(),
   };
 }
