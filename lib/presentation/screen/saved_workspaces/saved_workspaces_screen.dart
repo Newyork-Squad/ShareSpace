@@ -6,9 +6,11 @@ import 'package:share_space/presentation/design_system/widget/custom_app_bar.dar
 import 'package:share_space/presentation/design_system/widget/workspace_details_card.dart';
 import 'package:share_space/presentation/screen/saved_workspaces/state/saved_workspaces_cubit.dart';
 import 'package:share_space/presentation/screen/saved_workspaces/state/saved_workspaces_state.dart';
+
 import '../../../domain/usecase/workspace/get_saved_workspace.dart';
 import '../../design_system/widget/loading_screen.dart';
 import '../../routes/routes.dart';
+import '../room_details/room_details_arguments.dart';
 
 class SavedWorkspacesScreen extends StatelessWidget {
   const SavedWorkspacesScreen({super.key});
@@ -100,7 +102,10 @@ class _SavedWorkspacesView extends StatelessWidget {
                           Navigator.pushNamed(
                             context,
                             Routes.roomDetailsScreen,
-                            arguments: workspace.id,
+                            arguments: RoomDetailsArguments(
+                              roomId: workspace.id,
+                              isSaved: true, // ✅ لأنه جاي من قائمة المحفوظات
+                            ),
                           );
                         },
                         child: WorkspaceDetailsCard(
