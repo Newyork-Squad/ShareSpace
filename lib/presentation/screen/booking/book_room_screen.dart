@@ -23,9 +23,8 @@ class BookRoomScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final resolvedRoomId =
         roomId ?? (ModalRoute.of(context)?.settings.arguments as String?) ?? '';
-
     return BlocProvider(
-      create: (context) => getIt<BookingCubit>(),
+      create: (context) => getIt<BookingCubit>()..fetchRoomDetails(resolvedRoomId),
       child: Scaffold(
         backgroundColor: AppColors.light.surfaceLow,
         appBar: AppBar(
@@ -34,86 +33,96 @@ class BookRoomScreen extends StatelessWidget {
           surfaceTintColor: AppColors.light.surfaceLow,
           elevation: 0,
         ),
-        body: BlocBuilder<BookingCubit, BookingState>(
+        body: BlocConsumer<BookingCubit, BookingState>(
+          listener: (context, state) {
+            if (state is BookingSuccess) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              CustomTopSnackBar.show(
+                context,
+                title: AppStrings.success,
+                message: AppStrings.successBooking,
+                isError: false,
+              );
+            }
+            if (state is BookingError) {
+              CustomTopSnackBar.show(
+                context,
+                title: AppStrings.oops,
+                message: state.message,
+                isError: true,
+              );
+            }
+          },
           builder: (context, state) {
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CalendarWidget(
-                    onDateSelected: (date) {
-                      context.read<BookingCubit>().onDateChanged(date);
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  TimeSlotWidget(
-                    onStartTimeSelected: (startTime) => context
-                        .read<BookingCubit>()
-                        .onStartTimeChanged(startTime),
-                    onEndTimeSelected: (endTime) =>
-                        context.read<BookingCubit>().onEndTimeChanged(endTime),
-                  ),
-                  const SizedBox(height: 16),
-                  DurationWidget(
-                    onDurationSelected: (duration) => context
-                        .read<BookingCubit>()
-                        .onDurationChanged(duration),
-                  ),
-                  const SizedBox(height: 16),
-                  PaymentWidget(
-                    onPaymentTypeSelected: (paymentType) => context
-                        .read<BookingCubit>()
-                        .onPaymentTypeChanged(paymentType),
-                  ),
-                  const SizedBox(height: 24),
-                  ShareSpaceAppButton(
-                    isEnabled: context.read<BookingCubit>().isButtonEnabled,
-                    text: AppStrings.bookingConfirmBookingButton,
-                    onPressed: () {
-                      if (context.read<BookingCubit>().isButtonEnabled) {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (_) => BlocProvider.value(
-                            value: context.read<BookingCubit>(),
-                            child: ConfirmBookingBottomSheet(
-                              onConfirm: () {
-                                try {
+            if (state is BookingLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (state is BookingFormState) {
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CalendarWidget(
+                      onDateSelected: (date) {
+                        context.read<BookingCubit>().onDateChanged(date);
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    TimeSlotWidget(
+                      onStartTimeSelected: (startTime) => context
+                          .read<BookingCubit>()
+                          .onStartTimeChanged(startTime),
+                      onEndTimeSelected: (endTime) => context
+                          .read<BookingCubit>()
+                          .onEndTimeChanged(endTime),
+                    ),
+                    const SizedBox(height: 16),
+                    DurationWidget(
+                      onDurationSelected: (duration) => context
+                          .read<BookingCubit>()
+                          .onDurationChanged(duration),
+                    ),
+                    const SizedBox(height: 16),
+                    PaymentWidget(
+                      onPaymentTypeSelected: (paymentType) => context
+                          .read<BookingCubit>()
+                          .onPaymentTypeChanged(paymentType),
+                    ),
+                    const SizedBox(height: 24),
+                    ShareSpaceAppButton(
+                      isEnabled: state.isButtonEnabled,
+                      text: AppStrings.bookingConfirmBookingButton,
+                      onPressed: () {
+                        if (state.isButtonEnabled) {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (_) => BlocProvider.value(
+                              value: context.read<BookingCubit>(),
+                              child: ConfirmBookingBottomSheet(
+                                onConfirm: () {
                                   context.read<BookingCubit>().bookRoom(
                                     workspaceId: resolvedRoomId,
                                   );
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                  CustomTopSnackBar.show(
-                                    context,
-                                    title: AppStrings.success,
-                                    message: AppStrings.successBooking,
-                                    isError: false
-                                  );
-                                } catch (e) {
-                                  CustomTopSnackBar.show(
-                                    context,
-                                    title: AppStrings.oops,
-                                    message: AppStrings.failedBooking,
-                                    isError: true
-                                  );
-                                }
-                              },
-                              roomName: "",
-                              price: '',
-                              date: '',
-                              time: '',
+                                },
+                                roomName: state.roomName,
+                                price: state.formattedTotalPrice,
+                                date: state.date ?? '',
+                                time: state.startTime ?? '',
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                ],
-              ),
-            );
+                          );
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                  ],
+                ),
+              );
+            }
+            return const SizedBox.shrink();
           },
         ),
       ),
