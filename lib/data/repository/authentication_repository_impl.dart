@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:share_space/domain/repository/authentication_repository.dart';
 
 import '../remote/auth_api_service.dart';
@@ -19,7 +20,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String name,
     required String phoneNumber,
     required String gender,
-    String? imageUrl,
+    File? imageFile,
     String? bio,
   }) {
     return _apiService.createAccount(
@@ -28,7 +29,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       name: name,
       phoneNumber: phoneNumber,
       gender: gender,
-      imageUrl: imageUrl,
+      imageFile: imageFile,
       bio: bio,
     );
   }

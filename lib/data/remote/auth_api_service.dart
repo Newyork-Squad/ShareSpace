@@ -1,3 +1,5 @@
+import 'dart:io';
+
 abstract class AuthApiService {
   Future<bool> login(String phoneNumber, String password);
 
@@ -7,7 +9,7 @@ abstract class AuthApiService {
     required String name,
     required String phoneNumber,
     required String gender,
-    String? imageUrl,
+    File? imageFile,
     String? bio,
   });
 

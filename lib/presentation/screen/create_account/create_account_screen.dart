@@ -41,7 +41,6 @@ class _CreateAccountViewState extends State<CreateAccountView> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  String? selectedImageUrl;
   String? confirmPasswordError;
   bool isFormValid = false;
   bool hasPhoneError = false;
@@ -58,7 +57,8 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
   void _validateForm() {
     setState(() {
-      isFormValid = nameController.text.isNotEmpty &&
+      isFormValid =
+          nameController.text.isNotEmpty &&
           phoneController.text.isNotEmpty &&
           emailController.text.isNotEmpty &&
           passwordController.text.isNotEmpty &&
@@ -84,8 +84,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
 
     if (passwordController.text != confirmPasswordController.text) {
       setState(() {
-        confirmPasswordError =
-        "Confirm password does not match the password.";
+        confirmPasswordError = "Confirm password does not match the password.";
       });
       return;
     } else {
@@ -94,7 +93,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
       });
     }
 
-    cubit.createAccount(imageUrl: selectedImageUrl);
+    cubit.createAccount();
   }
 
   void _onLoginTap() {
@@ -149,10 +148,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       const SizedBox(height: 9),
                       Text(
                         AppStrings.createAccountTitle,
-                        style: AppTypography()
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(
+                        style: AppTypography().textTheme.titleMedium?.copyWith(
                           color: AppColors.light.title,
                         ),
                       ),
@@ -160,20 +156,19 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                       Text(
                         AppStrings.createAccountHeader,
                         textAlign: TextAlign.center,
-                        style: AppTypography()
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(
+                        style: AppTypography().textTheme.bodyMedium?.copyWith(
                           color: AppColors.light.body,
                         ),
                       ),
                       const SizedBox(height: 16),
+
                       ProfileImagePicker(
-                        onImageSelected: (imageUrl) {
-                          selectedImageUrl = imageUrl;
+                        onImageSelected: (file) {
+                          cubit.updateProfileImage(file);
                         },
                       ),
                       const SizedBox(height: 16),
+
                       AppTextField(
                         controller: nameController,
                         hintText: AppStrings.hintFullName,
@@ -181,6 +176,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         onChanged: cubit.updateFullName,
                       ),
                       const SizedBox(height: 16),
+
                       PhoneInputField(
                         controller: phoneController,
                         onChanged: cubit.updatePhoneNumber,
@@ -190,6 +186,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         },
                       ),
                       const SizedBox(height: 16),
+
                       AppTextField(
                         controller: emailController,
                         hintText: AppStrings.hintEmail,
@@ -197,6 +194,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         onChanged: cubit.updateEmail,
                       ),
                       const SizedBox(height: 16),
+
                       AppTextField(
                         controller: bioController,
                         hintText: AppStrings.hintBio,
@@ -206,6 +204,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         onChanged: cubit.updateBio,
                       ),
                       const SizedBox(height: 16),
+
                       GenderSelector(
                         selectedGender: cubit.gender,
                         onGenderSelected: (gender) {
@@ -214,6 +213,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         },
                       ),
                       const SizedBox(height: 16),
+
                       AppTextField(
                         controller: passwordController,
                         hintText: AppStrings.hintPassword,
@@ -222,6 +222,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         onChanged: cubit.updatePassword,
                       ),
                       const SizedBox(height: 12),
+
                       AppTextField(
                         controller: confirmPasswordController,
                         hintText: AppStrings.hintConfirmPassword,
@@ -231,14 +232,17 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                         errorText: confirmPasswordError,
                       ),
                       const SizedBox(height: 29),
+
                       ShareSpaceAppButton(
                         text: isLoading ? AppStrings.createAccountLoading
                             : AppStrings.createAccountButton,
                         isEnabled: !isLoading && isFormValid,
-                        onPressed:
-                        (!isLoading && isFormValid) ? _onCreateAccount : null,
+                        onPressed: (!isLoading && isFormValid)
+                            ? _onCreateAccount
+                            : null,
                       ),
                       const SizedBox(height: 12),
+
                       GestureDetector(
                         onTap: _onLoginTap,
                         child: Row(
@@ -246,21 +250,13 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           children: [
                             Text(
                               AppStrings.createAccountLoginPrompt,
-                              style: AppTypography()
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(
-                                color: AppColors.light.body,
-                              ),
+                              style: AppTypography().textTheme.labelMedium
+                                  ?.copyWith(color: AppColors.light.body),
                             ),
                             Text(
                               AppStrings.createAccountLoginAction,
-                              style: AppTypography()
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(
-                                color: AppColors.light.primary,
-                              ),
+                              style: AppTypography().textTheme.labelMedium
+                                  ?.copyWith(color: AppColors.light.primary),
                             ),
                           ],
                         ),
@@ -272,8 +268,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
               if (isLoading)
                 Container(
                   color: Colors.black26,
-                  child:
-                  const Center(child: CircularProgressIndicator()),
+                  child: const Center(child: CircularProgressIndicator()),
                 ),
             ],
           );

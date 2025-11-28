@@ -5,12 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import '../../../design_system/colors/app_color.dart';
 
 class ProfileImagePicker extends StatefulWidget {
-  final Function(String?)? onImageSelected;
+  final Function(File?)? onImageSelected;
 
-  const ProfileImagePicker({
-    super.key,
-    this.onImageSelected,
-  });
+  const ProfileImagePicker({super.key, this.onImageSelected});
 
   @override
   State<ProfileImagePicker> createState() => _ProfileImagePickerState();
@@ -21,15 +18,19 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile =
-    await picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+    final XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
 
     if (pickedFile != null) {
+      final file = File(pickedFile.path);
+
       setState(() {
-        _selectedImage = File(pickedFile.path);
+        _selectedImage = file;
       });
 
-      widget.onImageSelected?.call(pickedFile.path);
+      widget.onImageSelected?.call(file);
     }
   }
 
@@ -54,19 +55,19 @@ class _ProfileImagePickerState extends State<ProfileImagePicker> {
             child: ClipOval(
               child: hasImage
                   ? Image.file(
-                _selectedImage!,
-                fit: BoxFit.cover,
-                width: 88,
-                height: 88,
-              )
+                      _selectedImage!,
+                      fit: BoxFit.cover,
+                      width: 88,
+                      height: 88,
+                    )
                   : Center(
-                child: SizedBox(
-                  child: SvgPicture.asset(
-                    'assets/icons/add_image_icon.svg',
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
+                      child: SizedBox(
+                        child: SvgPicture.asset(
+                          'assets/icons/add_image_icon.svg',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
             ),
           ),
         ),
