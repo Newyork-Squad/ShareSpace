@@ -33,6 +33,8 @@ import 'package:share_space/domain/usecase/workspace/save_workspace.dart';
 import 'package:share_space/presentation/screen/booking_history/state/booking_history_cubit.dart';
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../data/remote/auth_api_service_impl.dart';
 import '../data/remote/booking_api_service.dart';
 import '../data/remote/dio_client.dart';
@@ -40,10 +42,14 @@ import '../data/remote/search_api_service.dart';
 import '../data/remote/search_api_service_impl.dart';
 import '../data/remote/workspace_api_service.dart';
 import '../data/remote/workspace_api_service_impl.dart';
+import '../data/repository/app_preferences_repository_imp.dart';
 import '../data/repository/booking_repository_impl.dart';
 import '../data/repository/search_repository_impl.dart';
+import '../domain/repository/app_preferences_repository.dart';
 import '../domain/repository/booking_repository.dart';
 import '../domain/repository/search_repository.dart';
+import '../domain/usecase/User/is_first_open_use_case.dart';
+import '../domain/usecase/User/set_first_open_completed_use_case.dart';
 import '../domain/usecase/authentication/create_account_usecase.dart';
 import '../domain/usecase/authentication/is_loggedIn_usecase.dart';
 import '../domain/usecase/authentication/logout_usecase.dart';
@@ -56,8 +62,25 @@ import '../presentation/screen/my_account/cubit/my_account_cubit.dart';
 
 final getIt = GetIt.instance;
 
-void setupDependencies() {
+Future<void>  setupDependencies() async {
   getIt.registerLazySingleton<TokenStorage>(() => TokenStorageImpl());
+
+
+  final prefs = await SharedPreferences.getInstance();
+  getIt.registerSingleton<SharedPreferences>(prefs);
+
+  getIt.registerLazySingleton<AppPreferencesRepository>(
+        () => AppPreferencesRepositoryImpl(getIt<SharedPreferences>()),
+  );
+
+  getIt.registerLazySingleton<IsFirstOpenUseCase>(
+        () => IsFirstOpenUseCase(getIt<AppPreferencesRepository>()),
+  );
+
+  getIt.registerLazySingleton<SetFirstOpenCompletedUseCase>(
+        () => SetFirstOpenCompletedUseCase(getIt<AppPreferencesRepository>()),
+  );
+
 
   getIt.registerLazySingleton<Dio>(() {
     DioClient(getIt<TokenStorage>());
@@ -139,7 +162,7 @@ void setupDependencies() {
 
   getIt.registerFactory(() => BookingHistoryCubit(getIt(), getIt()));
 
-  getIt.registerFactory(() => BookingCubit(getIt()));
+  getIt.registerFactory(() => BookingCubit(getIt(),getIt()));
 
   getIt.registerFactory<CreateAccountUseCase>(
     () => CreateAccountUseCase(getIt()),

@@ -69,17 +69,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: TextButton(
-                        onPressed: () async {
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          await prefs.setBool(
-                            'seenOnboarding',
-                            true,
-                          ); // حفظ الحالة
+                        onPressed: () {
 
-                          Navigator.pushReplacementNamed(
+                          Navigator.pushNamedAndRemoveUntil(
                             context,
                             Routes.loginScreen,
+                                (route) => false,
                           );
                         },
                         child: Text(
@@ -227,16 +222,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         TextButton(
                           onPressed: current['button'] == 'Start now'
                               ? () async {
-                                  // حفظ حالة مشاهدة Onboarding
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  await prefs.setBool('seenOnboarding', true);
 
-                                  // الانتقال للـ LoginScreen
+
                                   if (!mounted) return;
-                                  Navigator.pushReplacementNamed(
+                                  Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     Routes.loginScreen,
+                                        (route) => false,
                                   );
                                 }
                               : _onNextPressed,
