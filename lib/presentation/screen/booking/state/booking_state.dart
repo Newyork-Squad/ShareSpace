@@ -1,4 +1,6 @@
 
+import '../../../../domain/entity/room_details.dart';
+
 abstract class BookingState {
   const BookingState();
 
@@ -11,12 +13,14 @@ class BookingInitial extends BookingState {}
 class BookingLoading extends BookingState {}
 
 class BookingFormState extends BookingState {
+  final RoomDetails? roomDetails;
   final String? date;
   final String? startTime;
   final double? durationHours;
   final String paymentType;
 
   const BookingFormState({
+    this.roomDetails,
     this.date,
     this.startTime,
     this.durationHours,
@@ -24,6 +28,7 @@ class BookingFormState extends BookingState {
   });
 
   BookingFormState copyWith({
+    RoomDetails? roomDetails,
     String? date,
     String? startTime,
     String? endTime,
@@ -31,11 +36,24 @@ class BookingFormState extends BookingState {
     String? paymentType,
   }) {
     return BookingFormState(
+      roomDetails: roomDetails ?? this.roomDetails,
       date: date ?? this.date,
       startTime: startTime ?? this.startTime,
       durationHours: durationHours ?? this.durationHours,
       paymentType: paymentType ?? this.paymentType,
     );
+  }
+  double get _totalPrice {
+    if (durationHours == null || roomDetails == null) return 0.0;
+    return durationHours! * roomDetails!.pricePerHour;
+  }
+  String get formattedTotalPrice => _totalPrice.toStringAsFixed(2);
+  String get roomName => roomDetails?.name ?? '';
+  bool get isButtonEnabled {
+    return date != null &&
+        startTime != null &&
+        durationHours != null &&
+        roomDetails != null;
   }
 
   @override
