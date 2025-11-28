@@ -1,3 +1,4 @@
+import 'dart:io';
 import '../../repository/authentication_repository.dart';
 
 class CreateAccountUseCase {
@@ -11,7 +12,7 @@ class CreateAccountUseCase {
     required String name,
     required String phoneNumber,
     required String gender,
-    String? imageUrl,
+    File? imageFile,
     String? bio,
   }) async {
     try {
@@ -21,7 +22,7 @@ class CreateAccountUseCase {
         name: name,
         phoneNumber: phoneNumber,
         gender: gender,
-        imageUrl: imageUrl,
+        imageFile: imageFile,
         bio: bio,
       );
 

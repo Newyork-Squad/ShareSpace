@@ -8,7 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'resources/app_strings.dart';
 
- void  main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -24,13 +24,18 @@ class ShareSpaceApp extends StatelessWidget {
   Future<String> getInitialRoute() async {
     final prefs = await SharedPreferences.getInstance();
     bool isFirstOpen = prefs.getBool('isFirstOpen') ?? true;
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
     if (isFirstOpen) {
-      prefs.setBool('isFirstOpen', false);
+      await prefs.setBool('isFirstOpen', false);
       return Routes.onboardingScreen;
-    } else {
-      return Routes.loginScreen;
     }
+
+    if (isLoggedIn) {
+      return Routes.appNavigationBar;
+    }
+
+    return Routes.loginScreen;
   }
 
   @override

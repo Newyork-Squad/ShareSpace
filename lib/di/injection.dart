@@ -19,6 +19,7 @@ import 'package:share_space/domain/repository/workspace_repository.dart';
 import 'package:share_space/domain/usecase/User/getUserDetailsUseCase.dart';
 import 'package:share_space/domain/usecase/User/getUserLocationUseCase.dart';
 import 'package:share_space/domain/usecase/authentication/login_usecase.dart';
+import 'package:share_space/domain/usecase/booking/book_room.dart';
 import 'package:share_space/domain/usecase/booking/get_booking_history.dart';
 import 'package:share_space/domain/usecase/room_details/get_room_details.dart';
 import 'package:share_space/domain/usecase/workspace/get_best.dart';
@@ -31,6 +32,9 @@ import 'package:share_space/presentation/screen/booking_history/state/booking_hi
 import 'package:share_space/presentation/screen/home/state/home_cubit.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 
+import 'package:share_space/domain/usecase/workspace/save_workspace.dart';
+import 'package:share_space/domain/usecase/workspace/remove_saved_workspace.dart';
+
 import '../data/remote/auth_api_service_impl.dart';
 import '../data/remote/booking_api_service.dart';
 import '../data/remote/dio_client.dart';
@@ -41,6 +45,8 @@ import '../domain/repository/booking_repository.dart';
 import '../domain/usecase/authentication/create_account_usecase.dart';
 import '../domain/usecase/authentication/is_loggedIn_usecase.dart';
 import '../domain/usecase/authentication/logout_usecase.dart';
+import '../domain/usecase/booking/cancel_booking.dart';
+import '../presentation/screen/booking/state/booking_cubit.dart';
 import '../presentation/screen/my_account/cubit/my_account_cubit.dart';
 
 final getIt = GetIt.instance;
@@ -60,6 +66,9 @@ void setupDependencies() {
   getIt.registerLazySingleton<WorkspaceRepository>(
     () => WorkspaceRepositoryImpl(getIt()),
   );
+
+  getIt.registerLazySingleton(() => SaveWorkspaceUseCase(getIt()));
+  getIt.registerLazySingleton(() => RemoveSavedWorkspaceUseCase(getIt()));
 
   getIt.registerLazySingleton<BookingApiService>(
         () => BookingApiServiceImpl(getIt()),
@@ -85,6 +94,8 @@ void setupDependencies() {
   getIt.registerLazySingleton(() => GetCurrentLocationUseCase(getIt()));
 
   getIt.registerLazySingleton(() => GetBookingHistoryUseCase(getIt()));
+  getIt.registerLazySingleton(() => BookRoomUseCase(getIt()));
+  getIt.registerLazySingleton(() => CancelBookingUseCase(getIt()));
 
 
   getIt.registerFactory(
@@ -125,7 +136,9 @@ void setupDependencies() {
 
   getIt.registerFactory(() => LoginCubit(getIt()));
 
-  getIt.registerFactory(() => BookingHistoryCubit(getIt()));
+  getIt.registerFactory(() => BookingHistoryCubit(getIt(), getIt()));
+
+  getIt.registerFactory(() => BookingCubit(getIt()));
 
   getIt.registerFactory<CreateAccountUseCase>(
     () => CreateAccountUseCase(getIt()),

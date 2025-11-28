@@ -4,7 +4,6 @@ import 'package:share_space/data/mapper/workspace_mapper.dart';
 import 'package:share_space/data/remote/dto/booking_response.dart';
 import 'package:share_space/domain/entity/booking.dart';
 
-
 extension BookingResponseMapper on BookingResponse {
   Booking toEntity() {
     return Booking(
@@ -24,9 +23,10 @@ extension BookingResponseMapper on BookingResponse {
 
 BookingStatus toBookingStatus(String status) {
   return switch (status) {
-    'upcoming' => BookingStatus.upcoming,
-    'completed' => BookingStatus.completed,
-    'canceled' => BookingStatus.canceled,
+    'PENDING' => BookingStatus.upcoming,
+    'CONFIRMED' => BookingStatus.upcoming,
+    'COMPLETED' => BookingStatus.completed,
+    'CANCELLED' => BookingStatus.canceled,
     _ => throw Exception('Invalid booking status: $status'),
   };
 }

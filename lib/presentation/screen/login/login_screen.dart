@@ -5,12 +5,14 @@ import 'package:share_space/presentation/design_system/colors/app_color.dart';
 import 'package:share_space/presentation/design_system/typography/app_typography.dart';
 import 'package:share_space/presentation/routes/routes.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
-import '../../design_system/theme/app_theme.dart';
-import '../../design_system/widget/share_space_app_button.dart';
-import '../../design_system/widget/app_text_field.dart';
 import 'package:share_space/resources/app_strings.dart';
-import 'login_widget/app_logo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../design_system/widget/app_text_field.dart';
+import '../../design_system/widget/loading_screen.dart';
 import '../../design_system/widget/phone_input_field.dart';
+import '../../design_system/widget/share_space_app_button.dart';
+import 'login_widget/app_logo.dart';
 import 'login_widget/register_text.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -63,9 +65,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocProvider(
       create: (context) => getIt<LoginCubit>(),
       child: BlocListener<LoginCubit, LoginState>(
-        listener: (context, state) {
+        listener: (context, state) async {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool("isLoggedIn", true);
           if (state is LoginLoaded) {
-            Navigator.pushReplacementNamed(context, Routes.appNavigationBar);
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              Routes.appNavigationBar,
+                  (route) => false,
+            );
           } else if (state is LoginError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -85,11 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: BlocBuilder<LoginCubit, LoginState>(
               builder: (context, state) {
                 if (state is LoginLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: AppTheme.of(context).colors.primary,
-                    ),
-                  );
+                  return const LoadingScreen();
                 }
                 return Stack(
                   children: [

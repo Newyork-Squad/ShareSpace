@@ -3,8 +3,17 @@ import 'package:flutter_svg/svg.dart';
 import '../../../design_system/colors/app_color.dart';
 import '../../../design_system/typography/app_typography.dart';
 
-class PaymentWidget extends StatelessWidget {
-  const PaymentWidget({super.key});
+class PaymentWidget extends StatefulWidget {
+  final Function(String) onPaymentTypeSelected;
+
+  const PaymentWidget({super.key, required this.onPaymentTypeSelected});
+
+  @override
+  State<PaymentWidget> createState() => _PaymentWidgetState();
+}
+
+class _PaymentWidgetState extends State<PaymentWidget> {
+  String? _selectedPayment;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,12 @@ class PaymentWidget extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            setState(() {
+              _selectedPayment = 'Cash';
+            });
+            widget.onPaymentTypeSelected('Cash');
+          },
           child: Container(
             height: 48,
             padding: const EdgeInsets.symmetric(horizontal: 12),

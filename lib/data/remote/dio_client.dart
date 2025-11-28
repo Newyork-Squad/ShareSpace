@@ -69,7 +69,7 @@ class DioClient {
       DioCacheInterceptor(
         options: CacheOptions(
           store: MemCacheStore(),
-          policy: CachePolicy.forceCache,
+          policy: CachePolicy.request,
           maxStale: const Duration(days: 30),
           priority: CachePriority.high,
           hitCacheOnErrorExcept: [401, 403],

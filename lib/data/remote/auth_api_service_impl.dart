@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:share_space/data/remote/api_constants.dart';
@@ -47,22 +50,34 @@ class AuthApiServiceImpl implements AuthApiService {
     required String name,
     required String phoneNumber,
     required String gender,
-    String? imageUrl,
+    File? imageFile,
     String? bio,
   }) async {
     try {
-      final response = await _dio.post(
-        ApiConstants.signup,
-        data: {
-          'email': email,
-          'password': password,
-          'name': name,
-          'phoneNumber': phoneNumber,
-          'gender': gender,
-          'imageUrl': imageUrl ?? '',
-          'bio': bio ?? '',
-        },
-      );
+      /// 1) user JSON
+      final userData = {
+        'email': email,
+        'password': password,
+        'name': name,
+        'phoneNumber': phoneNumber,
+        'gender': gender,
+        'bio': bio ?? '',
+      };
+
+      final String userJson = jsonEncode(userData);
+
+      /// 2) FormData with `user` + `file`
+      final Map<String, dynamic> formDataMap = {
+        'user': MultipartFile.fromString(userJson, filename: 'user.json'),
+      };
+
+      if (imageFile != null) {
+        formDataMap['file'] = await MultipartFile.fromFile(imageFile.path);
+      }
+
+      final formData = FormData.fromMap(formDataMap);
+
+      final response = await _dio.post(ApiConstants.signup, data: formData);
 
       if (response.data['success'] == true) {
         debugPrint("Create account successful: ${response.data['message']}");

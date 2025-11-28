@@ -6,11 +6,15 @@ import '../../../design_system/theme/app_theme.dart';
 class RoomDetailsAppbar extends StatelessWidget {
   final String rate;
   final bool isScrolled;
+  final bool isSaved;
+  final VoidCallback? onBookmarkPressed;
 
   const RoomDetailsAppbar({
     super.key,
     required this.rate,
     required this.isScrolled,
+    required this.isSaved,
+    this.onBookmarkPressed,
   });
 
   @override
@@ -19,7 +23,6 @@ class RoomDetailsAppbar extends StatelessWidget {
 
     return Container(
       color: isScrolled ? theme.colors.surfaceLow : Colors.transparent,
-      // or any color you prefer
       child: SafeArea(
         child: Container(
           height: 64,
@@ -92,14 +95,16 @@ class RoomDetailsAppbar extends StatelessWidget {
                       ),
                       IconButton(
                         icon: SvgPicture.asset(
-                          'assets/icons/bookmark.svg',
+                          isSaved
+                              ? 'assets/icons/bookmark_saved.svg'
+                              : 'assets/icons/bookmark.svg',
                           width: 24,
                           height: 24,
                           color: isScrolled
                               ? theme.colors.title
                               : theme.colors.onPrimary,
                         ),
-                        onPressed: () {},
+                        onPressed: onBookmarkPressed,
                       ),
                     ],
                   ),
