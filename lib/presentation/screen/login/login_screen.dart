@@ -6,7 +6,6 @@ import 'package:share_space/presentation/design_system/typography/app_typography
 import 'package:share_space/presentation/routes/routes.dart';
 import 'package:share_space/presentation/screen/login/state/login_cubit.dart';
 import 'package:share_space/resources/app_strings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../design_system/widget/app_text_field.dart';
 import '../../design_system/widget/loading_screen.dart';
@@ -32,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void _validateForm() {
     final valid =
         phoneController.text.trim().isNotEmpty &&
-            passwordController.text.trim().isNotEmpty &&
-            !hasPhoneError;
+        passwordController.text.trim().isNotEmpty &&
+        !hasPhoneError;
     if (isFormValid.value != valid) {
       isFormValid.value = valid;
     }
@@ -66,11 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
       create: (context) => getIt<LoginCubit>(),
       child: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) async {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setBool("isLoggedIn", true);
           if (state is LoginLoaded) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
+            Navigator.of(context).pushNamedAndRemoveUntil(
               Routes.appNavigationBar,
                   (route) => false,
             );
@@ -109,7 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Expanded(
                             child: SingleChildScrollView(
                               padding: const EdgeInsets.only(
-                                  left: 16, right: 16, top: 24),
+                                left: 16,
+                                right: 16,
+                                top: 24,
+                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -117,23 +116,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                   const SizedBox(height: 24),
                                   Text(
                                     AppStrings.loginWelcomeBack,
-                                    style: AppTypography()
-                                        .textTheme
-                                        .titleMedium
+                                    style: AppTypography().textTheme.titleMedium
                                         ?.copyWith(
-                                      color: AppColors.light.title,
-                                    ),
+                                          color: AppColors.light.title,
+                                        ),
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
                                     AppStrings.loginInstructions,
                                     textAlign: TextAlign.center,
-                                    style: AppTypography()
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                      color: AppColors.light.body,
-                                    ),
+                                    style: AppTypography().textTheme.bodyMedium
+                                        ?.copyWith(color: AppColors.light.body),
                                   ),
                                   const SizedBox(height: 32),
                                   PhoneInputField(
@@ -165,7 +158,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   alpha: 0.9,
                                 ),
                                 padding: const EdgeInsets.only(
-                                    left: 16, right: 16, bottom: 12),
+                                  left: 16,
+                                  right: 16,
+                                  bottom: 12,
+                                ),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
