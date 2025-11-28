@@ -56,6 +56,7 @@ import '../domain/usecase/authentication/logout_usecase.dart';
 import '../domain/usecase/booking/cancel_booking.dart';
 import '../domain/usecase/search/get_suggestions.dart';
 import '../domain/usecase/search/search_workspaces.dart';
+import '../domain/usecase/workspace/get_saved_workspace.dart';
 import '../presentation/screen/booking/state/booking_cubit.dart';
 import '../presentation/screen/my_account/cubit/my_account_cubit.dart';
 
@@ -115,6 +116,7 @@ Future<void>  setupDependencies() async {
   getIt.registerLazySingleton(() => GetNearToYouUseCase(getIt()));
   getIt.registerLazySingleton(() => GetTopRatedUseCase(getIt()));
   getIt.registerLazySingleton(() => GetFeaturedUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetSavedWorkspacesUseCase(getIt()));
   getIt.registerLazySingleton(() => GetUserDetailsUseCase(getIt()));
   getIt.registerLazySingleton(() => GetCurrentLocationUseCase(getIt()));
 

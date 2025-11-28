@@ -15,6 +15,9 @@ import 'package:share_space/presentation/screen/room_details/widgets/room_bookin
 import 'package:share_space/presentation/screen/room_details/widgets/room_details_body.dart';
 import 'package:share_space/presentation/design_system/widget/custom_top_snackbar.dart';
 
+// لو حطيت RoomDetailsArguments في ملف تاني اعمل import صح
+import 'room_details_arguments.dart';
+
 class RoomDetailsScreen extends StatelessWidget {
   const RoomDetailsScreen({super.key, this.roomId});
 
@@ -23,9 +26,17 @@ class RoomDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
+
+    final args = ModalRoute.of(context)?.settings.arguments;
+
+    // نحدد الـ ID
     final resolvedRoomId = roomId ??
-        (ModalRoute.of(context)?.settings.arguments as String?) ??
+        (args is RoomDetailsArguments ? args.roomId : args as String?) ??
         '';
+
+    // نحدد هل هي محفوظة ولا لأ
+    final bool isInitiallySaved =
+    args is RoomDetailsArguments ? args.isSaved : false;
 
     return MultiBlocProvider(
       providers: [
@@ -37,7 +48,7 @@ class RoomDetailsScreen extends StatelessWidget {
           create: (_) => SaveRoomCubit(
             saveWorkspaceUseCase: getIt<SaveWorkspaceUseCase>(),
             removeSavedWorkspaceUseCase: getIt<RemoveSavedWorkspaceUseCase>(),
-            initiallySaved: false,
+            initiallySaved: isInitiallySaved, // ✅ هنا التعديل المهم
           ),
         ),
       ],
