@@ -107,7 +107,12 @@ class _MyAccountScreenState extends State<_MyAccountScreen> {
             assetPath: 'assets/images/all-bookmark.svg',
             iconBackgroundColor: theme.colors.yellowVariant,
             title: 'Saved Workspaces',
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                Routes.savedWorkspaces,
+              );
+            },
           ),
           MenuItemTile(
             assetPath: 'assets/images/sun-02.svg',

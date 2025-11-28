@@ -13,6 +13,7 @@ import '../screen/login/login_screen.dart';
 import '../screen/onboarding/onboarding_screen.dart';
 import '../screen/otp_verification/otp_verification_screen.dart';
 import '../screen/room_details/room_details_screen.dart';
+import '../screen/saved_workspaces/saved_workspaces_screen.dart';
 import '../screen/search/search_screen.dart';
 import '../design_system/widget/app_navigation_bar.dart';
 import 'package:share_space/resources/app_strings.dart';
@@ -30,6 +31,7 @@ class AppRouter {
         phoneNumber: args?.phoneNumber ?? '',
       );
     },
+    Routes.savedWorkspaces: (_) => const SavedWorkspacesScreen(),
     Routes.appNavigationBar: (_) => AppNavigationBar(),
     Routes.homeScreen: (_) => HomeScreen(),
     Routes.roomDetailsScreen: (_) => RoomDetailsScreen(),
