@@ -13,6 +13,7 @@ import 'package:share_space/presentation/screen/shared/ui_state/workspace_ui_sta
 
 import '../../../resources/app_strings.dart';
 import '../../design_system/widget/custom_top_snackbar.dart';
+import '../../design_system/widget/error_screen.dart';
 
 class BookingHistoryScreen extends StatefulWidget {
   const BookingHistoryScreen({super.key});
@@ -142,12 +143,7 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
               ),
             );
           } else if (state is BookingHistoryError) {
-            return Center(
-              child: Text(
-                state.message,
-                style: theme.typography.textTheme.labelSmall,
-              ),
-            );
+            return const ErrorScreen(hasAppBar: false);
           }
           return const SizedBox.shrink();
         },
