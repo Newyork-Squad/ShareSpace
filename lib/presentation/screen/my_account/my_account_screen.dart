@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../di/injection.dart';
 import '../../design_system/theme/app_theme.dart';
@@ -227,8 +228,16 @@ class _MyAccountScreenState extends State<_MyAccountScreen> {
     if (shouldLogout == true) {
       debugPrint('User confirmed logout');
       await context.read<MyAccountCubit>().logout();
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool("isLoggedIn", false);
+
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed(Routes.loginScreen);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          Routes.loginScreen,
+              (route) => false,
+        );
       }
     }
   }
