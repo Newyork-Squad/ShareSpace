@@ -1,0 +1,83 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_space/presentation/design_system/theme/app_theme.dart';
+
+import '../../../design_system/widget/base_bottom_sheet.dart';
+import '../../shared/ui_state/workspace_ui_state.dart';
+import '../filter_bottomsheet.dart';
+
+class FilterButton extends StatelessWidget {
+  final RangeValues initialRange;
+  RangeValues currentRange;
+  final List<String> rateOptions;
+  final int rateSelectedIndex;
+  List<int> selectedRateIndices;
+  final List<ServicesUiState> servicesOptions;
+  List<int> selectedServicesIndices;
+
+  FilterButton({super.key,
+    this.initialRange = const RangeValues(10, 500),
+    required this.currentRange,
+    required this.rateSelectedIndex,
+    this.rateOptions = const ["All", "1", "2", "3", "4", "5"],
+    required this.selectedRateIndices,
+    this.servicesOptions = ServicesUiState.values,
+    required this.selectedServicesIndices,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        padding: const EdgeInsets.all(0),
+        minimumSize: const Size(48, 48),
+        elevation: 0,
+      ),
+      onPressed: () {
+        showBaseBottomSheet(
+          context: context,
+          child: FilterBottomSheet(
+            initialRange: initialRange,
+            currentRange: currentRange,
+            rateSelectedIndex: rateSelectedIndex,
+            rateOptions: rateOptions,
+            selectedRateIndices: selectedRateIndices,
+            servicesOptions: servicesOptions,
+            selectedServicesIndices: selectedServicesIndices,
+          ),
+          label: "Filter",
+          onClose: () {},
+          height: 0.65,
+        );
+      },
+      child: Ink(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFF50B5E7), Color(0xFF19C6F9)],
+          ),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+          alignment: Alignment.center,
+          child: SvgPicture.asset(
+            'assets/icons/filter.svg',
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              theme.colors.surfaceLow,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
