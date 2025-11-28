@@ -13,7 +13,7 @@ class SearchCubit extends Cubit<SearchState> {
   Future<void> fetchSearch() async {
   }
 
-  Future<void> fetchLastViewed(String id) async {
+  Future<void> fetchLastViewed() async {
     final currentState = state;
     if (currentState is SearchLoaded) {
       try {
