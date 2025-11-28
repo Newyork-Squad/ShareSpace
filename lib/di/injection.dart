@@ -138,7 +138,7 @@ void setupDependencies() {
 
   getIt.registerFactory(() => BookingHistoryCubit(getIt(), getIt()));
 
-  getIt.registerFactory(() => BookingCubit(getIt()));
+  getIt.registerFactory(() => BookingCubit(getIt(),getIt()));
 
   getIt.registerFactory<CreateAccountUseCase>(
     () => CreateAccountUseCase(getIt()),

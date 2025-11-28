@@ -1,16 +1,28 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../domain/usecase/booking/book_room.dart';
+import '../../../../domain/usecase/room_details/get_room_details.dart';
 import 'booking_state.dart';
 
 class BookingCubit extends Cubit<BookingState> {
   final BookRoomUseCase _bookRoomUseCase;
+  final GetRoomDetailsUseCase _getRoomDetailsUseCase;
 
-  BookingCubit(this._bookRoomUseCase) : super(const BookingFormState());
+  BookingCubit(this._bookRoomUseCase,this._getRoomDetailsUseCase) : super(const BookingFormState());
 
   void onDateChanged(DateTime date) {
     final currentState = state;
     if (currentState is BookingFormState) {
       emit(currentState.copyWith(date: date.toIso8601String().split('T').first));
+    }
+  }
+  Future<void> fetchRoomDetails(String roomId) async {
+    emit(BookingLoading());
+    try {
+      final roomDetails = await _getRoomDetailsUseCase.call(roomId);
+
+      emit(BookingFormState(roomDetails: roomDetails));
+    } catch (e) {
+      emit(BookingError("Failed to load room details: ${e.toString()}"));
     }
   }
 
